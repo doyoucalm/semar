@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  semar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: semar-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=file:/app/prisma/dev.db
+    volumes:
+      - ./prisma/dev.db:/app/prisma/dev.db
+      - ./people:/app/people
+      - ./cases:/app/cases
+      - ./sessions:/app/sessions
+      - /root/bazi-mcp:/root/bazi-mcp
+    networks:
+      - mahardika-net
+
+networks:
+  mahardika-net:
+    external: true
+    name: mahardika-hub_mahardika-net

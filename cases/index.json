@@ -1,0 +1,82 @@
+{
+  "totalCases": 4,
+  "lastUpdated": "2026-04-20T03:31:53.435Z",
+  "cases": [
+    {
+      "id": "58572364-12fa-4933-8edf-ed4436076a36",
+      "createdAt": "2026-04-20T03:13:25.002Z",
+      "status": "active",
+      "dayMaster": "Bing",
+      "dayMasterElement": "Fire",
+      "dayBranch": "Yin",
+      "monthBranch": "Zi",
+      "intention": "Career advice",
+      "tags": [
+        "Bing",
+        "Fire",
+        "Hurting Officer",
+        "Friend",
+        "Eating God"
+      ],
+      "lessonsLearned": [],
+      "patternsConfirmed": []
+    },
+    {
+      "id": "6e158974-cf6a-48fe-832e-5d8d54b0c23a",
+      "createdAt": "2026-04-20T03:16:04.110Z",
+      "status": "active",
+      "dayMaster": "Jia",
+      "dayMasterElement": "Wood",
+      "dayBranch": "Chen",
+      "monthBranch": "Chen",
+      "intention": "Life purpose",
+      "tags": [
+        "Jia",
+        "Wood",
+        "Rob Wealth",
+        "Seven Killings",
+        "Direct Wealth"
+      ],
+      "lessonsLearned": [],
+      "patternsConfirmed": []
+    },
+    {
+      "id": "213f6421-c0e5-423b-9a2b-93be801a1992",
+      "createdAt": "2026-04-20T03:31:39.393Z",
+      "status": "active",
+      "dayMaster": "Jia",
+      "dayMasterElement": "Wood",
+      "dayBranch": "Chen",
+      "monthBranch": "Chen",
+      "intention": "General reflection",
+      "tags": [
+        "Jia",
+        "Wood",
+        "Rob Wealth",
+        "Seven Killings",
+        "Direct Wealth"
+      ],
+      "lessonsLearned": [],
+      "patternsConfirmed": []
+    },
+    {
+      "id": "e0512f56-c7e3-48a3-9e15-7ec1e7fb7849",
+      "createdAt": "2026-04-20T03:31:53.426Z",
+      "status": "active",
+      "dayMaster": "Jia",
+      "dayMasterElement": "Wood",
+      "dayBranch": "Chen",
+      "monthBranch": "Chen",
+      "intention": "General reflection",
+      "tags": [
+        "Jia",
+        "Wood",
+        "Rob Wealth",
+        "Seven Killings",
+        "Direct Wealth"
+      ],
+      "lessonsLearned": [],
+      "patternsConfirmed": []
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:ital,wght@0,300..700;1,300..700&display=swap');
+
+:root {
+  --primary: #D32F2F;
+  --on-surface: #1A1C1C;
+  --surface: #F9F9F9;
+  --surface-dim: #dadada;
+  --surface-container: #eeeeee;
+  --surface-container-low: #f3f3f3;
+  --surface-container-high: #e8e8e8;
+  --tertiary: #005f7b;
+}
+
+body {
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--surface-dim) 1px, transparent 0);
+  background-size: 8px 8px;
+  background-position: -4px -4px;
+  color: var(--on-surface);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+@layer components {
+  .kinetic-skew {
+    transform: skewX(-10deg);
+  }
+
+  .kinetic-skew-reverse {
+    transform: skewX(10deg);
+  }
+
+  .kinetic-shadow {
+    box-shadow: 6px 6px 0px 0px var(--on-surface);
+  }
+
+  .kinetic-shadow-red {
+    box-shadow: 6px 6px 0px 0px var(--primary);
+  }
+
+  .btn-primary {
+    @apply bg-[#D32F2F] text-white font-black italic uppercase px-8 py-4 kinetic-skew;
+    @apply hover:shadow-[8px_8px_0px_0px_#1A1C1C] active:scale-95 transition-all;
+  }
+
+  .input-rebel {
+    @apply w-full border-2 border-[#1A1C1C] bg-white p-4 font-bold;
+    @apply focus:outline-none focus:border-[#D32F2F] focus:shadow-[4px_4px_0px_0px_#D32F2F];
+    @apply transition-all;
+  }
+
+  .panel-rebel {
+    @apply bg-white border-2 border-[#1A1C1C] p-6 kinetic-shadow;
+  }
+
+  .dialogue-box {
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+  }
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0;
+}

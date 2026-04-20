@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id            String   @id
+  name          String
+  gender        String
+  solarDatetime String
+  timezone      String   @default("Asia/Jakarta")
+  chart         String   // JSON string of full bazi-mcp output
+  chartSummary  String   // JSON string of ChartSummary type
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  cases         Case[]
+}
+
+model Case {
+  id                String    @id @default(uuid())
+  personId          String
+  person            Person    @relation(fields: [personId], references: [id])
+  personName        String
+  intention         String?
+  status            String    @default("active")
+  chart             String    // Snapshotted JSON from person.chart
+  chartSummary      String    // Snapshotted JSON
+  messages          Message[]
+  observations      String?   // JSON string of string[]
+  overallResonance  Int       @default(0)
+  reflection        String?
+  lessonsLearned    String?   // JSON string of string[]
+  patternsConfirmed String?   // JSON string of string[]
+  patternsCorrected String?   // JSON string of string[]
+  tags              String?   // JSON string of string[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([personId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  caseId    String
+  case      Case     @relation(fields: [caseId], references: [id])
+  role      String   // 'person' | 'semar' | 'system'
+  content   String
+  metadata  String?  // JSON string for any extra tags
+  createdAt DateTime @default(now())
+}

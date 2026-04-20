@@ -1,0 +1,24 @@
+{
+  "totalPeople": 2,
+  "lastUpdated": "2026-04-20T03:31:53.416Z",
+  "people": [
+    {
+      "id": "5c97b98709cfa3076ad02aba16156ec5",
+      "name": "Budi",
+      "solarDatetime": "1985-05-05T03:15:00",
+      "dayMaster": "Jia",
+      "dayMasterElement": "Wood",
+      "caseCount": 1,
+      "lastVisit": "2026-04-20T03:16:04.105Z"
+    },
+    {
+      "id": "28d1de075be676bf898dee646d032b70",
+      "name": "Lucky",
+      "solarDatetime": "1985-05-05T03:31",
+      "dayMaster": "Jia",
+      "dayMasterElement": "Wood",
+      "caseCount": 2,
+      "lastVisit": "2026-04-20T03:31:53.416Z"
+    }
+  ]
+}
