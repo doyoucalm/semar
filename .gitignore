@@ -1,0 +1,35 @@
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+.env
+.env.local
+.env.*.local
+!.env.example
+
+.DS_Store
+Thumbs.db
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+coverage/
+.nyc_output/
+*.tsbuildinfo
+
+# Personal data — never commit Lucky's blueprint
+docs/personal/
+
+# Raw HKO scrape — 5.8 MB. Parsed JSON (data/solar-terms.json) is the artifact.
+packages/bazi/data/hko-raw/
+
+# Local-only CLI state: birth profile + diary log. Never commit personal data.
+.semar/

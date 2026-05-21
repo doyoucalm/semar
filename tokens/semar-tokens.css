@@ -1,0 +1,118 @@
+/* ============================================================
+   Semar / 天人合一 Codex — Design Tokens
+   ============================================================
+   Single source of truth for color, type, spacing.
+   Canonical app theme is DARK (Ink Indigo background).
+   "There is no light mode" — brand canon.
+   The Light brand-book HTML overrides --bg-page / --fg-primary
+   inline for printable presentation only.
+   ============================================================ */
+
+:root {
+  /* ---------- Pigment ramps ---------- */
+
+  /* Ink Indigo · 夜墨 — surfaces (canonical app background) */
+  --ink-500: #2e3648;
+  --ink-600: #232a3a;
+  --ink-700: #1a1f2e;
+  --ink-800: #141a26;
+  --ink-900: #0d1119;
+  --ink-950: #07090d;
+
+  /* Parchment Cream · 羊皮 — light on dark */
+  --parchment-50:  #fbf6ea;
+  --parchment-100: #f4ead5;
+  --parchment-200: #e8dcc4;
+  --parchment-300: #d6c6a4;
+  --parchment-400: #b8a781;
+  --parchment-500: #998864;
+
+  /* Ember Gold · 琥金 — accent (the one thing that asks to be seen) */
+  --ember-50:  #fcf3d4;
+  --ember-100: #f3dfa1;
+  --ember-200: #e6c87a;
+  --ember-300: #d4b067;
+  --ember-400: #c9a961;
+  --ember-500: #b39247;
+  --ember-600: #8c7234;
+  --ember-700: #5f4d22;
+
+  /* Temple Vermillion · 朱砂 — ritual only, rare */
+  --vermillion-100: #e8b3a5;
+  --vermillion-300: #c66f54;
+  --vermillion-500: #a13e2a;
+  --vermillion-700: #6f2818;
+  --vermillion-900: #3d150c;
+
+  /* Jade · 青翠 — life, streaks, alive-state */
+  --jade-100: #c5d4cc;
+  --jade-300: #7a9588;
+  --jade-500: #4a6b5c;
+  --jade-700: #2f4a3d;
+  --jade-900: #1a2a22;
+
+  /* Bronze Patina · 古銅 — timestamps, captions, fine print */
+  --bronze-100: #d6c8b3;
+  --bronze-200: #b8a78a;
+  --bronze-300: #9c8769;
+  --bronze-400: #8b7355;
+  --bronze-500: #6b5a42;
+  --bronze-600: #4f4231;
+  --bronze-700: #3d2e1c;
+
+  /* ---------- Semantic (dark / canonical) ---------- */
+  --bg-page:       var(--ink-900);
+  --bg-elevated:   var(--ink-800);
+  --bg-parchment:  var(--parchment-50);
+
+  --fg-primary:    var(--parchment-100);
+  --fg-secondary:  var(--parchment-200);
+  --fg-muted:      var(--bronze-400);
+
+  --accent-wisdom: var(--ember-400);
+  --accent-ritual: var(--vermillion-500);
+  --accent-life:   var(--jade-500);
+  --accent-quiet:  var(--bronze-400);
+
+  --border-gold:  rgba(201, 169, 97, 0.32);   /* ember-400 @ 32% */
+  --border-faint: rgba(201, 169, 97, 0.12);
+
+  /* ---------- Type ---------- */
+  --font-display:    'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-body:       'EB Garamond', Georgia, 'Noto Serif TC', serif;
+  --font-cn-display: 'Ma Shan Zheng', 'Noto Serif TC', serif;
+  --font-cn-body:    'Noto Serif TC', 'EB Garamond', serif;
+  --font-mono:       'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --font-deva:       'Noto Serif Devanagari', serif;
+
+  --type-scale-xs:   0.75rem;    /* 12px */
+  --type-scale-sm:   0.875rem;   /* 14px */
+  --type-scale-base: 1rem;       /* 16px */
+  --type-scale-lg:   1.25rem;    /* 20px */
+  --type-scale-xl:   1.75rem;    /* 28px */
+  --type-scale-2xl:  2.5rem;     /* 40px */
+  --type-scale-3xl:  3.75rem;    /* 60px */
+
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.08em;
+  --tracking-widest:  0.16em;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* ---------- Radius ---------- */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "semar",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Semar / 天人合一 Codex — divination engines and chat interface",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.22.1",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}

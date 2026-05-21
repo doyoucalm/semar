@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "source": "Standard BaZi stem interactions — 五合(five combinations), 相冲(clashes), 相克(controls).",
+  "combinations": [
+    { "stems": ["甲", "己"], "element": "土", "name": "甲己合土" },
+    { "stems": ["乙", "庚"], "element": "金", "name": "乙庚合金" },
+    { "stems": ["丙", "辛"], "element": "水", "name": "丙辛合水" },
+    { "stems": ["丁", "壬"], "element": "木", "name": "丁壬合木" },
+    { "stems": ["戊", "癸"], "element": "火", "name": "戊癸合火" }
+  ],
+  "clashes": [
+    { "stems": ["甲", "庚"], "name": "甲庚相冲" },
+    { "stems": ["乙", "辛"], "name": "乙辛相冲" },
+    { "stems": ["丙", "壬"], "name": "丙壬相冲" },
+    { "stems": ["丁", "癸"], "name": "丁癸相冲" }
+  ]
+}

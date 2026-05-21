@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semar · 天人合一 Codex — Brand Guidelines · Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens/semar-tokens.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--type-scale-base);
+  line-height: var(--leading-prose);
+  font-feature-settings: "liga", "kern", "onum";
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(201,169,97,0.06), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 100% 80%, rgba(161,62,42,0.045), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.82' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.66  0 0 0 0 0.38  0 0 0 0.025 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  min-height: 100vh;
+}
+
+/* ====================== LAYOUT SCAFFOLD ====================== */
+.book {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-10);
+  position: relative;
+}
+
+.folio-rule {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border-gold) 12%, var(--border-gold) 88%, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.folio-rule.left  { left: max(40px, calc(50% - 620px)); }
+.folio-rule.right { right: max(40px, calc(50% - 620px)); }
+
+section {
+  padding: var(--space-24) 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ====================== TYPOGRAPHY UTILITIES ====================== */
+.cn-display { font-family: var(--font-cn-display); }
+.cn-body    { font-family: var(--font-cn-body); font-weight: 400; }
+.mono       { font-family: var(--font-mono); }
+.sans-caps  {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  font-weight: 500;
+  font-size: var(--type-scale-sm);
+}
+.italic-display { font-family: var(--font-display); font-style: italic; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--ember-400);
+  font-weight: 500;
+}
+
+/* ====================== CHAPTER HEAD ====================== */
+.chapter-head {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  margin-bottom: var(--space-16);
+}
+.chapter-head .rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-gold), transparent);
+}
+.chapter-head .numeral {
+  font-family: var(--font-cn-display);
+  font-size: var(--type-scale-2xl);
+  color: var(--ember-400);
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 0 var(--space-6);
+}
+.chapter-head .label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--bronze-400);
+  margin-top: var(--space-2);
+}
+
+h2.section-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--type-scale-3xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--parchment-100);
+  margin-bottom: var(--space-4);
+}
+h2.section-title .cn {
+  font-family: var(--font-cn-display);
+  color: var(--ember-400);
+  margin-right: var(--space-4);
+}
+.section-lede {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-scale-lg);
+  color: var(--parchment-300);
+  max-width: 56ch;
+  margin-bottom: var(--space-12);
+  line-height: var(--leading-snug);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--type-scale-xl);
+  color: var(--parchment-100);
+  margin: var(--space-12) 0 var(--space-4);
+  letter-spacing: var(--tracking-tight);
+}
+
+p {
+  margin-bottom: var(--space-4);
+  color: var(--parchment-200);
+  max-width: 64ch;
+}
+p.lead { font-size: var(--type-scale-lg); color: var(--parchment-100); }
+
+a { color: var(--ember-300); text-decoration: none; border-bottom: 1px solid var(--border-gold); }
+
+/* ====================== COVER ====================== */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-16) 0 var(--space-12);
+  position: relative;
+}
+.cover-top, .cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--bronze-400);
+}
+.cover-center { text-align: center; padding: var(--space-12) 0; }
+.cover-mark {
+  width: 220px; height: 220px;
+  margin: 0 auto var(--space-12);
+}
+.cover-cn {
+  font-family: var(--font-cn-display);
+  font-size: clamp(5rem, 14vw, 10rem);
+  color: var(--ember-400);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-6);
+  text-shadow: 0 0 60px rgba(201,169,97,0.25);
+}
+.cover-name {
+  font-family: var(--font-display);
+  font-size: var(--type-scale-2xl);
+  font-weight: 400;
+  color: var(--parchment-100);
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-2);
+}
+.cover-name .accent { color: var(--ember-400); font-style: italic; font-weight: 500; }
+.cover-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-scale-lg);
+  color: var(--parchment-300);
+  max-width: 40ch;
+  margin: 0 auto var(--space-8);
+  line-height: var(--leading-snug);
+}
+.cover-sub {
+  font-family: var(--font-mono);
+  font-size: var(--type-scale-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--bronze-400);
+}
+
+/* ====================== TABLE OF CONTENTS ====================== */
+.toc {
+  padding: var(--space-16) 0;
+  border-top: 1px solid var(--border-gold);
+  border-bottom: 1px solid var(--border-gold);
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4) var(--space-12);
+}
+.toc-item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px dashed var(--border-faint);
+  color: var(--parchment-200);
+  border-bottom-color: var(--border-faint);
+}
+.toc-item .num { font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-lg); }
+.toc-item .title { font-family: var(--font-display); font-size: var(--type-scale-lg); }
+.toc-item .pg { font-family: var(--font-mono); font-size: var(--type-scale-xs); color: var(--bronze-400); letter-spacing: var(--tracking-wider); }
+
+/* ====================== MANUSCRIPT PANEL ====================== */
+.parchment {
+  background: linear-gradient(180deg, var(--parchment-100) 0%, var(--parchment-200) 100%);
+  color: var(--ink-900);
+  padding: var(--space-12) var(--space-12);
+  border-radius: var(--radius-sm);
+  position: relative;
+  box-shadow: var(--shadow-candle);
+  margin: var(--space-8) 0;
+}
+.parchment::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(139,115,85,0.18);
+  pointer-events: none;
+  border-radius: 1px;
+}
+.parchment h3 { color: var(--ink-900); }
+.parchment p  { color: var(--bronze-700); max-width: 60ch; }
+.parchment .eyebrow { color: var(--vermillion-500); }
+.parchment .pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-scale-2xl);
+  line-height: var(--leading-snug);
+  color: var(--ink-900);
+  letter-spacing: var(--tracking-tight);
+  padding: var(--space-6) 0;
+}
+.parchment .pull-quote::before { content: "“"; color: var(--vermillion-500); font-size: 2em; line-height: 0.2; vertical-align: -0.4em; margin-right: 0.05em; }
+.parchment .pull-quote::after  { content: "”"; color: var(--vermillion-500); font-size: 2em; line-height: 0.2; vertical-align: -0.4em; margin-left: 0.05em; }
+
+/* ====================== ORNAMENT ====================== */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin: var(--space-12) 0;
+  color: var(--ember-400);
+}
+.ornament .glyph { font-family: var(--font-cn-display); font-size: var(--type-scale-xl); }
+.ornament .line { width: 80px; height: 1px; background: var(--border-gold); }
+.ornament .dot  { width: 5px; height: 5px; background: var(--ember-400); border-radius: 50%; transform: rotate(45deg); }
+
+/* ====================== COLOR PALETTE ====================== */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin: var(--space-8) 0;
+}
+.swatch {
+  position: relative;
+  aspect-ratio: 1 / 1.2;
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid var(--border-faint);
+}
+.swatch .name { font-family: var(--font-display); font-size: var(--type-scale-lg); font-weight: 500; letter-spacing: var(--tracking-tight); }
+.swatch .cn { font-family: var(--font-cn-display); font-size: 1.4rem; opacity: 0.85; }
+.swatch .hex { font-family: var(--font-mono); font-size: var(--type-scale-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+.swatch .role { font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-sm); opacity: 0.7; max-width: 18ch; }
+.swatch.dark  { color: var(--parchment-100); }
+.swatch.light { color: var(--ink-900); }
+
+.ramp { display: flex; height: 48px; border-radius: var(--radius-sm); overflow: hidden; margin: var(--space-2) 0 var(--space-8); border: 1px solid var(--border-faint); }
+.ramp > div { flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: var(--tracking-wider); }
+
+/* ====================== TYPE SPECIMENS ====================== */
+.type-specimen {
+  border-top: 1px solid var(--border-faint);
+  padding: var(--space-8) 0;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+.type-specimen .meta { font-family: var(--font-mono); font-size: var(--type-scale-xs); color: var(--bronze-400); letter-spacing: var(--tracking-wider); text-transform: uppercase; line-height: 1.8; }
+.type-specimen .meta strong { display: block; color: var(--ember-400); font-weight: 500; font-size: 0.7rem; margin-bottom: 0; }
+.type-specimen .sample { color: var(--parchment-100); }
+.type-specimen .sample .big   { display: block; font-size: 4rem; line-height: 1; margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight); }
+.type-specimen .sample .quote { display: block; font-size: var(--type-scale-lg); line-height: var(--leading-snug); color: var(--parchment-200); max-width: 60ch; }
+
+/* ====================== LOGO SHEET ====================== */
+.mark-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+.mark-cell {
+  aspect-ratio: 1 / 1;
+  background: var(--ink-700);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: var(--space-6);
+}
+.mark-cell.parchment-bg {
+  background: var(--parchment-200);
+}
+.mark-cell .caption {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--bronze-400);
+}
+.mark-cell.parchment-bg .caption { color: var(--vermillion-700); }
+.mark-cell svg { width: 64%; height: 64%; }
+
+/* ====================== MOTIF GRID ====================== */
+.motif-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin: var(--space-6) 0;
+}
+.motif-cell {
+  aspect-ratio: 1 / 1;
+  background: var(--ink-700);
+  border: 1px solid var(--border-faint);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  color: var(--ember-400);
+}
+.motif-cell .glyph { font-family: var(--font-cn-display); font-size: 2.4rem; line-height: 1; }
+.motif-cell .ascii { font-family: serif; font-size: 2rem; line-height: 1; }
+.motif-cell .label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: var(--tracking-wider); color: var(--bronze-400); text-transform: uppercase; text-align: center; }
+
+/* ====================== COMPONENT SAMPLES ====================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--type-scale-base);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  cursor: pointer;
+  letter-spacing: var(--tracking-wide);
+  transition: all 200ms ease;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--ember-400);
+  color: var(--ink-900);
+  border-color: var(--ember-400);
+}
+.btn-primary:hover { background: var(--ember-300); }
+.btn-ghost {
+  background: transparent;
+  color: var(--parchment-100);
+  border-color: var(--border-gold);
+}
+.btn-ghost:hover { border-color: var(--ember-400); color: var(--ember-300); }
+.btn-ritual {
+  background: var(--vermillion-500);
+  color: var(--parchment-100);
+  border-color: var(--vermillion-500);
+}
+.btn-ritual:hover { background: var(--vermillion-700); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-gold);
+  color: var(--ember-300);
+}
+.badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.badge.bazi { color: var(--jade-300); border-color: rgba(122,149,136,0.4); }
+.badge.iching { color: var(--ember-300); border-color: var(--border-gold); }
+.badge.guanyin { color: var(--vermillion-300); border-color: rgba(198,111,84,0.45); }
+.badge.tarot { color: var(--parchment-300); border-color: var(--border-bronze); }
+
+.input-mock {
+  background: var(--ink-700);
+  border: 1px solid var(--border-bronze);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--type-scale-base);
+  color: var(--parchment-100);
+  width: 100%;
+  max-width: 480px;
+}
+.input-mock::placeholder { color: var(--bronze-400); font-style: italic; }
+
+.divider-gold {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin: var(--space-8) 0;
+}
+.divider-gold .l { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border-gold) 30%, var(--border-gold) 70%, transparent); }
+.divider-gold .m { color: var(--ember-400); font-family: var(--font-cn-display); font-size: var(--type-scale-lg); }
+
+/* ====================== APPLICATION MOCKUPS ====================== */
+.app-frame {
+  background: var(--ink-700);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  margin: var(--space-4) 0;
+  position: relative;
+}
+.app-frame::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--border-faint);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.cosmic-snapshot {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-6);
+}
+.cs-hero {
+  background: linear-gradient(160deg, var(--ink-800) 0%, var(--jade-900) 100%);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
+  padding: var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+.cs-hero .moon {
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--parchment-200), var(--parchment-300) 40%, var(--bronze-500) 80%, transparent 100%);
+  opacity: 0.16;
+  filter: blur(1px);
+}
+.cs-hero .date { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: var(--tracking-wider); color: var(--bronze-400); text-transform: uppercase; }
+.cs-hero .pillar { font-family: var(--font-cn-display); font-size: 4.5rem; color: var(--ember-400); line-height: 1; margin: var(--space-4) 0; letter-spacing: 0.04em; }
+.cs-hero .pillar-en { font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-lg); color: var(--parchment-200); }
+.cs-hero .pillar-meta { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: var(--tracking-wider); color: var(--bronze-400); text-transform: uppercase; margin-top: var(--space-2); }
+.cs-hero .reading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-scale-lg);
+  color: var(--parchment-100);
+  line-height: var(--leading-snug);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-gold);
+  max-width: 36ch;
+}
+
+.cs-side { display: flex; flex-direction: column; gap: var(--space-3); }
+.cs-card {
+  background: var(--ink-800);
+  border: 1px solid var(--border-faint);
+  border-left: 2px solid var(--ember-400);
+  padding: var(--space-4) var(--space-5);
+}
+.cs-card.ritual { border-left-color: var(--vermillion-500); }
+.cs-card.life   { border-left-color: var(--jade-500); }
+.cs-card .label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--bronze-400); }
+.cs-card .value { font-family: var(--font-display); font-size: var(--type-scale-lg); color: var(--parchment-100); margin-top: 4px; line-height: 1.3; }
+.cs-card .value .cn { font-family: var(--font-cn-display); color: var(--ember-400); margin-right: 6px; }
+.cs-card .meta  { font-family: var(--font-body); font-style: italic; font-size: var(--type-scale-sm); color: var(--parchment-300); margin-top: 4px; }
+
+/* Entry composer mock */
+.composer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-4);
+}
+.composer-col {
+  background: var(--ink-800);
+  border: 1px solid var(--border-faint);
+  padding: var(--space-5);
+}
+.composer-col h4 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--type-scale-base);
+  color: var(--ember-300);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.composer-col h4 .cn { font-family: var(--font-cn-display); font-style: normal; }
+.composer-col p { font-size: var(--type-scale-sm); color: var(--parchment-300); }
+.tarot-card {
+  width: 100%;
+  aspect-ratio: 2 / 3.2;
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(140deg, var(--ink-900), var(--vermillion-900));
+  position: relative;
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.tarot-card .num { font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-base); color: var(--ember-400); }
+.tarot-card .name { font-family: var(--font-display); font-size: var(--type-scale-base); color: var(--parchment-100); text-align: center; letter-spacing: var(--tracking-wide); }
+.tarot-card .glyph-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-cn-display);
+  font-size: 3rem;
+  color: rgba(201,169,97,0.55);
+}
+
+.hex-stack { display: flex; flex-direction: column; gap: 5px; padding: var(--space-3) 0; }
+.hex-line { height: 8px; background: var(--ember-400); border-radius: 1px; }
+.hex-line.broken { background: linear-gradient(to right, var(--ember-400) 0 42%, transparent 42% 58%, var(--ember-400) 58% 100%); }
+
+.verse-card {
+  background: linear-gradient(180deg, var(--parchment-100), var(--parchment-200));
+  color: var(--ink-900);
+  padding: var(--space-4);
+  border: 1px solid var(--bronze-400);
+  margin: var(--space-3) 0;
+}
+.verse-card .num { font-family: var(--font-cn-display); font-size: var(--type-scale-2xl); color: var(--vermillion-500); line-height: 1; }
+.verse-card .verse {
+  font-family: var(--font-cn-body);
+  font-size: var(--type-scale-base);
+  color: var(--ink-900);
+  line-height: 1.7;
+  margin-top: var(--space-2);
+}
+.verse-card .verse-en { font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-sm); color: var(--bronze-700); margin-top: 6px; }
+
+/* Synthesis panel */
+.synthesis {
+  margin-top: var(--space-6);
+  padding: var(--space-6);
+  border: 1px dashed var(--border-gold);
+  background: rgba(201,169,97,0.04);
+  position: relative;
+}
+.synthesis .label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--ember-400);
+  margin-bottom: var(--space-3);
+  display: block;
+}
+.synthesis .body {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-scale-lg);
+  color: var(--parchment-100);
+  line-height: var(--leading-snug);
+}
+.synthesis .body strong { color: var(--ember-300); font-style: normal; font-weight: 500; }
+
+/* Constellation pattern panel */
+.constellation {
+  position: relative;
+  height: 320px;
+  background: radial-gradient(ellipse at center, var(--ink-800), var(--ink-900));
+  border: 1px solid var(--border-faint);
+  margin: var(--space-4) 0;
+  overflow: hidden;
+}
+
+/* ====================== VOICE CARDS ====================== */
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+.voice-card {
+  background: var(--ink-700);
+  border: 1px solid var(--border-faint);
+  padding: var(--space-6);
+}
+.voice-card .lang { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--ember-400); }
+.voice-card .text { font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-lg); color: var(--parchment-100); margin: var(--space-3) 0; line-height: var(--leading-snug); }
+.voice-card .text.cn { font-family: var(--font-cn-body); font-style: normal; }
+.voice-card .note { font-family: var(--font-body); font-size: var(--type-scale-sm); color: var(--bronze-400); font-style: italic; }
+
+/* ====================== DO / DONT ====================== */
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+.do-dont .col {
+  padding: var(--space-6);
+  border: 1px solid;
+}
+.do-dont .col.do   { border-color: rgba(122,149,136,0.4); background: rgba(74,107,92,0.06); }
+.do-dont .col.dont { border-color: rgba(198,111,84,0.35); background: rgba(161,62,42,0.05); }
+.do-dont .col h4 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+.do-dont .col.do h4   { color: var(--jade-300); }
+.do-dont .col.dont h4 { color: var(--vermillion-300); }
+.do-dont ul { list-style: none; padding-left: 0; }
+.do-dont li {
+  font-family: var(--font-body);
+  font-size: var(--type-scale-base);
+  color: var(--parchment-200);
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-5);
+  position: relative;
+  line-height: var(--leading-snug);
+}
+.do-dont li::before {
+  position: absolute;
+  left: 0; top: 2px;
+  font-family: var(--font-cn-display);
+  font-size: var(--type-scale-base);
+}
+.do-dont .do li::before   { content: "✓"; color: var(--jade-300); }
+.do-dont .dont li::before { content: "✗"; color: var(--vermillion-300); }
+
+/* ====================== ORIGIN CHIPS ====================== */
+.origin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin: var(--space-6) 0;
+}
+.origin-card {
+  background: var(--ink-700);
+  border: 1px solid var(--border-faint);
+  padding: var(--space-5);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.origin-card .glyph {
+  width: 64px; height: 64px;
+  border: 1px solid var(--border-gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-cn-display);
+  font-size: 2rem;
+  color: var(--ember-400);
+}
+.origin-card h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--type-scale-lg);
+  color: var(--parchment-100);
+  margin-bottom: 4px;
+  letter-spacing: var(--tracking-tight);
+}
+.origin-card .src { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: var(--tracking-wider); color: var(--bronze-400); text-transform: uppercase; margin-bottom: var(--space-2); }
+.origin-card p { font-size: var(--type-scale-sm); color: var(--parchment-300); margin-bottom: 0; }
+
+/* ====================== CLOSING ====================== */
+.closing {
+  text-align: center;
+  padding: var(--space-32) 0;
+}
+.closing .seal {
+  width: 120px; height: 120px;
+  margin: 0 auto var(--space-8);
+  border: 1px solid var(--ember-400);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-cn-display);
+  font-size: 3rem;
+  color: var(--vermillion-500);
+  background: rgba(161,62,42,0.06);
+}
+.closing .mantra {
+  font-family: var(--font-sanskrit);
+  font-size: var(--type-scale-xl);
+  color: var(--ember-400);
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-4);
+}
+.closing .dedication {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-scale-lg);
+  color: var(--parchment-300);
+  max-width: 36ch;
+  margin: 0 auto var(--space-12);
+  line-height: var(--leading-snug);
+}
+.closing .colophon {
+  font-family: var(--font-mono);
+  font-size: var(--type-scale-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--bronze-400);
+  line-height: 2;
+}
+
+/* ====================== PRINT ====================== */
+@media print {
+  body { background: white; color: black; }
+  .folio-rule { display: none; }
+  section { page-break-inside: avoid; }
+}
+
+@media (max-width: 760px) {
+  .book { padding: 0 var(--space-4); }
+  .swatch-grid, .mark-grid, .motif-grid, .composer, .toc-grid, .voice-grid, .do-dont, .origin-grid { grid-template-columns: 1fr; }
+  .cosmic-snapshot { grid-template-columns: 1fr; }
+  .type-specimen { grid-template-columns: 1fr; }
+  .type-specimen .sample .big { font-size: 3rem; }
+  h2.section-title { font-size: var(--type-scale-2xl); }
+}
+
+/* ============================================================
+   LIGHT THEME · "Temple Manuscript in Daylight"
+   Inverts the canonical dark — paper, ink, aged gold leaf.
+   ============================================================ */
+:root {
+  --bg-page:        #efe3c8;            /* warm parchment */
+  --bg-elevated:    #fbf6ea;            /* lifted paper */
+  --bg-parchment:   #ffffff;            /* whitest page */
+  --bg-overlay:     rgba(247,238,217,0.85);
+
+  --fg-primary:     #1a1209;            /* deep ink */
+  --fg-secondary:   #3d2e1c;            /* aged ink */
+  --fg-muted:       #6b5a42;            /* faded ink */
+
+  --accent-wisdom:  #7a5c1c;            /* aged gold leaf (darker for paper) */
+  --accent-ritual:  #8a2f1d;            /* deepened vermillion */
+  --accent-life:    #2f4a3d;            /* dark jade */
+  --accent-quiet:   #6b5a42;
+
+  --border-gold:    rgba(122, 92, 28, 0.4);
+  --border-bronze:  rgba(107, 90, 66, 0.35);
+  --border-faint:   rgba(26, 18, 9, 0.12);
+}
+
+body {
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  background-image:
+    radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(122,92,28,0.08), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 100% 80%, rgba(138,47,29,0.06), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.78' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.32  0 0 0 0 0.15  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ----- typography colors flip ----- */
+p { color: var(--fg-secondary); }
+p.lead, h2.section-title, h3 { color: var(--fg-primary); }
+h2.section-title .cn,
+.chapter-head .numeral,
+.eyebrow,
+.toc-item .num,
+.ornament,
+.ornament .glyph,
+.divider-gold .m,
+.origin-card .glyph { color: var(--accent-wisdom); }
+.section-lede { color: var(--fg-secondary); }
+.cover-cn { color: var(--accent-wisdom); text-shadow: 0 0 40px rgba(122,92,28,0.15); }
+.cover-name { color: var(--fg-primary); }
+.cover-name .accent { color: var(--accent-wisdom); }
+.cover-tagline { color: var(--fg-secondary); }
+.cover-sub, .cover-top, .cover-bottom, .mono { color: var(--fg-muted); }
+.chapter-head .label { color: var(--fg-muted); }
+.toc-item { color: var(--fg-secondary); }
+.toc-item .title { color: var(--fg-primary); }
+.toc-item .pg { color: var(--fg-muted); }
+
+a { color: var(--accent-ritual); border-bottom-color: var(--border-gold); }
+
+/* ----- ornament dots & lines ----- */
+.ornament .dot { background: var(--accent-wisdom); }
+.ornament .line, .chapter-head .rule, .divider-gold .l {
+  background: linear-gradient(to right, transparent, var(--border-gold), transparent);
+}
+.toc { border-color: var(--border-gold); }
+.toc-item { border-bottom-color: var(--border-faint); }
+
+/* ----- panels & cards (flip from ink to paper) ----- */
+.app-frame {
+  background: var(--bg-elevated);
+  border-color: var(--border-gold);
+}
+.app-frame::before { border-color: var(--border-faint); }
+
+.composer-col,
+.voice-card,
+.origin-card,
+.cs-card,
+.mark-cell {
+  background: var(--bg-elevated);
+  border-color: var(--border-bronze);
+}
+.mark-cell { box-shadow: inset 0 0 0 1px rgba(122,92,28,0.08); }
+.mark-cell.parchment-bg { background: #fbf6ea; }
+.cs-card { border-left-color: var(--accent-wisdom); }
+.cs-card.ritual { border-left-color: var(--accent-ritual); }
+.cs-card.life   { border-left-color: var(--accent-life); }
+.cs-card .label { color: var(--fg-muted); }
+.cs-card .value { color: var(--fg-primary); }
+.cs-card .value .cn { color: var(--accent-wisdom); }
+.cs-card .meta  { color: var(--fg-secondary); }
+
+.voice-card .lang { color: var(--accent-wisdom); }
+.voice-card .text { color: var(--fg-primary); }
+.voice-card .note { color: var(--fg-muted); }
+
+.origin-card .glyph { border-color: var(--border-gold); background: rgba(122,92,28,0.05); }
+.origin-card h4 { color: var(--fg-primary); }
+.origin-card .src { color: var(--fg-muted); }
+.origin-card p { color: var(--fg-secondary); }
+
+.composer-col h4 { color: var(--accent-ritual); }
+.composer-col h4 .cn { color: var(--accent-wisdom); }
+.composer-col p { color: var(--fg-secondary); }
+
+/* ----- motif cells ----- */
+.motif-cell {
+  background: var(--bg-elevated);
+  border-color: var(--border-bronze);
+  color: var(--accent-wisdom);
+}
+.motif-cell .label { color: var(--fg-muted); }
+
+/* ----- parchment block — now an even-paler page-within-a-page ----- */
+.parchment {
+  background: linear-gradient(180deg, #ffffff 0%, #fbf6ea 100%);
+  color: var(--fg-primary);
+  box-shadow: 0 1px 0 rgba(122,92,28,0.12), 0 20px 40px -16px rgba(26,18,9,0.12);
+}
+.parchment::before { border-color: rgba(107, 90, 66, 0.22); }
+.parchment p { color: var(--fg-secondary); }
+.parchment .eyebrow { color: var(--accent-ritual); }
+.parchment .pull-quote { color: var(--fg-primary); }
+.parchment .pull-quote::before, .parchment .pull-quote::after { color: var(--accent-ritual); }
+
+/* ----- type specimens ----- */
+.type-specimen { border-top-color: var(--border-faint); }
+.type-specimen .meta { color: var(--fg-muted); }
+.type-specimen .meta strong { color: var(--accent-wisdom); }
+.type-specimen .sample { color: var(--fg-primary); }
+.type-specimen .sample .quote { color: var(--fg-secondary); }
+
+/* ----- buttons ----- */
+.btn-primary {
+  background: var(--accent-wisdom);
+  color: #fbf6ea;
+  border-color: var(--accent-wisdom);
+}
+.btn-primary:hover { background: #5f4719; }
+.btn-ghost {
+  color: var(--fg-primary);
+  border-color: var(--border-gold);
+}
+.btn-ghost:hover { border-color: var(--accent-wisdom); color: var(--accent-wisdom); }
+.btn-ritual {
+  background: var(--accent-ritual);
+  color: #fbf6ea;
+  border-color: var(--accent-ritual);
+}
+
+/* ----- badges ----- */
+.badge { color: var(--accent-wisdom); border-color: var(--border-gold); background: rgba(255,255,255,0.4); }
+.badge.bazi    { color: #2f4a3d; border-color: rgba(47,74,61,0.4); }
+.badge.iching  { color: var(--accent-wisdom); }
+.badge.guanyin { color: var(--accent-ritual); border-color: rgba(138,47,29,0.4); }
+.badge.tarot   { color: var(--fg-secondary); border-color: var(--border-bronze); }
+
+/* ----- inputs ----- */
+.input-mock {
+  background: #ffffff;
+  border-color: var(--border-bronze);
+  color: var(--fg-primary);
+}
+.input-mock::placeholder { color: var(--fg-muted); }
+
+/* ----- cosmic snapshot hero — daylight version ----- */
+.cs-hero {
+  background: linear-gradient(160deg, #fbf6ea 0%, #e4d9b8 100%);
+  border-color: var(--border-gold);
+}
+.cs-hero .moon {
+  background: radial-gradient(circle at 35% 35%, #fff, #efe3c8 40%, #a8916b 80%, transparent 100%);
+  opacity: 0.35;
+}
+.cs-hero .date, .cs-hero .pillar-meta { color: var(--fg-muted); }
+.cs-hero .pillar { color: var(--accent-wisdom); }
+.cs-hero .pillar-en { color: var(--fg-secondary); }
+.cs-hero .reading { color: var(--fg-primary); border-top-color: var(--border-gold); }
+
+/* ----- tarot card — manuscript card on parchment ----- */
+.tarot-card {
+  background: linear-gradient(140deg, #fbf6ea, #f1d8c8);
+  border-color: var(--border-gold);
+}
+.tarot-card .num { color: var(--accent-wisdom); }
+.tarot-card .name { color: var(--fg-primary); }
+.tarot-card .glyph-center { color: rgba(122,92,28,0.4); }
+
+/* ----- hex lines ----- */
+.hex-line { background: var(--accent-wisdom); }
+.hex-line.broken { background: linear-gradient(to right, var(--accent-wisdom) 0 42%, transparent 42% 58%, var(--accent-wisdom) 58% 100%); }
+
+/* ----- verse card — already light, just tighten ----- */
+.verse-card { border-color: var(--border-bronze); }
+.verse-card .num { color: var(--accent-ritual); }
+.verse-card .verse-en { color: var(--fg-muted); }
+
+/* ----- synthesis panel ----- */
+.synthesis { background: rgba(122,92,28,0.05); border-color: var(--border-gold); }
+.synthesis .label { color: var(--accent-wisdom); }
+.synthesis .body { color: var(--fg-primary); }
+.synthesis .body strong { color: var(--accent-ritual); }
+
+/* ----- constellation — invert to chart on aged paper ----- */
+.constellation {
+  background: radial-gradient(ellipse at center, #fbf6ea, #e4d9b8);
+  border-color: var(--border-bronze);
+}
+.constellation svg text { fill: #6b5a42 !important; }
+.constellation svg circle[fill="#c9a961"] { fill: #7a5c1c !important; }
+.constellation svg circle[fill="#7a9588"] { fill: #2f4a3d !important; }
+.constellation svg circle[fill="#8b7355"] { fill: #6b5a42 !important; }
+.constellation svg line { stroke: #7a5c1c !important; }
+.constellation svg g[stroke="#7a9588"] line { stroke: #2f4a3d !important; }
+
+/* ----- do/dont ----- */
+.do-dont .col.do   { border-color: rgba(47,74,61,0.4); background: rgba(47,74,61,0.05); }
+.do-dont .col.dont { border-color: rgba(138,47,29,0.35); background: rgba(138,47,29,0.05); }
+.do-dont .col.do h4   { color: #2f4a3d; }
+.do-dont .col.dont h4 { color: var(--accent-ritual); }
+.do-dont li { color: var(--fg-secondary); }
+.do-dont .do li::before   { color: #2f4a3d; }
+.do-dont .dont li::before { color: var(--accent-ritual); }
+
+/* ----- type scale table & lists ----- */
+.italic-display, .sans-caps { color: inherit; }
+
+/* ----- closing seal ----- */
+.closing .seal {
+  border-color: var(--accent-wisdom);
+  color: var(--accent-ritual);
+  background: rgba(138,47,29,0.05);
+}
+.closing .mantra { color: var(--accent-wisdom); }
+.closing .dedication { color: var(--fg-secondary); }
+.closing .colophon { color: var(--fg-muted); }
+
+/* ----- folio rules — barely-there bronze on paper ----- */
+.folio-rule.left, .folio-rule.right {
+  background: linear-gradient(to bottom, transparent, rgba(122,92,28,0.2) 12%, rgba(122,92,28,0.2) 88%, transparent);
+}
+
+/* ----- voice list ol numerals ----- */
+ol li[style*="counter-increment: rules"] span:first-of-type { color: var(--accent-wisdom) !important; }
+ol li[style*="counter-increment: rules"] strong { color: var(--fg-primary) !important; }
+ol li[style*="counter-increment: rules"] span[style*="parchment-300"] { color: var(--fg-secondary) !important; }
+
+/* ----- "Microcopy" table inline styles need flipping ----- */
+[style*="border-radius: var(--radius-sm)"][style*="border: 1px solid var(--border-faint)"] > div {
+  background: var(--bg-elevated);
+}
+
+/* Inline `color: var(--parchment-100)` etc inside elements need cascade help;
+   add catchall for prominent inline color tokens that should now be ink. */
+[style*="color: var(--parchment-100)"] { color: var(--fg-primary) !important; }
+[style*="color: var(--parchment-200)"] { color: var(--fg-secondary) !important; }
+[style*="color: var(--parchment-300)"] { color: var(--fg-secondary) !important; }
+[style*="color: var(--bronze-400)"]    { color: var(--fg-muted) !important; }
+[style*="color: var(--bronze-200)"]    { color: var(--fg-muted) !important; }
+[style*="color: var(--bronze-700)"]    { color: var(--fg-secondary) !important; }
+[style*="color: var(--ember-400)"]     { color: var(--accent-wisdom) !important; }
+[style*="color: var(--ember-300)"]     { color: var(--accent-wisdom) !important; }
+[style*="color: var(--vermillion-500)"]{ color: var(--accent-ritual) !important; }
+[style*="color: var(--vermillion-700)"]{ color: var(--accent-ritual) !important; }
+[style*="color: var(--ink-900)"]       { color: var(--fg-primary) !important; }
+[style*="background: linear-gradient(180deg, var(--ink-700)"] {
+  background: linear-gradient(180deg, #fbf6ea 0%, #efe3c8 100%) !important;
+}
+
+</style>
+</head>
+<body>
+<div class="folio-rule left"></div>
+<div class="folio-rule right"></div>
+
+<div class="book">
+
+  <!-- ============================================================
+       COVER
+       ============================================================ -->
+  <section class="cover" id="cover" data-screen-label="00 Cover">
+    <div class="cover-top">
+      <span>Semar / 天人合一 Codex</span>
+      <span>Brand &amp; Design Guidelines · v1.0</span>
+    </div>
+
+    <div class="cover-center">
+      <svg class="cover-mark" viewBox="0 0 220 220" fill="none">
+        <!-- Bagua wheel with central character -->
+        <circle cx="110" cy="110" r="100" stroke="#c9a961" stroke-width="0.6" opacity="0.4"/>
+        <circle cx="110" cy="110" r="84" stroke="#c9a961" stroke-width="0.6" opacity="0.6"/>
+        <circle cx="110" cy="110" r="62" stroke="#c9a961" stroke-width="0.8"/>
+        <!-- 8 trigrams at compass positions -->
+        <g font-family="serif" font-size="14" fill="#c9a961" text-anchor="middle">
+          <text x="110" y="26">☰</text>
+          <text x="174" y="48">☴</text>
+          <text x="198" y="115">☵</text>
+          <text x="174" y="180">☶</text>
+          <text x="110" y="202">☷</text>
+          <text x="46"  y="180">☳</text>
+          <text x="22"  y="115">☲</text>
+          <text x="46"  y="48">☱</text>
+        </g>
+        <!-- inner ring lines -->
+        <g stroke="#c9a961" stroke-width="0.4" opacity="0.5">
+          <line x1="110" y1="48" x2="110" y2="172"/>
+          <line x1="48" y1="110" x2="172" y2="110"/>
+          <line x1="66" y1="66"  x2="154" y2="154"/>
+          <line x1="154" y1="66" x2="66"  y2="154"/>
+        </g>
+        <!-- central character 觀 -->
+        <text x="110" y="125" font-family="'Ma Shan Zheng', serif" font-size="48" fill="#c9a961" text-anchor="middle">觀</text>
+        <!-- tiny vermillion seal dot -->
+        <circle cx="158" cy="158" r="6" fill="#a13e2a"/>
+      </svg>
+
+      <div class="cover-cn">天人合一</div>
+      <div class="cover-name">Semar · <span class="accent">Codex</span></div>
+      <div class="cover-tagline">The sage's notebook for the practitioner who reads in many tongues.</div>
+      <div class="cover-sub">Brand &amp; Design Guidelines · v1.0 · 17 Mei 2026</div>
+    </div>
+
+    <div class="cover-bottom">
+      <span>蒋承禄 · Lucky Surya Haryadi</span>
+      <span>Bandung → Shanghai → 蓬萊</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TABLE OF CONTENTS
+       ============================================================ -->
+  <section class="toc" id="toc" data-screen-label="01 Contents">
+    <div class="ornament"><span class="line"></span><span class="dot"></span><span class="glyph">目錄</span><span class="dot"></span><span class="line"></span></div>
+    <div class="toc-grid">
+      <a class="toc-item" href="#soul"><span class="num">一</span><span class="title">Soul of the Codex</span><span class="pg">P. 01</span></a>
+      <a class="toc-item" href="#origin"><span class="num">二</span><span class="title">Origin · Chart as DNA</span><span class="pg">P. 02</span></a>
+      <a class="toc-item" href="#names"><span class="num">三</span><span class="title">Name &amp; Identity</span><span class="pg">P. 03</span></a>
+      <a class="toc-item" href="#mark"><span class="num">四</span><span class="title">The Mark</span><span class="pg">P. 04</span></a>
+      <a class="toc-item" href="#palette"><span class="num">五</span><span class="title">Palette · Temple Pigment</span><span class="pg">P. 05</span></a>
+      <a class="toc-item" href="#type"><span class="num">六</span><span class="title">Type · Four Scripts</span><span class="pg">P. 06</span></a>
+      <a class="toc-item" href="#motif"><span class="num">七</span><span class="title">Motif Library</span><span class="pg">P. 07</span></a>
+      <a class="toc-item" href="#voice"><span class="num">八</span><span class="title">Voice &amp; Tone</span><span class="pg">P. 08</span></a>
+      <a class="toc-item" href="#components"><span class="num">九</span><span class="title">Components</span><span class="pg">P. 09</span></a>
+      <a class="toc-item" href="#applied"><span class="num">十</span><span class="title">Applied · Codex Screens</span><span class="pg">P. 10</span></a>
+      <a class="toc-item" href="#anti"><span class="num">十一</span><span class="title">Anti-Patterns</span><span class="pg">P. 11</span></a>
+      <a class="toc-item" href="#closing"><span class="num">十二</span><span class="title">Closing Prayer</span><span class="pg">P. 12</span></a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ONE · SOUL
+       ============================================================ -->
+  <section id="soul" data-screen-label="一 Soul">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div>
+        <div class="numeral">一</div>
+        <div class="label">Chapter One · Soul</div>
+      </div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">魂</span>Soul of the Codex</h2>
+    <p class="section-lede">Before any pixel, this is the gravity the work bends around.</p>
+
+    <p class="lead">Codex is not an app. Codex is a vessel for a sage path that has been forming since a boy in Bandung first read 三國演義 and recognized himself in the strategist. It is the place where eight wisdom traditions meet, and the lens through which a Profile 3/5 Universalizer hands his life experiments to the people who arrive asking for a map.</p>
+
+    <div class="parchment">
+      <span class="eyebrow">Manifesto · Lima Kalimat</span>
+      <h3 style="margin-top: var(--space-2);">Why this exists.</h3>
+      <p><strong>Pertama —</strong> wisdom traditions tidak terpisah. Tarot, BaZi, I&nbsp;Ching, 觀音靈籤, Vedic, Western astro, Human Design, Jawa-Bali wewaran — semua adalah lensa berbeda terhadap realitas yang sama. Sage di abad ke-13 tidak memilih satu — dia sintesiskan.</p>
+      <p><strong>Kedua —</strong> Codex bukan menjawab pertanyaan. Codex memberi mata untuk membaca sendiri. Setiap user adalah Sudhana yang datang ke gurunya — bukan untuk dijawab, tapi untuk diberi peta.</p>
+      <p><strong>Ketiga —</strong> Codex personal. Natal chart user terjahit ke setiap reading. Tidak ada horoskop generik. Tidak ada nasihat untuk "semua orang Taurus".</p>
+      <p><strong>Keempat —</strong> Codex sabar. Pola muncul setelah berbulan-bulan, bukan dalam satu sesi. Recognition is the gift.</p>
+      <p><strong>Kelima —</strong> Codex hormat. Sakralitas dijaga. Ini bukan game, bukan content, bukan algoritma engagement. Ini adalah meja tulis biksu di kuil pegunungan, malam hari, lentera menyala.</p>
+      <div class="pull-quote">Codex tidak memberi jawaban. Codex memberi mata.</div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">觀</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       TWO · ORIGIN
+       ============================================================ -->
+  <section id="origin" data-screen-label="二 Origin">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">二</div><div class="label">Chapter Two · Origin</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">源</span>Chart as DNA</h2>
+    <p class="section-lede">Every brand decision in this book traces back to one chart. The product is the practitioner; the practitioner is the chart.</p>
+
+    <p>Lucky Surya Haryadi (蒋承禄) — born <span class="mono">1985-05-05 · 03:15 WIB · Bandung</span> — is a 甲辰日 Yang Wood Dragon with 食神制杀, 華蓋 ×3, and 十靈日 — a structurally spiritual chart with a public-facing voice. Profile 3/5 Heretic / Universalizer. 觀音 practitioner. Currently inside the periode emas of 大運 丙子 (2025–2034). These are not biography. These are <em>brand inputs.</em></p>
+
+    <div class="origin-grid">
+      <div class="origin-card">
+        <div class="glyph">甲</div>
+        <div>
+          <h4>Yang Wood, upright</h4>
+          <div class="src">Day Master · 甲辰</div>
+          <p>Pohon besar, tegak, prinsipil. The brand stands straight — no flexing trendiness, no design relativism. Visual posture is vertical, gridded, calm.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">華</div>
+        <div>
+          <h4>Triple canopy of spirit</h4>
+          <div class="src">華蓋 ×3 · 丑辰辰</div>
+          <p>The chart's spiritual amplitude is unusually loud. The brand honors this with sacred restraint: gold leaf, manuscript pages, no decoration without meaning.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">食</div>
+        <div>
+          <h4>Creative compassion controls violence</h4>
+          <div class="src">食神制殺 · 丙 at hour pillar</div>
+          <p>The remedy in this chart is 食神 — gentle creative output — taming 七殺. The brand never shouts. It offers; the offer is enough.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">觀</div>
+        <div>
+          <h4>Avalokiteśvara as patron</h4>
+          <div class="src">Practiced devotion · post-Po Nagar</div>
+          <p>觀音 is the silent witness of this work. The brand keeps a Bodhisattva spirit: universal compassion, infinite patience, no judgment of where a practitioner is on the path.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">3/5</div>
+        <div>
+          <h4>Trial → Universal</h4>
+          <div class="src">Human Design Profile</div>
+          <p>The Line 3 experiments in private; the Line 5 ships the methodology to the many. Codex is the literal vessel of this profile — Lucky's experiments become 53 students' map.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">丙子</div>
+        <div>
+          <h4>The receive decade</h4>
+          <div class="src">大運 · 2025–2034</div>
+          <p>食神 + 印 water — the chart now favors automation, scalable systems, gentle output. Codex is timed to this current. It does not hustle. It receives signals and delivers maps.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">爪</div>
+        <div>
+          <h4>Three soils, four cardinal points</h4>
+          <div class="src">Bandung · Shanghai · diaspora</div>
+          <p>Born Indonesian, schooled Chinese, married in Shanghai — Codex speaks in 中文 + Bahasa + English + Sanskrit as a default, not a translation layer.</p>
+        </div>
+      </div>
+      <div class="origin-card">
+        <div class="glyph">Semar</div>
+        <div>
+          <h4>The humble wise servant</h4>
+          <div class="src">Wayang archetype · Punakawan</div>
+          <p>Semar is the god Sang Hyang Ismaya in the humble form of a servant — divinity disguised as ordinariness. The product is named for him because that is the brand's character: profound, patient, never grand.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">源</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       THREE · NAMES
+       ============================================================ -->
+  <section id="names" data-screen-label="三 Names">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">三</div><div class="label">Chapter Three · Name &amp; Identity</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">名</span>The Name System</h2>
+    <p class="section-lede">Three names, one soul. Each carries a different weight; each shows up in a different room.</p>
+
+    <div class="parchment">
+      <span class="eyebrow">Internal codename · for the team</span>
+      <h3>Semar</h3>
+      <p style="font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-lg); color: var(--ink-900); max-width: 56ch;">Punakawan dari pewayangan Jawa. Semar adalah penjelmaan Sang Hyang Ismaya dalam wujud abdi rendah — keilahian yang menyamar jadi kesederhanaan. Pakai nama ini di dalam tim, di repo, di GitHub, di doa.</p>
+      <p style="margin-top: var(--space-3);"><span class="sans-caps" style="color: var(--vermillion-500);">When to use:</span> internal code, repo names, file metadata, working titles, voice memos to self.</p>
+    </div>
+
+    <div class="parchment" style="background: linear-gradient(180deg, var(--ink-700) 0%, var(--ink-800) 100%); color: var(--parchment-100);">
+      <span class="eyebrow" style="color: var(--ember-400);">Product name · for the world</span>
+      <h3 style="color: var(--parchment-100);">天人合一 · Codex</h3>
+      <p style="color: var(--parchment-200);">Tiānrén Héyī — Heaven and Human as One. The classical Confucian-Daoist principle that the practitioner and the cosmos are not separate. <em>Codex</em> (Latin: bound book) anchors the metaphor: this is a notebook the user keeps for a lifetime.</p>
+      <p style="margin-top: var(--space-3); color: var(--parchment-200);"><span class="sans-caps" style="color: var(--ember-400);">When to use:</span> the app's name in app stores, splash screens, written communications to users, public-facing pages.</p>
+      <p style="font-family: var(--font-mono); font-size: var(--type-scale-sm); color: var(--bronze-400); margin-top: var(--space-3);">Written as: <strong style="color: var(--parchment-100);">天人合一 Codex</strong> (with em-space or middle dot) — never just "Codex" in marketing, never just "天人合一" without the Latin pair.</p>
+    </div>
+
+    <div class="parchment">
+      <span class="eyebrow">Tagline · for the heart</span>
+      <h3 style="font-style: italic;">Codex tidak memberi jawaban. Codex memberi mata.</h3>
+      <p style="color: var(--bronze-700);"><span class="sans-caps" style="color: var(--vermillion-500);">EN —</span> <em>"Codex does not give answers. Codex gives sight."</em></p>
+      <p style="color: var(--bronze-700);"><span class="sans-caps" style="color: var(--vermillion-500);">中文 —</span> <span class="cn-body">寶典不予答案，寶典予眼。</span></p>
+      <p style="color: var(--bronze-700);"><span class="sans-caps" style="color: var(--vermillion-500);">梵 / Sanskrit —</span> <em>Cakṣur dadāti, na uttaram.</em></p>
+      <p style="margin-top: var(--space-3); color: var(--bronze-700);">Use the Bahasa form first when speaking to Indonesian audiences; the English form for diaspora and global; Chinese for the temple and the elders; Sanskrit only inside ritual screens (opening prayer, closing of a long reading).</p>
+    </div>
+
+    <h3>Sub-taglines (situational)</h3>
+    <ul style="list-style: none; padding: 0;">
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint);">
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"One codex. Eight systems. Your path."</span>
+        <span class="sans-caps" style="color: var(--bronze-400); display: block; margin-top: 4px;">For onboarding · explains the multi-system promise</span>
+      </li>
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint);">
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"The sage's notebook for the modern practitioner."</span>
+        <span class="sans-caps" style="color: var(--bronze-400); display: block; margin-top: 4px;">For press, app store description, founder bio</span>
+      </li>
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint);">
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"Beyond a single lens."</span>
+        <span class="sans-caps" style="color: var(--bronze-400); display: block; margin-top: 4px;">Competitive contrast · against Labyrinthos, Co-Star, Stellium</span>
+      </li>
+    </ul>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">名</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       FOUR · MARK
+       ============================================================ -->
+  <section id="mark" data-screen-label="四 Mark">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">四</div><div class="label">Chapter Four · The Mark</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">印</span>The Mark</h2>
+    <p class="section-lede">Five logo directions to explore. All share one DNA: <em>geometric, hand-drawn, ancient yet legible.</em> No mystical purple-galaxy nonsense.</p>
+
+    <div class="mark-grid">
+
+      <!-- Mark 1: Bagua + 觀 -->
+      <div class="mark-cell">
+        <svg viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="92" stroke="#c9a961" stroke-width="0.8" opacity="0.5"/>
+          <circle cx="100" cy="100" r="58" stroke="#c9a961" stroke-width="1.2"/>
+          <g font-family="serif" font-size="14" fill="#c9a961" text-anchor="middle">
+            <text x="100" y="22">☰</text>
+            <text x="160" y="42">☴</text>
+            <text x="182" y="105">☵</text>
+            <text x="160" y="166">☶</text>
+            <text x="100" y="186">☷</text>
+            <text x="40"  y="166">☳</text>
+            <text x="18"  y="105">☲</text>
+            <text x="40"  y="42">☱</text>
+          </g>
+          <text x="100" y="118" font-family="'Ma Shan Zheng', serif" font-size="48" fill="#c9a961" text-anchor="middle">觀</text>
+          <circle cx="142" cy="142" r="5" fill="#a13e2a"/>
+        </svg>
+        <div class="caption">Mark A · Bagua + 觀</div>
+      </div>
+
+      <!-- Mark 2: Open book with star -->
+      <div class="mark-cell">
+        <svg viewBox="0 0 200 200" fill="none">
+          <!-- book pages -->
+          <path d="M 30 150 L 30 70 L 100 50 L 170 70 L 170 150 L 100 130 Z" stroke="#c9a961" stroke-width="1.5"/>
+          <line x1="100" y1="50" x2="100" y2="130" stroke="#c9a961" stroke-width="1.2"/>
+          <line x1="100" y1="130" x2="100" y2="155" stroke="#c9a961" stroke-width="1.2"/>
+          <!-- star above -->
+          <g transform="translate(100 28)" fill="#c9a961">
+            <polygon points="0,-16 4,-5 16,-5 6,3 10,15 0,8 -10,15 -6,3 -16,-5 -4,-5"/>
+          </g>
+          <!-- emanating lines -->
+          <g stroke="#c9a961" stroke-width="0.5" opacity="0.5">
+            <line x1="100" y1="28" x2="60" y2="55"/>
+            <line x1="100" y1="28" x2="140" y2="55"/>
+            <line x1="100" y1="28" x2="100" y2="50"/>
+          </g>
+          <text x="100" y="98" font-family="'Ma Shan Zheng', serif" font-size="24" fill="#c9a961" text-anchor="middle">天</text>
+          <text x="100" y="124" font-family="'Ma Shan Zheng', serif" font-size="22" fill="#a13e2a" text-anchor="middle">人</text>
+        </svg>
+        <div class="caption">Mark B · Codex Opens</div>
+      </div>
+
+      <!-- Mark 3: Lotus mandala -->
+      <div class="mark-cell">
+        <svg viewBox="0 0 200 200" fill="none">
+          <g transform="translate(100 100)" stroke="#c9a961" stroke-width="1" fill="none">
+            <!-- 8 petals -->
+            <g><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(45)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(90)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(135)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(180)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(225)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(270)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <g transform="rotate(315)"><ellipse cx="0" cy="-50" rx="14" ry="36"/></g>
+            <circle cx="0" cy="0" r="14" fill="#a13e2a" stroke="none"/>
+            <circle cx="0" cy="0" r="22" stroke-width="0.5"/>
+            <circle cx="0" cy="0" r="84" stroke-width="0.4" opacity="0.4"/>
+          </g>
+        </svg>
+        <div class="caption">Mark C · Lotus Mandala</div>
+      </div>
+
+      <!-- Mark 4: Single calligraphic 觀 -->
+      <div class="mark-cell parchment-bg">
+        <svg viewBox="0 0 200 200" fill="none">
+          <rect x="20" y="20" width="160" height="160" stroke="#a13e2a" stroke-width="2" fill="none"/>
+          <rect x="28" y="28" width="144" height="144" stroke="#a13e2a" stroke-width="0.5" fill="none"/>
+          <text x="100" y="135" font-family="'Ma Shan Zheng', serif" font-size="110" fill="#0d1119" text-anchor="middle" font-weight="700">觀</text>
+        </svg>
+        <div class="caption">Mark D · Seal · 觀</div>
+      </div>
+
+      <!-- Mark 5: Trigram stack -->
+      <div class="mark-cell">
+        <svg viewBox="0 0 200 200" fill="none">
+          <g stroke="#c9a961" stroke-width="3" stroke-linecap="square">
+            <!-- Hexagram 7 — 師 (Recruit Allies) — three lines repeating up -->
+            <line x1="60" y1="50" x2="140" y2="50"/>
+            <line x1="60" y1="68" x2="140" y2="68"/>
+            <line x1="60" y1="86" x2="140" y2="86"/>
+            <line x1="60" y1="104" x2="140" y2="104"/>
+            <line x1="60" y1="122" x2="93" y2="122"/>
+            <line x1="107" y1="122" x2="140" y2="122"/>
+            <line x1="60" y1="140" x2="140" y2="140"/>
+          </g>
+          <text x="100" y="178" font-family="'Ma Shan Zheng', serif" font-size="22" fill="#c9a961" text-anchor="middle">師</text>
+        </svg>
+        <div class="caption">Mark E · Hex 7 (Allies)</div>
+      </div>
+
+      <!-- Mark 6: Wordmark -->
+      <div class="mark-cell">
+        <svg viewBox="0 0 200 200" fill="none">
+          <text x="100" y="98" font-family="'Ma Shan Zheng', serif" font-size="56" fill="#c9a961" text-anchor="middle">天人</text>
+          <text x="100" y="148" font-family="'Ma Shan Zheng', serif" font-size="56" fill="#c9a961" text-anchor="middle">合一</text>
+          <line x1="60" y1="170" x2="140" y2="170" stroke="#c9a961" stroke-width="0.5"/>
+          <text x="100" y="188" font-family="'Cormorant Garamond', serif" font-size="12" fill="#c9a961" text-anchor="middle" letter-spacing="4">CODEX</text>
+        </svg>
+        <div class="caption">Mark F · Wordmark</div>
+      </div>
+
+    </div>
+
+    <h3>Recommendation</h3>
+    <p>Use <strong>Mark A (Bagua + 觀)</strong> as the primary app icon — it telegraphs system-thinking, Eastern lineage, and the central role of 觀音 in one symbol. Use <strong>Mark F (Wordmark)</strong> in document headers and the app's home screen. <strong>Mark D (Seal)</strong> is the closing stamp for any artifact the user exports — like a private chop press into the corner.</p>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">印</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       FIVE · PALETTE
+       ============================================================ -->
+  <section id="palette" data-screen-label="五 Palette">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">五</div><div class="label">Chapter Five · Palette</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">彩</span>Temple Pigment</h2>
+    <p class="section-lede">Pigments chosen to feel like a 13th-century manuscript by candlelight — never like a SaaS dashboard, never like a galaxy gradient.</p>
+
+    <div class="swatch-grid">
+      <div class="swatch dark" style="background: #0d1119;">
+        <div>
+          <div class="cn">夜墨</div>
+          <div class="name">Ink Indigo</div>
+        </div>
+        <div>
+          <div class="role">Primary surface · the night the lantern sits on</div>
+          <div class="hex">#0D1119</div>
+        </div>
+      </div>
+      <div class="swatch light" style="background: #e8dcc4;">
+        <div>
+          <div class="cn" style="color: #6f2818;">羊皮</div>
+          <div class="name">Manuscript Cream</div>
+        </div>
+        <div>
+          <div class="role">Parchment · the page</div>
+          <div class="hex">#E8DCC4</div>
+        </div>
+      </div>
+      <div class="swatch dark" style="background: #c9a961; color: #0d1119;">
+        <div>
+          <div class="cn">琥金</div>
+          <div class="name">Ember Gold</div>
+        </div>
+        <div>
+          <div class="role">Wisdom accent · what catches the candle</div>
+          <div class="hex">#C9A961</div>
+        </div>
+      </div>
+      <div class="swatch dark" style="background: #a13e2a;">
+        <div>
+          <div class="cn">朱砂</div>
+          <div class="name">Temple Vermillion</div>
+        </div>
+        <div>
+          <div class="role">Ritual · seal · sacred fire</div>
+          <div class="hex">#A13E2A</div>
+        </div>
+      </div>
+      <div class="swatch dark" style="background: #4a6b5c;">
+        <div>
+          <div class="cn">青翠</div>
+          <div class="name">Jade Whisper</div>
+        </div>
+        <div>
+          <div class="role">Life · growth · water 印</div>
+          <div class="hex">#4A6B5C</div>
+        </div>
+      </div>
+      <div class="swatch dark" style="background: #8b7355;">
+        <div>
+          <div class="cn">古銅</div>
+          <div class="name">Bronze Patina</div>
+        </div>
+        <div>
+          <div class="role">Quiet detail · dividers · meta</div>
+          <div class="hex">#8B7355</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Extended ramps</h3>
+    <p>Each canonical pigment has a 5-step ramp for layered surfaces. Use the canonical (500 / 400) shade for 80% of cases; reach for ramps only when establishing hierarchy in deep stacks.</p>
+
+    <div>
+      <div class="sans-caps" style="color: var(--bronze-400); margin-top: var(--space-6);">Ink — surfaces</div>
+      <div class="ramp">
+        <div style="background:#07090d; color:#c9a961;">950</div>
+        <div style="background:#0d1119; color:#c9a961;">900</div>
+        <div style="background:#141a26; color:#c9a961;">800</div>
+        <div style="background:#1a1f2e; color:#c9a961;">700</div>
+        <div style="background:#232a3a; color:#c9a961;">600</div>
+        <div style="background:#2e3648; color:#c9a961;">500</div>
+      </div>
+      <div class="sans-caps" style="color: var(--bronze-400);">Parchment — light on dark</div>
+      <div class="ramp">
+        <div style="background:#fbf6ea; color:#0d1119;">50</div>
+        <div style="background:#f4ead5; color:#0d1119;">100</div>
+        <div style="background:#e8dcc4; color:#0d1119;">200</div>
+        <div style="background:#d6c6a4; color:#0d1119;">300</div>
+        <div style="background:#b8a781; color:#0d1119;">400</div>
+        <div style="background:#998864; color:#0d1119;">500</div>
+      </div>
+      <div class="sans-caps" style="color: var(--bronze-400);">Ember — accent</div>
+      <div class="ramp">
+        <div style="background:#fcf3d4; color:#0d1119;">50</div>
+        <div style="background:#f3dfa1; color:#0d1119;">100</div>
+        <div style="background:#e6c87a; color:#0d1119;">200</div>
+        <div style="background:#d4b067; color:#0d1119;">300</div>
+        <div style="background:#c9a961; color:#0d1119;">400</div>
+        <div style="background:#b39247; color:#0d1119;">500</div>
+        <div style="background:#8c7234; color:#fcf3d4;">600</div>
+        <div style="background:#5f4d22; color:#fcf3d4;">700</div>
+      </div>
+      <div class="sans-caps" style="color: var(--bronze-400);">Vermillion — ritual</div>
+      <div class="ramp">
+        <div style="background:#e8b3a5; color:#3d150c;">100</div>
+        <div style="background:#c66f54; color:#3d150c;">300</div>
+        <div style="background:#a13e2a; color:#fbf6ea;">500</div>
+        <div style="background:#6f2818; color:#fbf6ea;">700</div>
+        <div style="background:#3d150c; color:#fbf6ea;">900</div>
+      </div>
+      <div class="sans-caps" style="color: var(--bronze-400);">Jade — life</div>
+      <div class="ramp">
+        <div style="background:#c5d4cc; color:#1a2a22;">100</div>
+        <div style="background:#7a9588; color:#1a2a22;">300</div>
+        <div style="background:#4a6b5c; color:#fbf6ea;">500</div>
+        <div style="background:#2f4a3d; color:#fbf6ea;">700</div>
+        <div style="background:#1a2a22; color:#fbf6ea;">900</div>
+      </div>
+    </div>
+
+    <h3>Pigment logic — when each color speaks</h3>
+    <div class="do-dont">
+      <div class="col do">
+        <h4>Always</h4>
+        <ul>
+          <li><strong>Ink Indigo</strong> for app background. Always. There is no light mode.</li>
+          <li><strong>Ember Gold</strong> for the one thing on screen that asks to be seen — a primary CTA, the day's pillar, the synthesis verdict.</li>
+          <li><strong>Vermillion</strong> only for ritual moments — opening a reading, completing a 108x chant, marking a sacred date. It should feel rare.</li>
+          <li><strong>Parchment Cream</strong> when content asks to be read in long form — a Kuan Yin verse, the synthesis essay, an exported report.</li>
+          <li><strong>Jade</strong> for streaks, progress, alive-state indicators.</li>
+          <li><strong>Bronze</strong> for timestamps, captions, fine print — anything the eye should skim over.</li>
+        </ul>
+      </div>
+      <div class="col dont">
+        <h4>Never</h4>
+        <ul>
+          <li>No purples. The mystical-galaxy-purple is the visual cliché this brand exists to refuse.</li>
+          <li>No pure white (#FFFFFF). Always Parchment 50 or warmer. The eye must rest like at temple.</li>
+          <li>No neon. No saturated blues. No magic-portal cyans.</li>
+          <li>No gradients with more than two stops. Two-tone candle-glow only.</li>
+          <li>Never two accent colors on the same screen. Ember <em>or</em> Vermillion — never both shouting.</li>
+          <li>Never red-for-error. Use Vermillion sparingly and only for sacred fire, never for system warnings.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">彩</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       SIX · TYPE
+       ============================================================ -->
+  <section id="type" data-screen-label="六 Type">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">六</div><div class="label">Chapter Six · Type</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">字</span>Four Scripts, One Voice</h2>
+    <p class="section-lede">A practitioner who reads in four traditions deserves a typographic system that does not flatten them into one. Each script gets its own typeface, chosen for soul.</p>
+
+    <div class="type-specimen">
+      <div class="meta">
+        <strong>Display · EN</strong>
+        Cormorant Garamond<br>
+        500 / 600 · italic for emphasis<br>
+        Renaissance serif lineage<br>
+        Use for: section titles,<br>chapter heads, hero copy
+      </div>
+      <div class="sample">
+        <span class="big" style="font-family: var(--font-display); font-weight: 500;">Codex gives sight.</span>
+        <span class="quote italic-display">"The sage's notebook for the modern practitioner — bound in indigo, written in candlelight, never finished."</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">
+        <strong>Body · EN / ID</strong>
+        EB Garamond<br>
+        400 / 500 / italic<br>
+        Humanist · readable at length<br>
+        Use for: paragraphs, verses,<br>essays, long-form synthesis
+      </div>
+      <div class="sample">
+        <span class="big" style="font-family: var(--font-body); font-weight: 500;">Receive. Recruit. Ship.</span>
+        <span class="quote" style="font-family: var(--font-body); font-style: normal;">Sebelum keputusan besar, tarik tiga sistem: tarot, I&nbsp;Ching, dan 觀音靈籤. Lihat di mana ketiganya bertemu. Yang bertemu, itulah pesan. Yang divergen, itu pertanyaan untukmu, bukan jawaban.</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">
+        <strong>Display · 中文</strong>
+        Ma Shan Zheng<br>
+        Brush calligraphy style<br>
+        Heritage · ritual presence<br>
+        Use for: large 干支,<br>chapter numerals, the mark
+      </div>
+      <div class="sample">
+        <span class="big cn-display" style="color: var(--ember-400);">甲辰日</span>
+        <span class="quote cn-body">观自在菩萨，行深般若波罗蜜多时，照见五蕴皆空。</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">
+        <strong>Body · 中文</strong>
+        Noto Serif TC<br>
+        400 / 500<br>
+        Modern Songti · legible<br>
+        Use for: verses, character<br>annotations, BaZi readings
+      </div>
+      <div class="sample">
+        <span class="big cn-body" style="font-weight: 500;">天人合一</span>
+        <span class="quote cn-body">人之初，性本善。性相近，習相遠。<br>苟不教，性乃遷。教之道，貴以專。</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">
+        <strong>Mono · Data</strong>
+        JetBrains Mono<br>
+        300 / 400 / 500<br>
+        Crisp · numerical<br>Use for: timestamps,<br>coordinates, hexagram codes,<br>chart data, captions
+      </div>
+      <div class="sample">
+        <span class="big mono" style="font-weight: 400;">1985.05.05 03:15 WIB</span>
+        <span class="quote mono" style="font-style: normal; letter-spacing: 0;">乙丑 · 庚辰 · 甲辰 · 丙寅<br>HEX 7 · 師 · 1985.36° E · -6.917° N</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">
+        <strong>Sacred · Sanskrit</strong>
+        Noto Serif Devanagari<br>
+        Used sparingly<br>Ritual screens only<br>Use for: mantras, opening<br>blessings, dedication
+      </div>
+      <div class="sample">
+        <span class="big" style="font-family: var(--font-sanskrit);">ॐ मणि पद्मे हूँ</span>
+        <span class="quote" style="font-family: var(--font-sanskrit);">सर्वमङ्गलमाङ्गल्ये शिवे सर्वार्थसाधिके।</span>
+      </div>
+    </div>
+
+    <h3>Type scale</h3>
+    <p>A modular scale anchored at 17px body — slightly larger than web default, to honor the long-form reading this product invites.</p>
+
+    <div style="margin: var(--space-6) 0; border-top: 1px solid var(--border-faint); border-bottom: 1px solid var(--border-faint);">
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">144 / 5XL</span>
+        <span style="font-family: var(--font-cn-display); font-size: 5rem; line-height: 1; color: var(--ember-400);">一</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Chapter numeral only</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">88 / 4XL</span>
+        <span style="font-family: var(--font-display); font-size: 4rem; line-height: 1; color: var(--parchment-100);">Display</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Cover hero only</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">56 / 3XL</span>
+        <span style="font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--parchment-100);">Section title</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Top of each chapter</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">36 / 2XL</span>
+        <span style="font-family: var(--font-display); font-size: 2.25rem; line-height: 1; color: var(--parchment-100);">Section subtitle</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Today's pillar, big numbers</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">26 / XL</span>
+        <span style="font-family: var(--font-display); font-size: 1.625rem; line-height: 1.2; color: var(--parchment-100);">Heading 3</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Subsection headers</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">20 / LG</span>
+        <span style="font-family: var(--font-display); font-size: var(--type-scale-lg); line-height: 1.32; color: var(--parchment-200); font-style: italic;">Lead paragraph or pull quote</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Section ledes, verse text</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">17 / BASE</span>
+        <span style="font-family: var(--font-body); font-size: var(--type-scale-base); color: var(--parchment-200);">Body — the comfort read</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Default paragraph</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">14 / SM</span>
+        <span style="font-family: var(--font-body); font-size: var(--type-scale-sm); color: var(--bronze-200);">Meta — captions, dates, sources</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Skim layer</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: var(--space-4); padding: var(--space-3) 0; align-items: baseline;">
+        <span class="mono" style="font-size: 0.7rem; color: var(--bronze-400); letter-spacing: var(--tracking-wider);">12 / XS</span>
+        <span class="mono" style="font-size: var(--type-scale-xs); color: var(--bronze-400); letter-spacing: var(--tracking-widest); text-transform: uppercase;">EYEBROW · MONO · UPPERCASE</span>
+        <span class="mono" style="font-size: 0.65rem; color: var(--bronze-400);">Section labels, badges</span>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">字</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       SEVEN · MOTIF
+       ============================================================ -->
+  <section id="motif" data-screen-label="七 Motif">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">七</div><div class="label">Chapter Seven · Motif</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">符</span>Motif Library</h2>
+    <p class="section-lede">Reusable iconographic atoms drawn from the systems Codex synthesizes. Never decorative — always meaningful.</p>
+
+    <h3>八卦 — Eight Trigrams</h3>
+    <div class="motif-grid">
+      <div class="motif-cell"><span class="ascii">☰</span><span class="label">Qián · 乾 · Heaven</span></div>
+      <div class="motif-cell"><span class="ascii">☱</span><span class="label">Duì · 兑 · Lake</span></div>
+      <div class="motif-cell"><span class="ascii">☲</span><span class="label">Lí · 離 · Fire</span></div>
+      <div class="motif-cell"><span class="ascii">☳</span><span class="label">Zhèn · 震 · Thunder</span></div>
+      <div class="motif-cell"><span class="ascii">☴</span><span class="label">Xùn · 巽 · Wind</span></div>
+      <div class="motif-cell"><span class="ascii">☵</span><span class="label">Kǎn · 坎 · Water</span></div>
+      <div class="motif-cell"><span class="ascii">☶</span><span class="label">Gèn · 艮 · Mountain</span></div>
+      <div class="motif-cell"><span class="ascii">☷</span><span class="label">Kūn · 坤 · Earth</span></div>
+    </div>
+
+    <h3>天干 — Ten Heavenly Stems</h3>
+    <div class="motif-grid" style="grid-template-columns: repeat(5, 1fr);">
+      <div class="motif-cell"><span class="glyph">甲</span><span class="label">Jiǎ · Yang Wood</span></div>
+      <div class="motif-cell"><span class="glyph">乙</span><span class="label">Yǐ · Yin Wood</span></div>
+      <div class="motif-cell"><span class="glyph">丙</span><span class="label">Bǐng · Yang Fire</span></div>
+      <div class="motif-cell"><span class="glyph">丁</span><span class="label">Dīng · Yin Fire</span></div>
+      <div class="motif-cell"><span class="glyph">戊</span><span class="label">Wù · Yang Earth</span></div>
+      <div class="motif-cell"><span class="glyph">己</span><span class="label">Jǐ · Yin Earth</span></div>
+      <div class="motif-cell"><span class="glyph">庚</span><span class="label">Gēng · Yang Metal</span></div>
+      <div class="motif-cell"><span class="glyph">辛</span><span class="label">Xīn · Yin Metal</span></div>
+      <div class="motif-cell"><span class="glyph">壬</span><span class="label">Rén · Yang Water</span></div>
+      <div class="motif-cell"><span class="glyph">癸</span><span class="label">Guǐ · Yin Water</span></div>
+    </div>
+
+    <h3>地支 — Twelve Earthly Branches</h3>
+    <div class="motif-grid" style="grid-template-columns: repeat(6, 1fr);">
+      <div class="motif-cell"><span class="glyph">子</span><span class="label">Zǐ · Rat</span></div>
+      <div class="motif-cell"><span class="glyph">丑</span><span class="label">Chǒu · Ox</span></div>
+      <div class="motif-cell"><span class="glyph">寅</span><span class="label">Yín · Tiger</span></div>
+      <div class="motif-cell"><span class="glyph">卯</span><span class="label">Mǎo · Rabbit</span></div>
+      <div class="motif-cell"><span class="glyph">辰</span><span class="label">Chén · Dragon</span></div>
+      <div class="motif-cell"><span class="glyph">巳</span><span class="label">Sì · Snake</span></div>
+      <div class="motif-cell"><span class="glyph">午</span><span class="label">Wǔ · Horse</span></div>
+      <div class="motif-cell"><span class="glyph">未</span><span class="label">Wèi · Goat</span></div>
+      <div class="motif-cell"><span class="glyph">申</span><span class="label">Shēn · Monkey</span></div>
+      <div class="motif-cell"><span class="glyph">酉</span><span class="label">Yǒu · Rooster</span></div>
+      <div class="motif-cell"><span class="glyph">戌</span><span class="label">Xū · Dog</span></div>
+      <div class="motif-cell"><span class="glyph">亥</span><span class="label">Hài · Boar</span></div>
+    </div>
+
+    <h3>月相 — Eight Lunar Phases</h3>
+    <div class="motif-grid">
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/></svg>
+        <span class="label">New · 新</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/><path d="M 30 8 A 22 22 0 0 0 30 52 A 11 22 0 0 1 30 8 Z" fill="#c9a961"/></svg>
+        <span class="label">Waxing crescent</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/><path d="M 30 8 A 22 22 0 0 0 30 52 L 30 8 Z" fill="#c9a961"/></svg>
+        <span class="label">First quarter</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/><path d="M 30 8 A 22 22 0 0 0 30 52 A 22 22 0 0 1 30 8 M 30 8 A 11 22 0 0 0 30 52" fill="#c9a961"/></svg>
+        <span class="label">Waxing gibbous</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="#c9a961" stroke="#c9a961" stroke-width="1.2"/></svg>
+        <span class="label">Full · 滿</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/><path d="M 30 8 A 22 22 0 0 1 30 52 A 22 22 0 0 0 30 8 M 30 8 A 11 22 0 0 1 30 52" fill="#c9a961"/></svg>
+        <span class="label">Waning gibbous</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/><path d="M 30 8 A 22 22 0 0 1 30 52 L 30 8 Z" fill="#c9a961"/></svg>
+        <span class="label">Last quarter</span>
+      </div>
+      <div class="motif-cell">
+        <svg viewBox="0 0 60 60" width="44" height="44"><circle cx="30" cy="30" r="22" fill="none" stroke="#c9a961" stroke-width="1.2"/><path d="M 30 8 A 22 22 0 0 1 30 52 A 11 22 0 0 0 30 8 Z" fill="#c9a961"/></svg>
+        <span class="label">Waning crescent</span>
+      </div>
+    </div>
+
+    <h3>System sigils — for badging entries</h3>
+    <p>Each divination tradition Codex supports gets a glyph used in badges, list rows, and filter chips. Built from the canonical character of each system.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0 var(--space-8);">
+      <span class="badge bazi"><span class="dot"></span>BaZi · 八字</span>
+      <span class="badge iching"><span class="dot"></span>I Ching · 易經</span>
+      <span class="badge guanyin"><span class="dot"></span>Kuan Yin · 觀音靈籤</span>
+      <span class="badge tarot"><span class="dot"></span>Tarot · 塔羅</span>
+      <span class="badge bazi"><span class="dot"></span>ZWDS · 紫微</span>
+      <span class="badge iching"><span class="dot"></span>Human Design</span>
+      <span class="badge guanyin"><span class="dot"></span>Bibliomancy · 心經</span>
+      <span class="badge tarot"><span class="dot"></span>Pendulum</span>
+      <span class="badge bazi"><span class="dot"></span>Jawa · Weton</span>
+      <span class="badge iching"><span class="dot"></span>Bali · Wewaran</span>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">符</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       EIGHT · VOICE
+       ============================================================ -->
+  <section id="voice" data-screen-label="八 Voice">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">八</div><div class="label">Chapter Eight · Voice</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">聲</span>Voice &amp; Tone</h2>
+    <p class="section-lede">Sage voice. Multilingual by default. Warm but never cute, precise but never cold, sacred but never preachy.</p>
+
+    <h3>Six rules of voice</h3>
+    <ol style="list-style: none; padding: 0; counter-reset: rules;">
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); padding-left: var(--space-12); position: relative; counter-increment: rules;">
+        <span style="position: absolute; left: 0; top: var(--space-3); font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-xl);">一</span>
+        <strong style="color: var(--parchment-100); font-family: var(--font-display); font-size: var(--type-scale-lg);">Observe, do not prescribe.</strong>
+        <span style="display: block; color: var(--parchment-300); font-style: italic; margin-top: 4px;">"Today is a 子午沖 day" — not "You should rest today." The reader decides what the observation means for them.</span>
+      </li>
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); padding-left: var(--space-12); position: relative; counter-increment: rules;">
+        <span style="position: absolute; left: 0; top: var(--space-3); font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-xl);">二</span>
+        <strong style="color: var(--parchment-100); font-family: var(--font-display); font-size: var(--type-scale-lg);">Carry the original tongue.</strong>
+        <span style="display: block; color: var(--parchment-300); font-style: italic; margin-top: 4px;">Don't translate 食神 to "Eating God"; show both. The original word holds meaning the English can't.</span>
+      </li>
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); padding-left: var(--space-12); position: relative; counter-increment: rules;">
+        <span style="position: absolute; left: 0; top: var(--space-3); font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-xl);">三</span>
+        <strong style="color: var(--parchment-100); font-family: var(--font-display); font-size: var(--type-scale-lg);">No "vibes." No "energies." No emoji.</strong>
+        <span style="display: block; color: var(--parchment-300); font-style: italic; margin-top: 4px;">If you would not write it in a temple manuscript, do not write it in Codex.</span>
+      </li>
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); padding-left: var(--space-12); position: relative; counter-increment: rules;">
+        <span style="position: absolute; left: 0; top: var(--space-3); font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-xl);">四</span>
+        <strong style="color: var(--parchment-100); font-family: var(--font-display); font-size: var(--type-scale-lg);">Short. Then shorter.</strong>
+        <span style="display: block; color: var(--parchment-300); font-style: italic; margin-top: 4px;">Sage voice prunes. Three short sentences beat one explained one. The reader fills the silence with their own meaning.</span>
+      </li>
+      <li style="padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-faint); padding-left: var(--space-12); position: relative; counter-increment: rules;">
+        <span style="position: absolute; left: 0; top: var(--space-3); font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-xl);">五</span>
+        <strong style="color: var(--parchment-100); font-family: var(--font-display); font-size: var(--type-scale-lg);">Never flatter the reader.</strong>
+        <span style="display: block; color: var(--parchment-300); font-style: italic; margin-top: 4px;">No "you're a special soul." No "ancient wisdom unlocked." Treat the reader like a fellow practitioner, not a customer.</span>
+      </li>
+      <li style="padding: var(--space-3) 0; padding-left: var(--space-12); position: relative; counter-increment: rules;">
+        <span style="position: absolute; left: 0; top: var(--space-3); font-family: var(--font-cn-display); color: var(--ember-400); font-size: var(--type-scale-xl);">六</span>
+        <strong style="color: var(--parchment-100); font-family: var(--font-display); font-size: var(--type-scale-lg);">Refuse certainty.</strong>
+        <span style="display: block; color: var(--parchment-300); font-style: italic; margin-top: 4px;">"This may mean" not "This means." "Often" not "always." Divination is the art of suggesting; we are not oracles for hire.</span>
+      </li>
+    </ol>
+
+    <h3>Voice samples, in four tongues</h3>
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="lang">Bahasa · daily check-in</div>
+        <div class="text">"Hari ini 庚午. Logam Yang ketemu kuda. Sinyalnya: jaga kata di rapat sore. Yang ingin meledak, biarkan habis di dalam dulu."</div>
+        <div class="note">Hangat. Spesifik. Tidak menggurui. Akhiran ringan, bukan perintah.</div>
+      </div>
+      <div class="voice-card">
+        <div class="lang">English · synthesis output</div>
+        <div class="text">"Three systems point to the same hinge: timing. The Magician (you have the tools), Hex 64 Wei Chi (not yet complete), Verse 34 (wait for spring). Prepare, do not launch."</div>
+        <div class="note">Precise. Names the systems by name. Verdict in plain words, no padding.</div>
+      </div>
+      <div class="voice-card">
+        <div class="lang">中文 · 流日 reading</div>
+        <div class="text cn">「今日庚午，金克木。日主受冲，宜守不宜攻。語要慎，行要緩。」</div>
+        <div class="note">Classical compression. No filler particles. Reads like a temple log.</div>
+      </div>
+      <div class="voice-card">
+        <div class="lang">Sanskrit · ritual opening</div>
+        <div class="text" style="font-family: var(--font-sanskrit);">ॐ मणि पद्मे हूँ — May this reading serve the awakening of the one who reads.</div>
+        <div class="note">Only inside ritual moments. Never in UI buttons or system messages.</div>
+      </div>
+    </div>
+
+    <h3>Microcopy — what each surface sounds like</h3>
+    <div style="border: 1px solid var(--border-faint); border-radius: var(--radius-sm); overflow: hidden; margin-top: var(--space-4);">
+      <div style="display: grid; grid-template-columns: 180px 1fr; padding: var(--space-4); border-bottom: 1px solid var(--border-faint); align-items: baseline;">
+        <span class="sans-caps" style="color: var(--ember-400);">Empty state</span>
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"The first page is always empty. Begin with one question."</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 180px 1fr; padding: var(--space-4); border-bottom: 1px solid var(--border-faint); align-items: baseline;">
+        <span class="sans-caps" style="color: var(--ember-400);">Loading</span>
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"The hexagram is being cast."</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 180px 1fr; padding: var(--space-4); border-bottom: 1px solid var(--border-faint); align-items: baseline;">
+        <span class="sans-caps" style="color: var(--ember-400);">Error</span>
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"The line did not settle. Try again with a steadier hand."</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 180px 1fr; padding: var(--space-4); border-bottom: 1px solid var(--border-faint); align-items: baseline;">
+        <span class="sans-caps" style="color: var(--ember-400);">Save confirmation</span>
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"Sealed into the Codex."</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 180px 1fr; padding: var(--space-4); align-items: baseline;">
+        <span class="sans-caps" style="color: var(--ember-400);">Onboarding CTA</span>
+        <span class="italic-display" style="color: var(--parchment-100); font-size: var(--type-scale-lg);">"Begin your codex" — never "Sign up," never "Get started."</span>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">聲</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       NINE · COMPONENTS
+       ============================================================ -->
+  <section id="components" data-screen-label="九 Components">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">九</div><div class="label">Chapter Nine · Components</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">器</span>Component Library</h2>
+    <p class="section-lede">The smallest units of the interface, presented in isolation. Each is a deliberate choice — not Material, not iOS, not Bootstrap. It is Codex.</p>
+
+    <h3>Buttons</h3>
+    <p>Three intensities. Use the lowest one that still gets attention. Never stack two primary buttons on a screen.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; margin: var(--space-4) 0 var(--space-8);">
+      <button class="btn btn-primary">Cast the hexagram</button>
+      <button class="btn btn-ghost">Save draft</button>
+      <button class="btn btn-ritual">Begin ritual · 108×</button>
+      <button class="btn btn-ghost" style="opacity: 0.4; cursor: not-allowed;">Disabled state</button>
+    </div>
+
+    <h3>Badges &amp; chips</h3>
+    <p>Badge a divination entry with the system(s) it used. Multi-system entries stack chips — visible proof of synthesis.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0 var(--space-8);">
+      <span class="badge bazi"><span class="dot"></span>BaZi · 流日</span>
+      <span class="badge iching"><span class="dot"></span>Hex 7 · 師</span>
+      <span class="badge guanyin"><span class="dot"></span>Verse 34</span>
+      <span class="badge tarot"><span class="dot"></span>The Magician</span>
+      <span class="badge" style="color: var(--jade-300); border-color: rgba(122,149,136,0.4);"><span class="dot"></span>Convergence ×3</span>
+    </div>
+
+    <h3>Inputs</h3>
+    <p>Inputs sit on a slightly lifted ink panel with bronze borders, never harsh white fields. The placeholder is italic — a whispered prompt, not a label.</p>
+    <div style="display: flex; flex-direction: column; gap: var(--space-3); margin: var(--space-4) 0 var(--space-8);">
+      <input type="text" class="input-mock" placeholder="Frame your question, in one sentence…">
+      <textarea class="input-mock" rows="3" placeholder="What did the body know before the mind agreed?"></textarea>
+    </div>
+
+    <h3>Dividers</h3>
+    <p>Three weights, used at three different cadences. Gold ornament for chapter breaks; bronze hair for paragraph rhythm; dashed bronze for list separations.</p>
+    <div class="divider-gold"><span class="l"></span><span class="m">觀</span><span class="l"></span></div>
+    <hr style="border: 0; border-top: 1px solid var(--border-bronze); margin: var(--space-8) 0;">
+    <hr style="border: 0; border-top: 1px dashed var(--border-faint); margin: var(--space-8) 0;">
+
+    <h3>Manuscript card · the parchment panel</h3>
+    <p>The container for any content the reader is meant to dwell on — a Kuan Yin verse, a long-form synthesis, a quote from a teacher.</p>
+    <div class="parchment" style="margin: var(--space-4) 0 var(--space-8); padding: var(--space-8);">
+      <span class="eyebrow">Verse · 第三十四</span>
+      <h3 style="margin: var(--space-2) 0;">勸君且向竹床眠</h3>
+      <p style="font-family: var(--font-display); font-style: italic; color: var(--bronze-700); font-size: var(--type-scale-base);">"Better rest awhile upon the bamboo bed — the proper time to act has not yet come."</p>
+      <p style="font-family: var(--font-mono); font-size: var(--type-scale-xs); letter-spacing: var(--tracking-wider); color: var(--vermillion-500); text-transform: uppercase; margin-top: var(--space-4);">Drawn 2026.05.17 · 寅 hour · Po Nagar lineage</p>
+    </div>
+
+    <h3>Cosmic card · the data tile</h3>
+    <p>The unit used in dashboards — a single cosmic reading on a glance.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin: var(--space-4) 0 var(--space-8);">
+      <div class="cs-card">
+        <div class="label">流日 · today's pillar</div>
+        <div class="value"><span class="cn">庚午</span> Geng Wu</div>
+        <div class="meta">Yang metal on horse — sharpen one tool, do not collect new ones.</div>
+      </div>
+      <div class="cs-card life">
+        <div class="label">Moon · 月相</div>
+        <div class="value">Waxing gibbous · day 11</div>
+        <div class="meta">Energy still building. Plant, do not harvest.</div>
+      </div>
+      <div class="cs-card ritual">
+        <div class="label">觀音 · daily verse</div>
+        <div class="value"><span class="cn">第三十四</span> Wait for spring</div>
+        <div class="meta">The 34th stick fell. Honor the rest before the work.</div>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">器</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       TEN · APPLIED
+       ============================================================ -->
+  <section id="applied" data-screen-label="十 Applied">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">十</div><div class="label">Chapter Ten · Applied</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">用</span>Applied · Three Codex Screens</h2>
+    <p class="section-lede">The system, assembled. Three of the seven sacred modules rendered as they should appear on a real morning, in real practice.</p>
+
+    <h3>Module 1 · Today's Cosmic Snapshot</h3>
+    <p>The dashboard a practitioner opens at sunrise. The day's pillar dominates; supporting systems whisper around the edges.</p>
+    <div class="app-frame">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-6); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-faint);">
+        <div>
+          <span class="eyebrow">天人合一 Codex · 流日</span>
+          <h4 style="font-family: var(--font-display); font-size: var(--type-scale-xl); color: var(--parchment-100); font-weight: 400; margin-top: 4px;">Sunday Morning · Bandung</h4>
+        </div>
+        <span class="mono" style="font-size: var(--type-scale-xs); color: var(--bronze-400); letter-spacing: var(--tracking-wider);">2026 · 05 · 17 · 06:42 WIB</span>
+      </div>
+
+      <div class="cosmic-snapshot">
+        <div class="cs-hero">
+          <div class="moon"></div>
+          <div class="date">流日 · today's day pillar</div>
+          <div class="pillar">庚午</div>
+          <div class="pillar-en">Yang Metal · Horse</div>
+          <div class="pillar-meta">vs Natal 甲辰 — 金克木 / 午沖辰庫</div>
+          <div class="reading">A clashing day for the wood master. The fire of 午 opens your storehouse; the metal of 庚 cuts at the trunk. Sharpen, do not plant.</div>
+        </div>
+        <div class="cs-side">
+          <div class="cs-card">
+            <div class="label">易經 · I Ching of the day</div>
+            <div class="value"><span class="cn">第七</span> Hex 7 · 師 The Army</div>
+            <div class="meta">Recruit allies. No solo move this week.</div>
+          </div>
+          <div class="cs-card ritual">
+            <div class="label">觀音靈籤 · Kuan Yin</div>
+            <div class="value"><span class="cn">第三十四</span> Verse 34 · 上上</div>
+            <div class="meta">Rest before the work — spring is forming.</div>
+          </div>
+          <div class="cs-card life">
+            <div class="label">月相 · moon</div>
+            <div class="value">Waxing gibbous · 80%</div>
+            <div class="meta">Energy still rising — plant, do not reap.</div>
+          </div>
+          <div class="cs-card">
+            <div class="label">Jawa · pasaran</div>
+            <div class="value">Minggu · Pahing</div>
+            <div class="meta">Lakuning Srengenge — your visible-day.</div>
+          </div>
+          <div class="cs-card">
+            <div class="label">Bali · wewaran</div>
+            <div class="value">Redite · Paing · Wuku Menail</div>
+            <div class="meta">Bhatara Citragotra presides.</div>
+          </div>
+          <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+            <div class="label">Alignment score</div>
+            <div class="value" style="font-family: var(--font-mono); color: var(--ember-400);">62 / 100</div>
+            <div class="meta">Receive day · do not initiate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Module 2 · Divination Entry Composer</h3>
+    <p>The scribe's workbench. Three vertical strips — one per system in play. Synthesis appears at the bottom only when the cards/coins/sticks have settled.</p>
+    <div class="app-frame">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-6); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-faint);">
+        <div>
+          <span class="eyebrow">New Entry · 新題</span>
+          <h4 style="font-family: var(--font-display); font-style: italic; font-size: var(--type-scale-xl); color: var(--parchment-100); font-weight: 400; margin-top: 4px;">"Apakah Juli adalah waktu untuk ship MVP?"</h4>
+        </div>
+        <div style="display: flex; gap: var(--space-2);">
+          <span class="badge tarot"><span class="dot"></span>Tarot</span>
+          <span class="badge iching"><span class="dot"></span>I Ching</span>
+          <span class="badge guanyin"><span class="dot"></span>Kuan Yin</span>
+        </div>
+      </div>
+
+      <div class="composer">
+        <div class="composer-col">
+          <h4><span class="cn">塔</span>Tarot · The Magician</h4>
+          <div class="tarot-card">
+            <div class="num">I</div>
+            <div class="glyph-center">∞</div>
+            <div class="name">THE MAGICIAN</div>
+          </div>
+          <p>You hold all four suits already. The question is not capability — it is timing.</p>
+        </div>
+
+        <div class="composer-col">
+          <h4><span class="cn">易</span>I Ching · Hex 64</h4>
+          <div class="hex-stack">
+            <div class="hex-line broken"></div>
+            <div class="hex-line"></div>
+            <div class="hex-line broken"></div>
+            <div class="hex-line"></div>
+            <div class="hex-line broken"></div>
+            <div class="hex-line"></div>
+          </div>
+          <p style="font-family: var(--font-cn-body); font-size: var(--type-scale-base); color: var(--parchment-100); margin-top: var(--space-2);">未濟 — <span style="font-style: italic; color: var(--parchment-300);">Not Yet Across</span></p>
+          <p>The fox is wet at the tail. The crossing is begun but not complete. Caution at the end.</p>
+        </div>
+
+        <div class="composer-col">
+          <h4><span class="cn">觀</span>Kuan Yin · 第三十四</h4>
+          <div class="verse-card">
+            <div class="num">三四</div>
+            <div class="verse">勸君且向竹床眠<br>明月清風自然來</div>
+            <div class="verse-en">"Better rest upon the bamboo bed; the bright moon and pure wind will come of themselves."</div>
+          </div>
+          <p>Wait for the proper season. Do not force the bloom.</p>
+        </div>
+      </div>
+
+      <div class="synthesis">
+        <span class="label">⌬ Synthesis · the codex speaks</span>
+        <div class="body">All three systems point to a single hinge: <strong>timing.</strong> The Magician confirms capability, Hex 64 names the position (begun but not complete), and Verse 34 names the discipline (rest before launch). Convergence reading: <strong>prepare, do not ship.</strong> The earliest aligned window is the 乙未月 metal storehouse opening on <span class="mono" style="color: var(--ember-300); font-style: normal;">7 July 2026.</span></div>
+      </div>
+    </div>
+
+    <h3>Module 3 · Pattern Recognition · Constellation</h3>
+    <p>The innovation. Every entry over years becomes a star; recurring symbols draw their own constellation. Hex 7 appearing nine times in ninety days draws its own bright line.</p>
+    <div class="app-frame">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-4);">
+        <div>
+          <span class="eyebrow">Pattern map · 90 days · 47 entries</span>
+          <h4 style="font-family: var(--font-display); font-size: var(--type-scale-xl); color: var(--parchment-100); font-weight: 400; margin-top: 4px;">Recurring symbols, drawn as constellation</h4>
+        </div>
+        <div style="display: flex; gap: var(--space-3); font-family: var(--font-mono); font-size: var(--type-scale-xs); color: var(--bronze-400); letter-spacing: var(--tracking-wider); text-transform: uppercase;">
+          <span><span style="color: var(--ember-400);">●</span> 9×+ recurring</span>
+          <span><span style="color: var(--jade-300);">●</span> 3-8×</span>
+          <span><span style="color: var(--bronze-400);">●</span> single</span>
+        </div>
+      </div>
+
+      <div class="constellation">
+        <svg viewBox="0 0 800 320" style="width: 100%; height: 100%; display: block;">
+          <!-- Constellation lines -->
+          <g stroke="#c9a961" stroke-width="0.4" opacity="0.5">
+            <line x1="140" y1="80" x2="280" y2="160"/>
+            <line x1="280" y1="160" x2="420" y2="120"/>
+            <line x1="420" y1="120" x2="560" y2="200"/>
+            <line x1="560" y1="200" x2="680" y2="100"/>
+            <line x1="280" y1="160" x2="380" y2="240"/>
+            <line x1="380" y1="240" x2="540" y2="260"/>
+            <line x1="140" y1="80" x2="80" y2="200"/>
+          </g>
+          <g stroke="#7a9588" stroke-width="0.3" opacity="0.4">
+            <line x1="200" y1="240" x2="320" y2="280"/>
+            <line x1="500" y1="60" x2="620" y2="180"/>
+            <line x1="660" y1="240" x2="720" y2="160"/>
+          </g>
+
+          <!-- Background dim entries -->
+          <g fill="#8b7355" opacity="0.5">
+            <circle cx="60"  cy="120" r="1.5"/>
+            <circle cx="180" cy="180" r="1.5"/>
+            <circle cx="220" cy="60"  r="1.5"/>
+            <circle cx="360" cy="80"  r="1.5"/>
+            <circle cx="460" cy="180" r="1.5"/>
+            <circle cx="500" cy="40"  r="1.5"/>
+            <circle cx="640" cy="280" r="1.5"/>
+            <circle cx="380" cy="50"  r="1.5"/>
+            <circle cx="100" cy="260" r="1.5"/>
+            <circle cx="600" cy="100" r="1.5"/>
+            <circle cx="740" cy="220" r="1.5"/>
+            <circle cx="440" cy="290" r="1.5"/>
+            <circle cx="700" cy="60"  r="1.5"/>
+            <circle cx="160" cy="220" r="1.5"/>
+            <circle cx="540" cy="100" r="1.5"/>
+          </g>
+
+          <!-- Mid recurring (jade) -->
+          <g fill="#7a9588">
+            <circle cx="200" cy="240" r="3"/>
+            <circle cx="320" cy="280" r="3"/>
+            <circle cx="500" cy="60"  r="3"/>
+            <circle cx="620" cy="180" r="3"/>
+            <circle cx="660" cy="240" r="3"/>
+            <circle cx="720" cy="160" r="3"/>
+          </g>
+
+          <!-- Bright recurring (gold) -->
+          <g fill="#c9a961">
+            <circle cx="140" cy="80"  r="5"/>
+            <circle cx="280" cy="160" r="5"/>
+            <circle cx="420" cy="120" r="5"/>
+            <circle cx="560" cy="200" r="5"/>
+            <circle cx="680" cy="100" r="5"/>
+            <circle cx="380" cy="240" r="5"/>
+            <circle cx="540" cy="260" r="5"/>
+            <circle cx="80"  cy="200" r="5"/>
+          </g>
+          <!-- Halo on brightest -->
+          <g fill="none" stroke="#c9a961" stroke-width="0.6" opacity="0.3">
+            <circle cx="280" cy="160" r="14"/>
+            <circle cx="420" cy="120" r="14"/>
+          </g>
+
+          <!-- Labels -->
+          <g font-family="JetBrains Mono, monospace" font-size="9" fill="#d6c6a4" letter-spacing="1">
+            <text x="150" y="74">HEX 7 · 9×</text>
+            <text x="292" y="156">MAGICIAN · 11×</text>
+            <text x="432" y="116">VERSE 34 · 8×</text>
+            <text x="572" y="196">HEX 64 · 6×</text>
+            <text x="690" y="96">LION'S GATE</text>
+            <text x="392" y="236">辰戌冲 · 7×</text>
+            <text x="554" y="256">3-CARD CROSS</text>
+            <text x="92"  y="196">觀音 OPENING</text>
+          </g>
+
+          <!-- Title overlay -->
+          <text x="20" y="304" font-family="EB Garamond, serif" font-style="italic" font-size="12" fill="#8b7355">2026.02.16 — 2026.05.17 · 90-day window</text>
+        </svg>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4);">
+        <div class="cs-card" style="border-left-color: var(--ember-400);">
+          <div class="label">Brightest pattern</div>
+          <div class="value"><span class="cn">第七</span> Hex 7 · 9 times</div>
+          <div class="meta">"Recruit allies" has appeared in nearly every strategic reading this quarter. The cosmos is repeating itself.</div>
+        </div>
+        <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+          <div class="label">New constellation forming</div>
+          <div class="value">Magician × Hex 64 × Verse 34</div>
+          <div class="meta">Three appeared together on three separate dates. This is no longer coincidence; this is the year's structural message.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">用</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       ELEVEN · ANTI-PATTERNS
+       ============================================================ -->
+  <section id="anti" data-screen-label="十一 Anti">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">十一</div><div class="label">Chapter Eleven · Anti-Patterns</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <h2 class="section-title"><span class="cn">非</span>What Codex Is Not</h2>
+    <p class="section-lede">A brand is defined as much by its refusals as its choices. These are the visual and tonal directions Codex will never drift toward, however popular the trend.</p>
+
+    <div class="do-dont">
+      <div class="col dont">
+        <h4>Never look like</h4>
+        <ul>
+          <li><strong>Co-Star</strong> — aggressive sans-serif, neon yellow, sass-as-product. We are not punks.</li>
+          <li><strong>Sanctuary / Pattern apps</strong> — pastel gradients, friendly bubbles, gamified daily streaks. We are not casual.</li>
+          <li><strong>Labyrinthos modern</strong> — clean minimal cards, white space SaaS aesthetic. We are not a productivity tool.</li>
+          <li><strong>The Pattern</strong> — purple-magenta gradient mysticism, vague generalities. We are not a vibe.</li>
+          <li><strong>AI-tarot apps</strong> — Midjourney-style mystical art, glowing portals, "ancient wisdom unlocked." We are not a fantasy.</li>
+        </ul>
+      </div>
+      <div class="col do">
+        <h4>Always look like</h4>
+        <ul>
+          <li>A 13th-century manuscript that survived in a temple library, photographed in ambient candlelight.</li>
+          <li>An observatory notebook from a Yuan-dynasty astronomer who also studied Vedic charts.</li>
+          <li>The personal logbook of a wandering sage who never stayed long enough to call any tradition his own.</li>
+          <li>The closing chop of a master who has nothing to prove and nothing to sell.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Specific bans</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4);">
+      <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+        <div class="label">No emoji</div>
+        <div class="value">∅ 🔮 ✨ 🌙</div>
+        <div class="meta">Use the Chinese character, the trigram, or the line-art glyph. Emoji are loud; Codex is quiet.</div>
+      </div>
+      <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+        <div class="label">No Inter, no Roboto, no SF</div>
+        <div class="value">∅ system sans</div>
+        <div class="meta">A practitioner's notebook does not look like a settings panel.</div>
+      </div>
+      <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+        <div class="label">No light mode toggle</div>
+        <div class="value">∅ ☀ / ☾</div>
+        <div class="meta">Codex is always dark, always temple. The candle does not flick on and off.</div>
+      </div>
+      <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+        <div class="label">No streak gamification</div>
+        <div class="value">∅ "you're on fire 🔥"</div>
+        <div class="meta">Practice is honored, not rewarded. The mala bead counter glows; it does not shout.</div>
+      </div>
+      <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+        <div class="label">No AI-mystical art</div>
+        <div class="value">∅ Midjourney sage</div>
+        <div class="meta">Use real woodblock, real calligraphy, or hand-drawn line-art. Generated imagery is forbidden in the brand layer.</div>
+      </div>
+      <div class="cs-card" style="border-left-color: var(--vermillion-500);">
+        <div class="label">No certainty</div>
+        <div class="value">∅ "Your destiny is..."</div>
+        <div class="meta">"May suggest." "Often indicates." "Frequently appears with." Codex offers; it never decrees.</div>
+      </div>
+    </div>
+
+    <div class="ornament"><span class="line"></span><span class="glyph">非</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============================================================
+       TWELVE · CLOSING
+       ============================================================ -->
+  <section id="closing" data-screen-label="十二 Closing">
+    <div class="chapter-head">
+      <div class="rule"></div>
+      <div><div class="numeral">十二</div><div class="label">Chapter Twelve · Closing</div></div>
+      <div class="rule"></div>
+    </div>
+
+    <div class="closing">
+      <div class="seal">印</div>
+      <div class="mantra">ॐ मणि पद्मे हूँ</div>
+      <p class="dedication">For Sudhana on his way to the fifty-third teacher. May this codex be one stop among many. May the practitioner who reads it find their own eyes, not these.</p>
+
+      <div class="divider-gold"><span class="l"></span><span class="m">畢</span><span class="l"></span></div>
+
+      <div class="colophon">
+        Compiled · Bandung · 17 Mei 2026<br>
+        Hari Minggu · Pahing · Wuku Menail<br>
+        流日 · 庚午<br>
+        Da Yun · 丙子 · year 2 of 10<br>
+        <br>
+        蒋承禄 · Lucky Surya Haryadi<br>
+        Profile 3/5 Universalizer · 觀音 practitioner<br>
+        <br>
+        Semar · 天人合一 Codex · v1.0
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

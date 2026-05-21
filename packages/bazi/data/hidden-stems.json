@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "source": "Standard BaZi convention — branch hidden stems (地支藏干).",
+  "note": "Each branch hides 1–3 stems. Roles: 主气 (primary qi), 中气 (middle qi), 余气 (residual qi). Weights are the conventional 0.6/0.3/0.1 distribution used for element-strength analysis.",
+  "roles": {
+    "primary":  { "cn": "主气", "weight": 0.6 },
+    "middle":   { "cn": "中气", "weight": 0.3 },
+    "residual": { "cn": "余气", "weight": 0.1 }
+  },
+  "branches": {
+    "子": [{ "stem": "癸", "role": "primary" }],
+    "丑": [
+      { "stem": "己", "role": "primary" },
+      { "stem": "癸", "role": "middle" },
+      { "stem": "辛", "role": "residual" }
+    ],
+    "寅": [
+      { "stem": "甲", "role": "primary" },
+      { "stem": "丙", "role": "middle" },
+      { "stem": "戊", "role": "residual" }
+    ],
+    "卯": [{ "stem": "乙", "role": "primary" }],
+    "辰": [
+      { "stem": "戊", "role": "primary" },
+      { "stem": "乙", "role": "middle" },
+      { "stem": "癸", "role": "residual" }
+    ],
+    "巳": [
+      { "stem": "丙", "role": "primary" },
+      { "stem": "庚", "role": "middle" },
+      { "stem": "戊", "role": "residual" }
+    ],
+    "午": [
+      { "stem": "丁", "role": "primary" },
+      { "stem": "己", "role": "middle" }
+    ],
+    "未": [
+      { "stem": "己", "role": "primary" },
+      { "stem": "丁", "role": "middle" },
+      { "stem": "乙", "role": "residual" }
+    ],
+    "申": [
+      { "stem": "庚", "role": "primary" },
+      { "stem": "壬", "role": "middle" },
+      { "stem": "戊", "role": "residual" }
+    ],
+    "酉": [{ "stem": "辛", "role": "primary" }],
+    "戌": [
+      { "stem": "戊", "role": "primary" },
+      { "stem": "辛", "role": "middle" },
+      { "stem": "丁", "role": "residual" }
+    ],
+    "亥": [
+      { "stem": "壬", "role": "primary" },
+      { "stem": "甲", "role": "middle" }
+    ]
+  }
+}

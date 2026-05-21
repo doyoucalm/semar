@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "source": "Standard BaZi shen sha (神煞) — most widely-agreed rules. Less canonical ones are flagged; alternative schools may differ.",
+  "stars": [
+    {
+      "key": "tianyi",
+      "cn": "天乙贵人",
+      "en": "Heavenly Noble",
+      "category": "auspicious",
+      "anchor": "dayStem",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "甲": ["丑", "未"], "戊": ["丑", "未"], "庚": ["丑", "未"],
+        "乙": ["子", "申"], "己": ["子", "申"],
+        "丙": ["亥", "酉"], "丁": ["亥", "酉"],
+        "壬": ["卯", "巳"], "癸": ["卯", "巳"],
+        "辛": ["寅", "午"]
+      }
+    },
+    {
+      "key": "wenchang",
+      "cn": "文昌贵人",
+      "en": "Literary Star",
+      "category": "auspicious",
+      "anchor": "dayStem",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "甲": ["巳"],
+        "乙": ["午"],
+        "丙": ["申"], "戊": ["申"],
+        "丁": ["酉"], "己": ["酉"],
+        "庚": ["亥"],
+        "辛": ["子"],
+        "壬": ["寅"],
+        "癸": ["卯"]
+      }
+    },
+    {
+      "key": "xuetang",
+      "cn": "学堂",
+      "en": "Study Hall",
+      "category": "auspicious",
+      "anchor": "dayStem",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "甲": ["亥"],
+        "乙": ["午"],
+        "丙": ["寅"], "戊": ["寅"],
+        "丁": ["酉"], "己": ["酉"],
+        "庚": ["巳"],
+        "辛": ["子"],
+        "壬": ["申"],
+        "癸": ["卯"]
+      }
+    },
+    {
+      "key": "jinyu",
+      "cn": "金舆",
+      "en": "Golden Carriage",
+      "category": "auspicious",
+      "anchor": "dayStem",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "甲": ["辰"], "乙": ["巳"], "丙": ["未"], "丁": ["申"], "戊": ["未"],
+        "己": ["申"], "庚": ["戌"], "辛": ["亥"], "壬": ["丑"], "癸": ["寅"]
+      }
+    },
+    {
+      "key": "huagai",
+      "cn": "华盖",
+      "en": "Canopy",
+      "category": "mystical",
+      "anchor": "yearOrDayBranch",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "申": ["辰"], "子": ["辰"], "辰": ["辰"],
+        "亥": ["未"], "卯": ["未"], "未": ["未"],
+        "寅": ["戌"], "午": ["戌"], "戌": ["戌"],
+        "巳": ["丑"], "酉": ["丑"], "丑": ["丑"]
+      }
+    },
+    {
+      "key": "jiangxing",
+      "cn": "将星",
+      "en": "General Star",
+      "category": "auspicious",
+      "anchor": "yearOrDayBranch",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "申": ["子"], "子": ["子"], "辰": ["子"],
+        "亥": ["卯"], "卯": ["卯"], "未": ["卯"],
+        "寅": ["午"], "午": ["午"], "戌": ["午"],
+        "巳": ["酉"], "酉": ["酉"], "丑": ["酉"]
+      }
+    },
+    {
+      "key": "yima",
+      "cn": "驿马",
+      "en": "Travelling Horse",
+      "category": "mobility",
+      "anchor": "yearOrDayBranch",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "申": ["寅"], "子": ["寅"], "辰": ["寅"],
+        "亥": ["巳"], "卯": ["巳"], "未": ["巳"],
+        "寅": ["申"], "午": ["申"], "戌": ["申"],
+        "巳": ["亥"], "酉": ["亥"], "丑": ["亥"]
+      }
+    },
+    {
+      "key": "taohua",
+      "cn": "桃花",
+      "en": "Peach Blossom",
+      "category": "romance",
+      "anchor": "yearOrDayBranch",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "申": ["酉"], "子": ["酉"], "辰": ["酉"],
+        "亥": ["子"], "卯": ["子"], "未": ["子"],
+        "寅": ["卯"], "午": ["卯"], "戌": ["卯"],
+        "巳": ["午"], "酉": ["午"], "丑": ["午"]
+      }
+    },
+    {
+      "key": "jiesha",
+      "cn": "劫煞",
+      "en": "Robbery Star",
+      "category": "inauspicious",
+      "anchor": "yearOrDayBranch",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "申": ["巳"], "子": ["巳"], "辰": ["巳"],
+        "亥": ["申"], "卯": ["申"], "未": ["申"],
+        "寅": ["亥"], "午": ["亥"], "戌": ["亥"],
+        "巳": ["寅"], "酉": ["寅"], "丑": ["寅"]
+      }
+    },
+    {
+      "key": "zaisha",
+      "cn": "灾煞",
+      "en": "Disaster Star",
+      "category": "inauspicious",
+      "anchor": "yearOrDayBranch",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "申": ["午"], "子": ["午"], "辰": ["午"],
+        "亥": ["酉"], "卯": ["酉"], "未": ["酉"],
+        "寅": ["子"], "午": ["子"], "戌": ["子"],
+        "巳": ["卯"], "酉": ["卯"], "丑": ["卯"]
+      }
+    },
+    {
+      "key": "tianyuandinawang",
+      "cn": "天罗地网",
+      "en": "Heavenly Net Earthly Trap",
+      "category": "inauspicious",
+      "anchor": "dayStem",
+      "rule": "matchAnchorBranch",
+      "table": {
+        "甲": ["辰", "巳"], "乙": ["辰", "巳"],
+        "壬": ["戌", "亥"], "癸": ["戌", "亥"]
+      }
+    },
+    {
+      "key": "kongwang",
+      "cn": "空亡",
+      "en": "Void / Empty",
+      "category": "structural",
+      "anchor": "dayStemBranch",
+      "rule": "voidPerXun",
+      "note": "The two missing branches in the 10-day xun (旬) containing the day pillar. E.g. 甲辰 xun lacks 寅 卯."
+    }
+  ]
+}
