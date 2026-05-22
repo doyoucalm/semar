@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Semar / 天人合一 Codex - Primary Mark
+  Hand-coded SVG. Source of truth: semar-tokens.css
+
+  Palette: ink-900=#0d1119 ember-400=#c9a961 parchment-100=#f4ead5 bronze-400=#8b7355
+
+  Radii: r175 outer-deco r155 bezel-out r106 bezel-in r131 trigram r52 inner-circle
+  Trigrams: Post-Heaven 后天八卦
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400"
+     role="img" aria-label="Semar 天人合一 Codex mark">
+  <title>Semar · 天人合一</title>
+
+  <defs>
+    <!-- Subtle ambient glow from center -->
+    <radialGradient id="mark-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c9a961" stop-opacity="0.10"/>
+      <stop offset="55%"  stop-color="#c9a961" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Inner circle fill: slightly elevated surface -->
+    <radialGradient id="inner-fill" cx="40%" cy="35%" r="65%">
+      <stop offset="0%"   stop-color="#1a1f2e"/>
+      <stop offset="100%" stop-color="#0d1119"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ── Background ────────────────────────────────────────────── -->
+  <rect width="400" height="400" fill="#0d1119"/>
+  <circle cx="200" cy="200" r="200" fill="url(#mark-glow)"/>
+
+  <!-- ── Outer decorative ring ─────────────────────────────────── -->
+  <circle cx="200" cy="200" r="175"
+          fill="none" stroke="#c9a961" stroke-width="0.6" opacity="0.30"/>
+
+  <!-- ── Bezel ──────────────────────────────────────────────────── -->
+  <!-- outer boundary -->
+  <circle cx="200" cy="200" r="155"
+          fill="none" stroke="#c9a961" stroke-width="1.6"/>
+  <!-- inner boundary -->
+  <circle cx="200" cy="200" r="106"
+          fill="none" stroke="#c9a961" stroke-width="1.0"/>
+
+  <!--
+    Sector dividers: 8 lines from bezel-inner (r=106) to outer-ring (r=175)
+    Angle = 0° (N, top), stepping 45° clockwise
+    x = 200 + r·sin(θ),  y = 200 − r·cos(θ)
+
+    θ=0°    sin=0,      cos=1      N
+    θ=45°   sin=.7071  cos=.7071  NE
+    θ=90°   sin=1,      cos=0      E
+    θ=135°  sin=.7071  cos=-.7071 SE
+    θ=180°  sin=0,      cos=-1     S
+    θ=225°  sin=-.7071 cos=-.7071 SW
+    θ=270°  sin=-1,     cos=0      W
+    θ=315°  sin=-.7071 cos=.7071  NW
+
+    r=106: offsets 0, ±75.0, ±106
+    r=175: offsets 0, ±123.7, ±175
+  -->
+
+  <!-- N  --> <line x1="200"  y1="94"   x2="200"  y2="25"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- NE --> <line x1="275"  y1="125"  x2="323.7" y2="76.3" stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- E  --> <line x1="306"  y1="200"  x2="375"  y2="200"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- SE --> <line x1="275"  y1="275"  x2="323.7" y2="323.7" stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- S  --> <line x1="200"  y1="306"  x2="200"  y2="375"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- SW --> <line x1="125"  y1="275"  x2="76.3" y2="323.7" stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- W  --> <line x1="94"   y1="200"  x2="25"   y2="200"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- NW --> <line x1="125"  y1="125"  x2="76.3" y2="76.3"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+
+  <!-- Compass dots at outer ring (r=175) -->
+  <circle cx="200"  cy="25"    r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="323.7" cy="76.3" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="375"  cy="200"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="323.7" cy="323.7" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="200"  cy="375"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="76.3" cy="323.7" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="25"   cy="200"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="76.3" cy="76.3"  r="2.2" fill="#c9a961" opacity="0.55"/>
+
+  <!-- ── Trigrams in bezel at r=131 (Post-Heaven 后天八卦) ───── -->
+  <!--
+    N  ☵ Kan  (Water) — (200, 69)
+    NE ☶ Gen  (Mountain) — (292.6, 107.4)
+    E  ☳ Zhen (Thunder) — (331, 200)
+    SE ☴ Xun  (Wind) — (292.6, 292.6)
+    S  ☲ Li   (Fire) — (200, 331)
+    SW ☷ Kun  (Earth) — (107.4, 292.6)
+    W  ☱ Dui  (Lake) — (69, 200)
+    NW ☰ Qian (Heaven) — (107.4, 107.4)
+  -->
+  <text x="200"   y="69"    text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☵</text>
+  <text x="292.6" y="107.4" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☶</text>
+  <text x="331"   y="200"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☳</text>
+  <text x="292.6" y="292.6" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☴</text>
+  <text x="200"   y="331"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☲</text>
+  <text x="107.4" y="292.6" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☷</text>
+  <text x="69"    y="200"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☱</text>
+  <text x="107.4" y="107.4" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☰</text>
+
+  <!-- ── Inner circle ───────────────────────────────────────────── -->
+  <circle cx="200" cy="200" r="52" fill="url(#inner-fill)"/>
+  <circle cx="200" cy="200" r="52"
+          fill="none" stroke="#c9a961" stroke-width="1.0" opacity="0.85"/>
+
+  <!-- ── Center character: 天 ──────────────────────────────────── -->
+  <!--
+    Fallback chain: Ma Shan Zheng → Noto Serif TC → AR PL UMing CN → generic serif
+    The 天 (tiān) character means Heaven — the first word of 天人合一.
+  -->
+  <text x="200" y="200"
+        text-anchor="middle" dominant-baseline="middle"
+        font-size="46" fill="#c9a961"
+        font-family="'Ma Shan Zheng','Noto Serif TC','AR PL UMing CN',serif">天</text>
+</svg>

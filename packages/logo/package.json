@@ -1,0 +1,14 @@
+{
+  "name": "@semar/logo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Semar / 天人合一 Codex — logo mark assets and D3 generator",
+  "type": "module",
+  "exports": {
+    "./mark.svg": "./src/semar-mark.svg",
+    "./generate-mark": "./src/generate-mark.js"
+  },
+  "scripts": {
+    "preview": "npx serve preview -l 4444"
+  }
+}

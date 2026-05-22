@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Semar / 天人合一 Codex - Mark v3 (Semar wayang silhouette)
+  Body path: D3 CatmullRomClosed spline through 37 anatomical key points.
+
+  Anatomy (right profile, wayang kulit reference):
+    Kuncung: small forehead bump (not topknot)
+    Head: round, proportionate
+    Nose: flat/pug (pesek) — barely protrudes
+    Belly: DOMINANT — large sphere, front AND back rounded equally
+    Rear: also rounded (character is round on all sides)
+    Legs: very short, stubby
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400"
+     role="img" aria-label="Semar 天人合一 Codex mark v3">
+  <title>Semar · 天人合一 · v3</title>
+
+  <defs>
+    <radialGradient id="v3-bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c9a961" stop-opacity="0.10"/>
+      <stop offset="60%"  stop-color="#c9a961" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="v3-fig-glow" cx="45%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#c9a961" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+
+    <!--
+      Poleng pattern — kain kotak-kotak hitam-putih Semar.
+      Simbol yin-yang Jawa: keseimbangan dualitas (gelap-terang, langit-bumi).
+      Di logo: gold (ember-400) + ink-800 alternating 14×14px squares.
+    -->
+    <pattern id="poleng" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect width="14" height="14" fill="#c9a961"/>
+      <rect x="0" y="0" width="7" height="7" fill="#141a26"/>
+      <rect x="7" y="7" width="7" height="7" fill="#141a26"/>
+    </pattern>
+
+    <!-- Clip to Semar body silhouette (for poleng overlay) -->
+    <clipPath id="body-clip">
+      <path d="M202,130C204.845,130.322,207.479,133.556,210,136C212.853,138.765,215.998,142.32,218,146C219.99,149.657,221.64,154.367,222,158C222.287,160.901,221.36,163.528,221,166C220.687,168.147,220.635,170.047,220,172C219.333,174.051,217.865,176.074,217,178C216.225,179.726,215.667,181.333,215,183C214.333,184.667,214.034,186.432,213,188C211.815,189.797,209.407,191.377,208,193C206.817,194.364,204.648,195.746,205,197C205.632,199.255,214.822,200.675,220,203C225.779,205.595,232.495,208.686,238,212C243.09,215.065,250.299,217.893,252,222C253.43,225.453,251.914,230.281,250,234C247.74,238.392,242.553,242.547,238,246C233.265,249.592,226.394,252.393,222,255C218.85,256.869,215.045,257.579,214,260C212.914,262.518,214.834,267.185,216,270C216.98,272.367,220.54,274.427,220,276C219.285,278.083,212.054,279.342,208,280C204.051,280.641,200.151,280.148,196,280C191.51,279.84,185.89,280.267,182,279C178.811,277.961,175.353,276.441,174,274C172.607,271.487,173.37,267.274,174,264C174.654,260.602,178.527,257.328,178,254C177.365,249.992,170.882,246.633,168,242C164.764,236.798,161.07,229.954,160,224C159.034,218.629,160.121,213.11,161,208C161.838,203.13,163.509,198.643,165,194C166.506,189.309,168.274,184.466,170,180C171.614,175.824,173.643,171.956,175,168C176.271,164.295,177.331,160.508,178,157C178.596,153.874,178.314,150.871,179,148C179.667,145.211,180.62,142.373,182,140C183.319,137.731,185.005,134.934,187,134C188.748,133.181,190.85,134.456,193,134C195.754,133.416,199.176,129.681,202,130Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0d1119"/>
+  <circle cx="200" cy="200" r="200" fill="url(#v3-bg-glow)"/>
+
+  <!-- Outer decorative ring -->
+  <circle cx="200" cy="200" r="175"
+          fill="none" stroke="#c9a961" stroke-width="0.6" opacity="0.30"/>
+
+  <!-- Bezel outer -->
+  <circle cx="200" cy="200" r="155"
+          fill="none" stroke="#c9a961" stroke-width="1.6"/>
+
+  <!-- Bezel inner -->
+  <circle cx="200" cy="200" r="106"
+          fill="none" stroke="#c9a961" stroke-width="1.0"/>
+
+  <!-- Sector dividers -->
+  <line x1="200" y1="94"  x2="200"  y2="25"    stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="275" y1="125" x2="323.7" y2="76.3"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="306" y1="200" x2="375"  y2="200"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="275" y1="275" x2="323.7" y2="323.7" stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="200" y1="306" x2="200"  y2="375"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="125" y1="275" x2="76.3" y2="323.7"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="94"  y1="200" x2="25"   y2="200"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <line x1="125" y1="125" x2="76.3" y2="76.3"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+
+  <!-- Compass dots -->
+  <circle cx="200"   cy="25"    r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="323.7" cy="76.3"  r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="375"   cy="200"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="323.7" cy="323.7" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="200"   cy="375"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="76.3"  cy="323.7" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="25"    cy="200"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="76.3"  cy="76.3"  r="2.2" fill="#c9a961" opacity="0.55"/>
+
+  <!-- Trigrams at r=131 (Post-Heaven) -->
+  <text x="200"   y="69"    text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☵</text>
+  <text x="292.6" y="107.4" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☶</text>
+  <text x="331"   y="200"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☳</text>
+  <text x="292.6" y="292.6" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☴</text>
+  <text x="200"   y="331"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☲</text>
+  <text x="107.4" y="292.6" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☷</text>
+  <text x="69"    y="200"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☱</text>
+  <text x="107.4" y="107.4" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☰</text>
+
+  <!-- Warm glow behind Semar figure -->
+  <ellipse cx="206" cy="207" rx="72" ry="70" fill="url(#v3-fig-glow)"/>
+
+  <!-- SEMAR BODY — D3 CatmullRomClosed spline -->
+  <path d="M202,130C204.845,130.322,207.479,133.556,210,136C212.853,138.765,215.998,142.32,218,146C219.99,149.657,221.64,154.367,222,158C222.287,160.901,221.36,163.528,221,166C220.687,168.147,220.635,170.047,220,172C219.333,174.051,217.865,176.074,217,178C216.225,179.726,215.667,181.333,215,183C214.333,184.667,214.034,186.432,213,188C211.815,189.797,209.407,191.377,208,193C206.817,194.364,204.648,195.746,205,197C205.632,199.255,214.822,200.675,220,203C225.779,205.595,232.495,208.686,238,212C243.09,215.065,250.299,217.893,252,222C253.43,225.453,251.914,230.281,250,234C247.74,238.392,242.553,242.547,238,246C233.265,249.592,226.394,252.393,222,255C218.85,256.869,215.045,257.579,214,260C212.914,262.518,214.834,267.185,216,270C216.98,272.367,220.54,274.427,220,276C219.285,278.083,212.054,279.342,208,280C204.051,280.641,200.151,280.148,196,280C191.51,279.84,185.89,280.267,182,279C178.811,277.961,175.353,276.441,174,274C172.607,271.487,173.37,267.274,174,264C174.654,260.602,178.527,257.328,178,254C177.365,249.992,170.882,246.633,168,242C164.764,236.798,161.07,229.954,160,224C159.034,218.629,160.121,213.11,161,208C161.838,203.13,163.509,198.643,165,194C166.506,189.309,168.274,184.466,170,180C171.614,175.824,173.643,171.956,175,168C176.271,164.295,177.331,160.508,178,157C178.596,153.874,178.314,150.871,179,148C179.667,145.211,180.62,142.373,182,140C183.319,137.731,185.005,134.934,187,134C188.748,133.181,190.85,134.456,193,134C195.754,133.416,199.176,129.681,202,130Z" fill="#c9a961"/>
+
+  <!-- Kuncung — explicit circle for crispness -->
+  <circle cx="200" cy="131" r="9" fill="#c9a961"/>
+
+  <!-- Eye: wayang kulit style — solid horizontal almond -->
+  <path d="M 210 157 L 215 154 L 222 155 L 222 158 L 215 159 Z"
+        fill="#0d1119" opacity="0.82"/>
+
+  <!-- Nose (pesek — flat pug, wayang kulit style) -->
+  <ellipse cx="221" cy="169" rx="5" ry="4" fill="#0d1119" opacity="0.45"/>
+
+  <!-- Belly button (puseur) — iconic -->
+  <circle cx="236" cy="224" r="5" fill="#0d1119" opacity="0.50"/>
+
+  <!--
+    Kain poleng — kotak-kotak hitam-putih, simbol yin-yang Jawa.
+    Clipped to body silhouette, applied only on garment/skirt area (y > 244).
+    The checker sits on top of the gold body, alternating squares darkened.
+  -->
+  <rect x="155" y="244" width="105" height="40"
+        fill="url(#poleng)" clip-path="url(#body-clip)" opacity="0.85"/>
+
+  <!-- Sarong border line (waistband) -->
+  <path d="M 175 244 Q 205 248 238 243"
+        fill="none" stroke="#0d1119" stroke-width="2" opacity="0.55"/>
+</svg>

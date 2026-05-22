@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Semar Mark — Logo Preview</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=EB+Garamond:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <!-- D3 v7 -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+
+  <style>
+    :root {
+      --ink-900:   #0d1119;
+      --ink-800:   #141a26;
+      --ink-700:   #1a1f2e;
+      --ember:     #c9a961;
+      --parchment: #f4ead5;
+      --bronze:    #8b7355;
+      --border-gold: rgba(201,169,97,0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--ink-900);
+      color: var(--parchment);
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      border-bottom: 1px solid var(--border-gold);
+      padding-bottom: 32px;
+    }
+    header .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 8px;
+    }
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--parchment);
+      letter-spacing: 0.02em;
+    }
+    header .cn {
+      font-family: 'Ma Shan Zheng', serif;
+      font-size: 1.5rem;
+      color: var(--ember);
+      margin-left: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .panel-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ember);
+    }
+    .panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: var(--parchment);
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+    .mark-wrap {
+      border: 1px solid var(--border-gold);
+      border-radius: 4px;
+      padding: 24px;
+      background: var(--ink-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mark-wrap img,
+    .mark-wrap svg { width: 280px; height: 280px; }
+    .note {
+      font-size: 0.88rem;
+      color: var(--bronze);
+      text-align: center;
+      max-width: 320px;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .sizes-row {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--border-gold);
+      padding-top: 40px;
+      margin-top: 12px;
+    }
+    .sizes-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ember);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .sizes-strip {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .size-item span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--bronze);
+      letter-spacing: 0.12em;
+    }
+    .on-parchment { background: #f4ead5; border-radius: 4px; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">packages/logo · preview</p>
+  <h1>Semar Mark <span class="cn">天人合一</span></h1>
+</header>
+
+<div class="grid">
+
+  <!-- Hand-coded SVG -->
+  <div class="panel">
+    <span class="panel-label">Approach A</span>
+    <span class="panel-title">Hand-coded SVG</span>
+    <div class="mark-wrap">
+      <img src="src/semar-mark.svg" alt="Semar mark"/>
+    </div>
+    <p class="note">
+      Static SVG file. Token values hardcoded.
+      Embeds via &lt;img&gt; or inline.
+      diff-able, zero build step.
+    </p>
+  </div>
+
+  <!-- D3 generated -->
+  <div class="panel">
+    <span class="panel-label">Approach B</span>
+    <span class="panel-title">D3 Generated</span>
+    <div class="mark-wrap" id="d3-panel"></div>
+    <p class="note">
+      Built programmatically via <code>generate-mark.js</code>.
+      Same geometry, BAGUA data-driven.
+      Size / color configurable at runtime.
+    </p>
+  </div>
+
+  <!-- Concept V2: Semar silhouette -->
+  <div class="panel">
+    <span class="panel-label">Concept V2</span>
+    <span class="panel-title">Semar Figure (wayang)</span>
+    <div class="mark-wrap">
+      <img src="src/semar-mark-v2.svg" alt="Semar mark v2 — wayang concept"/>
+    </div>
+    <p class="note">
+      Semar silhouette di center — topknot + wajah bulat + hidung khas.
+      Wayang kulit style, 3/4 view, ember gold.
+    </p>
+  </div>
+
+  <!-- Size strip -->
+  <div class="sizes-row">
+    <p class="sizes-label">Scale test — mark at various sizes</p>
+    <div class="sizes-strip" id="sizes"></div>
+  </div>
+
+</div>
+
+<!-- D3 generator (inline — avoids CORS module import issues with file:// / serve) -->
+<script>
+const TOKENS = {
+  inkBg:       '#0d1119',
+  inkElevated: '#1a1f2e',
+  ember:       '#c9a961',
+  parchment:   '#f4ead5',
+  bronze:      '#8b7355',
+};
+
+const BAGUA = [
+  ['☵','坎','Kan · Water',    0  ],
+  ['☶','艮','Gen · Mountain', 45 ],
+  ['☳','震','Zhen · Thunder', 90 ],
+  ['☴','巽','Xun · Wind',     135],
+  ['☲','离','Li · Fire',      180],
+  ['☷','坤','Kun · Earth',    225],
+  ['☱','兑','Dui · Lake',     270],
+  ['☰','乾','Qian · Heaven',  315],
+];
+
+function polar(cx, cy, r, deg) {
+  const rad = (deg - 90) * (Math.PI / 180);
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function renderMark(container, { size = 400, bg = TOKENS.inkBg } = {}) {
+  const cx = size / 2, cy = size / 2;
+  const s = size / 400;
+  const R = {
+    outerDeco:  175 * s,
+    bezelOut:   155 * s,
+    bezelIn:    106 * s,
+    trigram:    131 * s,
+    inner:       52 * s,
+    dot:        175 * s,
+  };
+
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', `0 0 ${size} ${size}`)
+    .attr('width', size).attr('height', size);
+
+  const defs = svg.append('defs');
+
+  const gg = defs.append('radialGradient').attr('id', `glow-${size}`);
+  gg.append('stop').attr('offset','0%').attr('stop-color',TOKENS.ember).attr('stop-opacity',0.10);
+  gg.append('stop').attr('offset','55%').attr('stop-color',TOKENS.ember).attr('stop-opacity',0.03);
+  gg.append('stop').attr('offset','100%').attr('stop-color',TOKENS.ember).attr('stop-opacity',0);
+
+  const ig = defs.append('radialGradient').attr('id',`inner-${size}`)
+    .attr('cx','40%').attr('cy','35%').attr('r','65%');
+  ig.append('stop').attr('offset','0%').attr('stop-color',TOKENS.inkElevated);
+  ig.append('stop').attr('offset','100%').attr('stop-color',TOKENS.inkBg);
+
+  svg.append('rect').attr('width',size).attr('height',size).attr('fill',bg);
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',size/2).attr('fill',`url(#glow-${size})`);
+
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',R.outerDeco)
+    .attr('fill','none').attr('stroke',TOKENS.ember).attr('stroke-width',0.6).attr('opacity',0.30);
+
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',R.bezelOut)
+    .attr('fill','none').attr('stroke',TOKENS.ember).attr('stroke-width',1.6);
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',R.bezelIn)
+    .attr('fill','none').attr('stroke',TOKENS.ember).attr('stroke-width',1.0);
+
+  BAGUA.forEach(([,,, deg]) => {
+    const i = polar(cx,cy,R.bezelIn,deg), o = polar(cx,cy,R.outerDeco,deg);
+    svg.append('line')
+      .attr('x1',i.x).attr('y1',i.y).attr('x2',o.x).attr('y2',o.y)
+      .attr('stroke',TOKENS.ember).attr('stroke-width',0.6).attr('opacity',0.40);
+  });
+
+  BAGUA.forEach(([,,, deg]) => {
+    const p = polar(cx,cy,R.dot,deg);
+    svg.append('circle').attr('cx',p.x).attr('cy',p.y).attr('r',2.2*s)
+      .attr('fill',TOKENS.ember).attr('opacity',0.55);
+  });
+
+  BAGUA.forEach(([glyph,,, deg]) => {
+    const p = polar(cx,cy,R.trigram,deg);
+    svg.append('text')
+      .attr('x',p.x).attr('y',p.y)
+      .attr('text-anchor','middle').attr('dominant-baseline','middle')
+      .attr('font-size',22*s).attr('fill',TOKENS.ember).attr('font-family','serif')
+      .text(glyph);
+  });
+
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',R.inner).attr('fill',`url(#inner-${size})`);
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',R.inner)
+    .attr('fill','none').attr('stroke',TOKENS.ember).attr('stroke-width',1.0).attr('opacity',0.85);
+
+  svg.append('text')
+    .attr('x',cx).attr('y',cy)
+    .attr('text-anchor','middle').attr('dominant-baseline','middle')
+    .attr('font-size',46*s).attr('fill',TOKENS.ember)
+    .attr('font-family',"'Ma Shan Zheng','Noto Serif TC',serif")
+    .text('天');
+
+  return svg.node();
+}
+
+// Render D3 panel
+renderMark(document.getElementById('d3-panel'), { size: 280 });
+
+// Render size strip
+const strip = document.getElementById('sizes');
+[
+  { px: 192, label: '192 · og-image' },
+  { px: 128, label: '128' },
+  { px: 64,  label: '64' },
+  { px: 32,  label: '32 · favicon' },
+  { px: 16,  label: '16' },
+].forEach(({ px, label }) => {
+  const item = document.createElement('div');
+  item.className = 'size-item';
+  renderMark(item, { size: px });
+  const lbl = document.createElement('span');
+  lbl.textContent = label;
+  item.appendChild(lbl);
+  strip.appendChild(item);
+});
+
+// Parchment variant
+const pi = document.createElement('div');
+pi.className = 'size-item';
+const pw = document.createElement('div');
+pw.className = 'on-parchment';
+renderMark(pw, { size: 128, bg: '#f4ead5' });
+pi.appendChild(pw);
+const pl = document.createElement('span');
+pl.textContent = '128 · parchment';
+pi.appendChild(pl);
+strip.appendChild(pi);
+</script>
+</body>
+</html>

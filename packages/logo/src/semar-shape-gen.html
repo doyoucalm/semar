@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--
+  Semar Silhouette Generator
+  Uses D3 Catmull-Rom spline through anatomically-correct key points.
+  Run in browser → inspect the generated <path d="..."> → copy to semar-mark-v3.svg
+
+  Anatomy (right profile, based on wayang kulit reference):
+    - Kuncung: small forehead bump (not a topknot — grows from forehead)
+    - Head: round, proportionate
+    - Nose: flat/pug — barely protrudes
+    - Lower jaw: slight protrusion
+    - Neck: very short
+    - Belly: DOMINANT — large sphere, protrudes right AND rounds at back
+    - Rear/back: also rounded (both front and back bulge equally)
+    - Legs: very short, stubby
+    - Feet: small, turned out
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Semar Shape Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <style>
+    body { background: #0d1119; display: flex; gap: 40px; padding: 40px; }
+    .panel { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    label { font: 12px monospace; color: #c9a961; }
+    pre { font: 10px monospace; color: #8b7355; max-width: 420px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+<div class="panel">
+  <label>Semar — full figure (400×400)</label>
+  <svg id="full" viewBox="0 0 400 400" width="400" height="400"></svg>
+</div>
+<div class="panel">
+  <label>Semar — mark only (200×200)</label>
+  <svg id="small" viewBox="100 100 200 200" width="300" height="300"></svg>
+</div>
+<div class="panel">
+  <label>Generated path d= value:</label>
+  <pre id="path-out"></pre>
+</div>
+
+<script>
+const W = 400, CX = 200, CY = 200;
+const T = { // design tokens
+  inkBg:    '#0d1119',
+  inkElev:  '#1a1f2e',
+  ember:    '#c9a961',
+  bronze:   '#8b7355',
+};
+
+/*
+  SEMAR SILHOUETTE KEY POINTS
+  Right profile (belly protrudes right).
+  Coordinates in 400×400 viewbox, center (200,200).
+
+  Points listed CLOCKWISE from kuncung top.
+  The spline will connect them with smooth curves.
+
+  Legend:
+    x > 200 = right side (front/belly side)
+    x < 200 = left side  (back side)
+    y < 200 = above center
+    y > 200 = below center
+*/
+const pts = [
+  // ── KUNCUNG (forehead bump) ──────────────────────────
+  [193, 134],  //  0 kuncung top
+  [202, 130],  //  1 kuncung right peak
+  [210, 136],  //  2 kuncung right base / forehead top
+  // ── FACE ────────────────────────────────────────────
+  [218, 146],  //  3 forehead / temple
+  [222, 158],  //  4 eye level
+  [221, 166],  //  5 nose bridge (flat — barely protrudes)
+  [220, 172],  //  6 nose tip (pesek / pug — rounds down, not out)
+  [217, 178],  //  7 upper lip / philtrum
+  [215, 183],  //  8 mouth level
+  [213, 188],  //  9 lower jaw (slight protrusion)
+  [208, 193],  // 10 chin
+  // ── NECK → CHEST ────────────────────────────────────
+  [205, 197],  // 11 neck / short transition
+  // ── BELLY — the DOMINANT element ───────────────────
+  [220, 203],  // 12 chest right / belly top-right
+  [238, 212],  // 13 belly upper protrusion
+  [252, 222],  // 14 belly MAX RIGHT (the big gendut)
+  [250, 234],  // 15 belly right-lower
+  [238, 246],  // 16 belly lower-right curve
+  [222, 255],  // 17 belly bottom-right
+  // ── RIGHT LEG ───────────────────────────────────────
+  [214, 260],  // 18 right leg upper
+  [216, 270],  // 19 right leg lower
+  [220, 276],  // 20 right foot outer
+  [208, 280],  // 21 right foot tip
+  // ── LEFT FOOT / BETWEEN FEET ────────────────────────
+  [196, 280],  // 22 between feet / inner
+  [182, 279],  // 23 left foot
+  [174, 274],  // 24 left foot inner
+  // ── LEFT LEG ────────────────────────────────────────
+  [174, 264],  // 25 left leg lower
+  [178, 254],  // 26 left leg upper / belly bottom-left
+  // ── BACK / REAR HUMP ────────────────────────────────
+  // Semar's rear is also rounded — both belly and back bulge equally
+  [168, 242],  // 27 belly bottom-left
+  [160, 224],  // 28 BACK HUMP MAX LEFT (rear protrusion)
+  [161, 208],  // 29 back mid
+  // ── BACK UPPER / SHOULDER ───────────────────────────
+  [165, 194],  // 30 back upper torso
+  [170, 180],  // 31 shoulder / upper back
+  [175, 168],  // 32 back of neck
+  // ── HEAD BACK ───────────────────────────────────────
+  [178, 157],  // 33 back of head lower
+  [179, 148],  // 34 back of head mid
+  [182, 140],  // 35 back of head upper
+  [187, 134],  // 36 kuncung left base
+];
+
+// ── Build D3 Catmull-Rom closed path ─────────────────
+const line = d3.line()
+  .x(d => d[0])
+  .y(d => d[1])
+  .curve(d3.curveCatmullRomClosed.alpha(0.5));
+
+const bodyPath = line(pts);
+
+// ── Render into #full (400×400 with bagua ring) ──────
+function renderMark(svgEl, showBagua = true) {
+  const svg = d3.select(svgEl);
+  svg.selectAll('*').remove();
+
+  const defs = svg.append('defs');
+  const gg = defs.append('radialGradient').attr('id', 'v3-glow');
+  gg.append('stop').attr('offset','0%').attr('stop-color',T.ember).attr('stop-opacity',0.12);
+  gg.append('stop').attr('offset','100%').attr('stop-color',T.ember).attr('stop-opacity',0);
+
+  svg.append('rect').attr('width',400).attr('height',400).attr('fill',T.inkBg);
+  svg.append('circle').attr('cx',CX).attr('cy',CY).attr('r',200).attr('fill','url(#v3-glow)');
+
+  if (showBagua) {
+    // Bagua ring — same as v1/v2
+    const BAGUA = [
+      ['☵',0],['☶',45],['☳',90],['☴',135],
+      ['☲',180],['☷',225],['☱',270],['☰',315],
+    ];
+    function polar(r, deg) {
+      const rad = (deg - 90) * Math.PI / 180;
+      return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
+    }
+    svg.append('circle').attr('cx',CX).attr('cy',CY).attr('r',175)
+      .attr('fill','none').attr('stroke',T.ember).attr('stroke-width',0.6).attr('opacity',0.30);
+    svg.append('circle').attr('cx',CX).attr('cy',CY).attr('r',155)
+      .attr('fill','none').attr('stroke',T.ember).attr('stroke-width',1.6);
+    svg.append('circle').attr('cx',CX).attr('cy',CY).attr('r',106)
+      .attr('fill','none').attr('stroke',T.ember).attr('stroke-width',1.0);
+
+    BAGUA.forEach(([g, deg]) => {
+      const i = polar(106, deg), o = polar(175, deg), t = polar(131, deg), dot = polar(175, deg);
+      svg.append('line')
+        .attr('x1',i.x).attr('y1',i.y).attr('x2',o.x).attr('y2',o.y)
+        .attr('stroke',T.ember).attr('stroke-width',0.6).attr('opacity',0.40);
+      svg.append('circle').attr('cx',dot.x).attr('cy',dot.y).attr('r',2.2)
+        .attr('fill',T.ember).attr('opacity',0.55);
+      svg.append('text').attr('x',t.x).attr('y',t.y)
+        .attr('text-anchor','middle').attr('dominant-baseline','middle')
+        .attr('font-size',22).attr('fill',T.ember).attr('font-family','serif')
+        .text(g);
+    });
+  }
+
+  // ── Semar body ───────────────────────────────────────
+  // Warm glow behind figure
+  svg.append('ellipse')
+    .attr('cx', 205).attr('cy', 205).attr('rx', 70).attr('ry', 68)
+    .attr('fill', 'url(#v3-glow)');
+
+  // Main silhouette
+  svg.append('path').attr('d', bodyPath).attr('fill', T.ember);
+
+  // ── Kuncung — explicit circle to make it crisp ───────
+  svg.append('circle').attr('cx', 200).attr('cy', 131).attr('r', 9)
+    .attr('fill', T.ember);
+
+  // ── Eye (right-profile: one eye visible, half-closed) ─
+  svg.append('path')
+    .attr('d', 'M 210 157 Q 216 151 222 157')
+    .attr('fill', 'none')
+    .attr('stroke', T.inkBg)
+    .attr('stroke-width', 3).attr('stroke-linecap', 'round');
+
+  // ── Nose hint (pesek — tiny, points slightly down) ────
+  svg.append('ellipse').attr('cx', 221).attr('cy', 167).attr('rx', 4.5).attr('ry', 3.5)
+    .attr('fill', T.inkBg).attr('opacity', 0.45);
+
+  // ── Mouth (slight upward curve — Semar always smiles) ─
+  svg.append('path')
+    .attr('d', 'M 210 183 Q 213 188 218 185')
+    .attr('fill', 'none')
+    .attr('stroke', T.inkBg)
+    .attr('stroke-width', 2.5).attr('stroke-linecap', 'round');
+
+  // ── Belly button (puseur — iconic, always depicted) ───
+  svg.append('circle').attr('cx', 236).attr('cy', 224).attr('r', 5)
+    .attr('fill', T.inkBg).attr('opacity', 0.50);
+
+  // ── Sarong fold line (checkered hipcloth suggestion) ──
+  svg.append('path')
+    .attr('d', 'M 196 245 Q 222 248 238 244')
+    .attr('fill', 'none')
+    .attr('stroke', T.inkBg)
+    .attr('stroke-width', 1.8).attr('opacity', 0.40);
+
+  return svg.node();
+}
+
+// Render both views
+renderMark(document.getElementById('full'), true);
+renderMark(document.getElementById('small'), true);
+
+// Output path for manual use
+document.getElementById('path-out').textContent =
+  'BODY PATH:\n' + bodyPath + '\n\nKEY POINTS:\n' +
+  pts.map((p,i) => `${i}: [${p}]`).join('\n');
+</script>
+</body>
+</html>

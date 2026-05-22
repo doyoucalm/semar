@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Semar / 天人合一 Codex - Concept Mark v2
+  Center element: Semar silhouette (wayang kulit style)
+
+  Semar features:
+    - Topknot (konde): the round bun on top
+    - Head: rotund, almost perfectly circular
+    - Nose: the signature feature — hangs to the right, large and pear-shaped
+    - Eyes: half-closed slits (blissful expression)
+    - Smile: wide, always present
+
+  Radii: r175 outer-deco r155 bezel-out r106 bezel-in r131 trigram
+  Center: (200,200). No inner circle — Semar fills the center space.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400"
+     role="img" aria-label="Semar 天人合一 Codex concept mark v2">
+  <title>Semar · 天人合一 · Concept v2</title>
+
+  <defs>
+    <radialGradient id="v2-bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c9a961" stop-opacity="0.10"/>
+      <stop offset="60%"  stop-color="#c9a961" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subtle inner glow behind Semar figure -->
+    <radialGradient id="v2-semar-glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"   stop-color="#c9a961" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0d1119"/>
+  <circle cx="200" cy="200" r="200" fill="url(#v2-bg-glow)"/>
+
+  <!-- Outer decorative ring -->
+  <circle cx="200" cy="200" r="175"
+          fill="none" stroke="#c9a961" stroke-width="0.6" opacity="0.30"/>
+
+  <!-- Bezel outer -->
+  <circle cx="200" cy="200" r="155"
+          fill="none" stroke="#c9a961" stroke-width="1.6"/>
+
+  <!-- Bezel inner -->
+  <circle cx="200" cy="200" r="106"
+          fill="none" stroke="#c9a961" stroke-width="1.0"/>
+
+  <!-- Sector dividers (r=106 to r=175) -->
+  <!-- N  --> <line x1="200"  y1="94"   x2="200"  y2="25"    stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- NE --> <line x1="275"  y1="125"  x2="323.7" y2="76.3"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- E  --> <line x1="306"  y1="200"  x2="375"  y2="200"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- SE --> <line x1="275"  y1="275"  x2="323.7" y2="323.7" stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- S  --> <line x1="200"  y1="306"  x2="200"  y2="375"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- SW --> <line x1="125"  y1="275"  x2="76.3" y2="323.7"  stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- W  --> <line x1="94"   y1="200"  x2="25"   y2="200"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+  <!-- NW --> <line x1="125"  y1="125"  x2="76.3" y2="76.3"   stroke="#c9a961" stroke-width="0.6" opacity="0.40"/>
+
+  <!-- Compass dots at outer ring -->
+  <circle cx="200"   cy="25"    r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="323.7" cy="76.3"  r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="375"   cy="200"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="323.7" cy="323.7" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="200"   cy="375"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="76.3"  cy="323.7" r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="25"    cy="200"   r="2.2" fill="#c9a961" opacity="0.55"/>
+  <circle cx="76.3"  cy="76.3"  r="2.2" fill="#c9a961" opacity="0.55"/>
+
+  <!-- Trigrams in bezel at r=131 (Post-Heaven) -->
+  <text x="200"   y="69"    text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☵</text>
+  <text x="292.6" y="107.4" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☶</text>
+  <text x="331"   y="200"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☳</text>
+  <text x="292.6" y="292.6" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☴</text>
+  <text x="200"   y="331"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☲</text>
+  <text x="107.4" y="292.6" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☷</text>
+  <text x="69"    y="200"   text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☱</text>
+  <text x="107.4" y="107.4" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#c9a961" font-family="serif">☰</text>
+
+  <!--
+    ═══════════════════════════════════════════════════════════
+    SEMAR SILHOUETTE — wayang kulit style, 3/4 view
+    Center (200,200). All components in ember gold (#c9a961).
+    ═══════════════════════════════════════════════════════════
+
+    Anatomy:
+      Topknot (konde): cy=160, rx=14 ry=16   top at y=144  (56px above center)
+      Head:            cy=199, rx=36 ry=34    top at y=165  (35px above center)
+      Nose:            cx=222 cy=212, rx=17 ry=19  (signature protrusion, right+down)
+
+    Eyes + smile are dark (#0d1119) cut into the gold head.
+
+    Topknot overlaps with head (bottom of topknot y=176, top of head y=165 overlap OK).
+  -->
+
+  <!-- Warm glow centered slightly left (face side) -->
+  <ellipse cx="196" cy="196" rx="65" ry="60" fill="url(#v2-semar-glow)"/>
+
+  <!--
+    SEMAR anatomy — profile 3/4 facing RIGHT:
+    Head is shifted slightly LEFT to give nose room to protrude RIGHT.
+
+    Topknot:  cx=196 cy=157  rx=15 ry=17   (top: y=140, 60px above center)
+    Head:     cx=193 cy=200  rx=37 ry=35   (right edge: x=230)
+    Nose:     cx=236 cy=214  rx=22 ry=24   (right edge: x=258 — clearly outside face)
+              The nose RIGHT edge at x=258 = 58px from mark center,
+              safely inside bezel inner ring (r=106).
+  -->
+
+  <!-- Topknot (konde) — the signature bun -->
+  <ellipse cx="196" cy="157" rx="15" ry="17" fill="#c9a961"/>
+
+  <!-- Head — large, round, slightly left of center -->
+  <ellipse cx="193" cy="200" rx="37" ry="35" fill="#c9a961"/>
+
+  <!--
+    Nose — THE defining Semar feature.
+    Large pear-shape, dramatically protrudes RIGHT from face center.
+    Face right edge at x=230; nose right edge at x=258.
+    Net protrusion: 28px beyond the face — clearly visible at all sizes.
+  -->
+  <ellipse cx="236" cy="214" rx="22" ry="24" fill="#c9a961"/>
+
+  <!--
+    Eyes — half-closed blissful slits, cut dark into gold.
+    Shifted left to stay on the face (cx=193), not overlapping the nose.
+  -->
+  <path d="M 172 194 Q 181 186 190 194"
+        fill="none" stroke="#0d1119" stroke-width="3.0" stroke-linecap="round"/>
+  <path d="M 195 193 Q 204 185 213 193"
+        fill="none" stroke="#0d1119" stroke-width="2.8" stroke-linecap="round"/>
+
+  <!-- Smile — wide, ever-present grin -->
+  <path d="M 170 222 Q 192 240 214 226"
+        fill="none" stroke="#0d1119" stroke-width="3.0" stroke-linecap="round"/>
+
+  <!-- Nostril — subtle dark circle inside the nose ellipse -->
+  <circle cx="228" cy="222" r="4" fill="#0d1119" opacity="0.65"/>
+</svg>
