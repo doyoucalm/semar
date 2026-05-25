@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { EB_Garamond, Noto_Serif_TC, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { Nav } from '@/components/Nav';
+import { Nav }        from '@/components/Nav';
+import { DiarySync }  from '@/components/DiarySync';
 
 const ebGaramond = EB_Garamond({
   subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="id" className={`${ebGaramond.variable} ${notoSerifTC.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-screen bg-ink text-parchment">
         <div className="flex flex-col min-h-screen max-w-lg mx-auto relative">
+          <DiarySync />
           <main className="flex-1 pb-20">{children}</main>
           <Nav />
         </div>
