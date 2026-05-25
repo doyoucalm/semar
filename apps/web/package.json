@@ -1,0 +1,32 @@
+{
+  "name": "@semar/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3777",
+    "build": "next build",
+    "start": "next start --port 3777",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@semar/astrology": "workspace:*",
+    "@semar/bazi": "workspace:*",
+    "@semar/iching": "workspace:*",
+    "@semar/numerology": "workspace:*",
+    "@semar/pawukon": "workspace:*",
+    "@semar/tarot": "workspace:*",
+    "@semar/zwds": "workspace:*",
+    "next": "^15.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10",
+    "postcss": "^8",
+    "tailwindcss": "^3.4",
+    "typescript": "^5.6"
+  }
+}

@@ -554,3 +554,95 @@ Sample regenerated: `samples/2026-05-19-lucky.md` (152 lines, 8509 chars) now sh
 - **"go semar bazi case study"** → rewrite `knowledge/bazi/case-studies/lucky-1985.md` for the corrected `丙寅` hour pillar (still on the old `己巳` reading).
 - Git: still not a repo. Earlier plan unchanged.
 
+---
+
+# SESSION HANDOFF — 2026-05-25 (web app deployed + interpretive layer)
+
+## What landed this session
+
+### 1. `apps/web` — Next.js 15 web application built from scratch
+Full mobile-first PWA shell at `semar.astaredekar.com` (port 3777 via nginx reverse proxy, SSL via certbot).
+
+**Routes:**
+- `/daily` — DailyBrief: BaZi day pillar, Weton, transit aspect, cross-engine synthesis + oracle chooser (Tarot/I-Ching/Keduanya)
+- `/cast/tarot` — 3-card spread with 3D CSS flip animation
+- `/cast/iching` — 3-coin casting method with animated coins + hexagram build
+- `/diary` — Reverse-chronological log + 14-day calendar strip
+- `/cast`, `/chat` — stubs
+
+**Systemd service**: `/etc/systemd/system/semar.service`
+- ExecStart uses full path: `/root/.hermes/node/bin/node /workspace/semar/apps/web/node_modules/next/dist/bin/next start --port 3777`
+- systemd doesn't include `/root/.hermes/node/bin` in PATH — full path is mandatory.
+
+### 2. `apps/web/lib/meanings.ts` — interpretive data layer (NEW)
+Pure static lookup tables (no imports):
+- `HEXAGRAM_GUIDANCE` — 64 hexagrams, 1-line judgment text (EN)
+- `TAROT_MEANINGS` — 78 cards, `{upright, reversed}` keyword strings
+- `BAZI_STEM` — 10 heavenly stems in `"ElementPolarity — brief · description"` format
+- `BAZI_BRANCH` — 12 earthly branches in same format
+- `NEPTU_BRIEF` — neptu 7–17 one-liners
+- `WUKU_BRIEF` — 30 wuku one-liners
+- `TRANSIT_ASPECT` — 5 aspect types one-liners (ID)
+- `PLANET_BRIEF` — 15 planets/points (EN name, ID life area)
+
+### 3. DailyBrief enhancements
+- Neptu/wuku brief below Weton line
+- BaZi stem + branch energy brief in gold
+- Transit aspect one-liner below transit display
+- **KONVERGENSI section** — `buildSynthesis()` combines all 3 signals into a paragraph
+- **Fixed tarot save bug**: was saving raw `TarotDraw[]` with `cardName` field → diary showed `p:undefined`. Now normalizes to `{position, card: d.cardName, reversed}`.
+
+### 4. TarotCard — keywords after flip
+`TAROT_MEANINGS[draw.cardName]?.upright/reversed` shown below card name post-flip.
+
+### 5. CoinCast — hexagram guidance
+`HEXAGRAM_GUIDANCE[result.hexagram.number]` italic paragraph after result. Also shows relating hexagram guidance.
+
+### 6. HexagramDisplay — fixed build direction
+I-Ching casts from line 1 (bottom) to line 6 (top). Placeholder dashes moved to top of flex column so first cast line appears at bottom and hexagram grows upward (traditional).
+
+### 7. Diary improvements
+- `getEntryDates()` now returns ALL entry kinds (was filtering `kind === 'today'` only → missing cast entries)
+- CalendarStrip timezone fixed: was using `new Date().toISOString().slice(0,10)` (UTC midnight → wrong date for WIB). Now uses `todayLocal()` as reference + UTC noon arithmetic.
+- `EntryRow` handles `card` field (not `cardName`) for tarot entries; shows engine label; shows I-Ching EN name + relating hexagram.
+
+## Files created/modified
+
+| File | Change |
+|---|---|
+| `apps/web/` | NEW — entire Next.js app (too many files to list) |
+| `apps/web/lib/meanings.ts` | NEW — 78 tarot + 64 hexagram + BaZi + Weton + transit lookups |
+| `apps/web/components/DailyBrief.tsx` | buildSynthesis + BaZi/neptu/wuku/transit briefs + KONVERGENSI + tarot save fix |
+| `apps/web/components/TarotCard.tsx` | keywords after flip |
+| `apps/web/components/CoinCast.tsx` | hexagram guidance + relating guidance |
+| `apps/web/components/HexagramDisplay.tsx` | bottom-to-top build direction fix |
+| `apps/web/app/diary/page.tsx` | CalendarStrip TZ fix + EntryRow improvements |
+| `apps/web/lib/diary-store.ts` | getEntryDates() returns all kinds |
+| `/etc/systemd/system/semar.service` | NEW — production systemd unit |
+| `/etc/nginx/sites-available/semar.astaredekar.com` | NEW — nginx reverse proxy config |
+
+## Open items inherited + new
+
+**New open items from this session:**
+- **Chat page** (`/chat`) — stub only. Needs `MINIMAX_API_KEY` wired as env var. MiniMax key already exists at `/root/.mm_key`.
+- **Tarot art batch 2** — Cards 05+ (Hierophant = Leon Silverberg Suikoden II archetype). Only cards 00-04 have art. Art goes to `apps/web/public/card-art/` and `ART_SLUGS` in `apps/web/lib/engines-client.ts` needs updating.
+- **Supabase migration** — Diary is currently localStorage Phase 1. Phase 2 = Supabase for cross-device sync.
+- **Weekly Convergence Digest** — the moat feature per [[semar_differentiator]]. Cross-engine longitudinal pattern synthesis. Sunday-evening artifact. Build before chat interface.
+- **OPENAI_API_KEY** — still not provisioned. Blocks tarot art generation pipeline.
+
+**Inherited open items (still unresolved):**
+- Lunar converter 3 skipped tests in `@semar/zwds`
+- BaZi case study rewrite for 丙寅 hour
+- ZWDS depth (auxiliary stars, decade limits)
+- Astrology fixtures still at 9:31 (cosmetic)
+- Sasih/Saka year for pawukon
+- KB pawukon content
+- Git: still not a repo
+
+## Resume hints
+
+- **"go semar chat"** → wire MiniMax API (`/root/.mm_key`) as `MINIMAX_API_KEY` env in `.env.local` + implement `/chat` page as AI-powered divination interface.
+- **"go semar convergence"** → implement Weekly Convergence Digest: aggregate diary events by tag/engine over 7-day window, send pre-aggregated summary to MiniMax, render as 3-block artifact (Counts · Convergence · Negation).
+- **"go semar tarot batch 2"** → generate cards 05+ via Genspark or OpenAI image gen. Card 05 = The Hierophant = Leon Silverberg (Suikoden II). Slug pattern: `apps/web/public/card-art/05-hierophant.jpg`.
+- **"go semar beresin"** → check TG for quiz answers (msg #318) before resuming DiaryEvent schema migration.
+
