@@ -2,39 +2,35 @@
  * DiarySync — invisible component mounted at root layout.
  *
  * On first render:
- * 1. Pulls Supabase entries missing from localStorage (cross-device sync).
- * 2. On first-ever load with Supabase configured, also pushes any existing
- *    localStorage entries upstream (one-time migration).
+ * 1. One-time migration: pushes any existing localStorage entries to /api/diary.
+ * 2. Pulls remote entries missing from localStorage (cross-device sync).
  *
- * Silent — no UI. Fails gracefully if Supabase is unconfigured or offline.
+ * Silent — no UI. Fails gracefully if the API is unreachable.
  */
 
 'use client';
 
 import { useEffect } from 'react';
-import { supabaseEnabled } from '@/lib/supabase';
-import { syncFromSupabase, pushLocalToSupabase } from '@/lib/diary-store';
+import { syncFromRemote, pushLocalToRemote } from '@/lib/diary-store';
 
 const MIGRATED_KEY = 'semar-diary-migrated-v1';
 
 export function DiarySync() {
   useEffect(() => {
-    if (!supabaseEnabled) return;
-
     void (async () => {
-      // One-time migration: push existing localStorage entries to Supabase.
+      // One-time migration: push existing localStorage entries to server DB.
       if (!localStorage.getItem(MIGRATED_KEY)) {
-        const { pushed } = await pushLocalToSupabase();
+        const { pushed } = await pushLocalToRemote();
         if (pushed > 0) {
-          console.info(`[DiarySync] migrated ${pushed} local entries to Supabase`);
+          console.info(`[DiarySync] migrated ${pushed} local entries to server`);
         }
         localStorage.setItem(MIGRATED_KEY, '1');
       }
 
       // Pull any remote entries we're missing (other devices wrote them).
-      const { added } = await syncFromSupabase();
+      const { added } = await syncFromRemote();
       if (added > 0) {
-        console.info(`[DiarySync] pulled ${added} remote entries from Supabase`);
+        console.info(`[DiarySync] pulled ${added} remote entries from server`);
       }
     })();
   }, []);

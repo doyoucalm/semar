@@ -3,21 +3,17 @@
  *
  * Strategy:
  *   - localStorage: primary read path + offline fallback (always fast, sync).
- *   - Supabase: write-through on every appendEntry + pull-to-sync on app load.
+ *   - /api/diary:   write-through on every appendEntry + pull-to-sync on app load.
  *
  * All exported read functions remain synchronous — no callers need changing.
- * Supabase operations are fire-and-forget for writes, and called once on mount
+ * API operations are fire-and-forget for writes, and called once on mount
  * via DiarySync component for reads.
- *
- * Phase 3: add auth.users scoping to RLS policy.
  */
 
 'use client';
 
 import type { WebDiaryEntry } from './diary-types';
 export type { WebDiaryEntry } from './diary-types';
-
-import { supabase } from './supabase';
 
 const KEY = 'semar-diary-v1';
 
@@ -37,58 +33,20 @@ function save(entries: WebDiaryEntry[]): void {
   localStorage.setItem(KEY, JSON.stringify(entries));
 }
 
-// ── Supabase row shape ────────────────────────────────────────────────────────
-
-interface DiaryRow {
-  id: string;
-  created_at: string;
-  local_date: string;
-  kind: string;
-  question: string | null;
-  notes: string | null;
-  payload: Record<string, unknown>;
-}
-
-function toRow(e: WebDiaryEntry): DiaryRow {
-  return {
-    id:         e.id,
-    created_at: e.createdAt,
-    local_date: e.localDate,
-    kind:       e.kind,
-    question:   e.question ?? null,
-    notes:      e.notes    ?? null,
-    payload:    e.payload,
-  };
-}
-
-function fromRow(row: DiaryRow): WebDiaryEntry {
-  return {
-    id:        row.id,
-    createdAt: row.created_at,
-    localDate: row.local_date,
-    kind:      row.kind as WebDiaryEntry['kind'],
-    question:  row.question  ?? undefined,
-    notes:     row.notes     ?? undefined,
-    payload:   row.payload,
-  };
-}
-
 // ── Public API ────────────────────────────────────────────────────────────────
 
-/** Append entry to localStorage + fire-and-forget Supabase upsert. */
+/** Append entry to localStorage + fire-and-forget upsert to /api/diary. */
 export function appendEntry(entry: WebDiaryEntry): void {
   const entries = load();
   entries.push(entry);
   save(entries);
 
-  if (supabase) {
-    void supabase
-      .from('diary_entries')
-      .upsert(toRow(entry))
-      .then(({ error }) => {
-        if (error) console.warn('[diary] supabase upsert failed:', error.message);
-      });
-  }
+  // Fire-and-forget — never blocks the UI
+  void fetch('/api/diary', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ entries: [entry] }),
+  }).catch((err) => console.warn('[diary] API upsert failed:', err));
 }
 
 /** Synchronous read — always from localStorage. */
@@ -116,33 +74,23 @@ export function makeId(): string {
 // ── Cross-device sync ─────────────────────────────────────────────────────────
 
 /**
- * Pull all remote entries from Supabase and merge into localStorage.
- * Remote entries that are missing locally are added (cross-device sync).
- * Local entries always win on ID collision (already written, no regression).
+ * Pull all remote entries from /api/diary and merge into localStorage.
+ * Remote entries missing locally are added (cross-device sync).
+ * Local entries always win on ID collision.
  *
  * Call once on app mount via DiarySync component. Silent-fails if offline.
  */
-export async function syncFromSupabase(): Promise<{ added: number }> {
-  if (!supabase) return { added: 0 };
-
+export async function syncFromRemote(): Promise<{ added: number }> {
   try {
-    const { data, error } = await supabase
-      .from('diary_entries')
-      .select('*')
-      .order('created_at', { ascending: true })
-      .limit(1000);                        // >1000 entries → paginate later
+    const res = await fetch('/api/diary');
+    if (!res.ok) { console.warn('[diary] pull failed:', res.status); return { added: 0 }; }
 
-    if (error) {
-      console.warn('[diary] supabase pull failed:', error.message);
-      return { added: 0 };
-    }
-    if (!data || data.length === 0) return { added: 0 };
+    const { entries: remote } = (await res.json()) as { entries: WebDiaryEntry[] };
+    if (!remote || remote.length === 0) return { added: 0 };
 
-    const remote = (data as DiaryRow[]).map(fromRow);
-    const local  = load();
+    const local    = load();
     const localIds = new Set(local.map((e) => e.id));
-
-    const toAdd = remote.filter((e) => !localIds.has(e.id));
+    const toAdd    = remote.filter((e) => !localIds.has(e.id));
     if (toAdd.length === 0) return { added: 0 };
 
     const merged = [...local, ...toAdd]
@@ -150,33 +98,35 @@ export async function syncFromSupabase(): Promise<{ added: number }> {
     save(merged);
     return { added: toAdd.length };
   } catch (err) {
-    console.warn('[diary] supabase sync error:', err);
+    console.warn('[diary] sync error:', err);
     return { added: 0 };
   }
 }
 
 /**
- * Push all localStorage entries that are missing in Supabase.
- * Useful for initial migration after credentials are first configured.
+ * Push all localStorage entries not yet in the server DB.
+ * Used for one-time migration when first loading on a new device.
  */
-export async function pushLocalToSupabase(): Promise<{ pushed: number }> {
-  if (!supabase) return { pushed: 0 };
-
+export async function pushLocalToRemote(): Promise<{ pushed: number }> {
   const local = load();
   if (local.length === 0) return { pushed: 0 };
 
   try {
-    const { error } = await supabase
-      .from('diary_entries')
-      .upsert(local.map(toRow), { onConflict: 'id', ignoreDuplicates: true });
+    const res = await fetch('/api/diary', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ entries: local }),
+    });
+    if (!res.ok) { console.warn('[diary] push failed:', res.status); return { pushed: 0 }; }
 
-    if (error) {
-      console.warn('[diary] supabase push failed:', error.message);
-      return { pushed: 0 };
-    }
-    return { pushed: local.length };
+    const { inserted } = (await res.json()) as { inserted: number };
+    return { pushed: inserted };
   } catch (err) {
-    console.warn('[diary] supabase push error:', err);
+    console.warn('[diary] push error:', err);
     return { pushed: 0 };
   }
 }
+
+// ── Legacy Supabase compat (kept so no import sites break) ───────────────────
+export const syncFromSupabase   = syncFromRemote;
+export const pushLocalToSupabase = pushLocalToRemote;
