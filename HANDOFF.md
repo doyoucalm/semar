@@ -1,7 +1,57 @@
 # Semar / 天人合一 Codex — Handoff
 
-**Status**: Init in progress, paused for token limit on 2026-05-17.
-**Resume signal**: User says **"go semar beresin"** — pick up from "Resume checklist" below.
+**Status (2026-05-29)**: LIVE in production at **https://semar.astaredekor.com**
+(nginx + certbot SSL → systemd `semar.service`, `next start` port 3777, up since
+26 May). 9 engine packages + web app + CLI, **411 tests green**. Active development,
+not paused.
+**Resume signal**: User says **"go semar beresin"** — read "LATEST SESSION" directly
+below, then the dated sections further down for full history.
+
+> ⚠️ Domain is **astaredekor.com** (not astaredekar). DNS-verified 2026-05-29.
+
+---
+
+## LATEST SESSION — 2026-05-29 (commit + audit)
+
+Picked up 4 days of uncommitted work, verified it, committed in 5 clean commits,
+fixed one real bug, and audited the project.
+
+**Committed (on `main`, NOT yet pushed — push needs explicit go):**
+- `9a55286` chore(gitignore): exclude `data/` — server-side SQLite diary store held
+  personal entries and was about to be committed. Now ignored like `.semar/`.
+- `3927ea9` feat(zwds): lunar.ts now delegates to `lunar-javascript` (precomputed
+  table) instead of astronomy-engine — fixes the 3 long-skipped leap-month tests
+  near 冬至, −233 lines. Adds 大限 decade-limits (+18 tests) + aux-star wiring.
+- `1ab0772` feat(cli): `semar stats` (streak/top cards/weton), `semar cal`, 2-step
+  interactive `semar today`. **Bug fixed:** computeStreak derived "yesterday" from
+  `Date.now()` while "today" was caller-supplied → passed `todayLocal` compared
+  against real wall-clock yesterday and reported streak 0. Now derived from today.
+- `960467d` refactor(web): **diary sync pivoted Supabase client → server-side
+  SQLite** (`better-sqlite3` in `lib/db.ts` + `/api/diary` GET/POST). The previous
+  "Supabase migration" open item is therefore SUPERSEDED — single-user VPS tool, no
+  auth, DB at `data/semar.db`. Also added 3 few-shot voice examples to chat prompt.
+- `b6e3ba2` docs(bazi): expand lucky-1985 case study.
+
+**Audit findings (2026-05-29):**
+- 🟡 **Dead Supabase code.** `@supabase/supabase-js` still declared in
+  `apps/web/package.json`; `apps/web/lib/supabase.ts` is now unused after the SQLite
+  pivot. Remove dep + file, or re-justify keeping it. Low risk, just clutter.
+- 🟡 **No backup of `data/semar.db`.** Now gitignored (correct — personal data) AND
+  not in any cloud sync. R2 weekly backup bundles the repo dir so the file rides
+  along, but verify the WAL is checkpointed or the bundle may catch a partial write.
+  The Supabase pivot traded cross-device sync for local-only; that's a real product
+  regression if Lucky ever wants the diary on his phone — was that intentional?
+- 🟢 **`.env.local` correctly gitignored**, MINIMAX key sourced from `/root/.mm_key`.
+- 🟢 **Tests honest** — 411 green, no `.skip` left in zwds lunar.
+- 🟢 **Personal data hygiene** — `docs/personal/`, `.semar/`, `data/` all ignored.
+
+**Resolved this session (were open items below):** lunar 3 skipped tests ✅ ·
+ZWDS decade limits + aux stars ✅ · chat few-shot voice ✅ · Supabase migration
+SUPERSEDED by SQLite ✅.
+
+**Still open:** tarot art batch 2 (needs OPENAI_API_KEY, still unprovisioned) ·
+dead Supabase cleanup · decide local-SQLite vs cross-device sync · push `main` to
+origin when ready.
 
 ---
 
@@ -624,11 +674,19 @@ I-Ching casts from line 1 (bottom) to line 6 (top). Placeholder dashes moved to 
 ## Open items inherited + new
 
 **New open items from this session:**
-- **Chat page** (`/chat`) — stub only. Needs `MINIMAX_API_KEY` wired as env var. MiniMax key already exists at `/root/.mm_key`.
 - **Tarot art batch 2** — Cards 05+ (Hierophant = Leon Silverberg Suikoden II archetype). Only cards 00-04 have art. Art goes to `apps/web/public/card-art/` and `ART_SLUGS` in `apps/web/lib/engines-client.ts` needs updating.
 - **Supabase migration** — Diary is currently localStorage Phase 1. Phase 2 = Supabase for cross-device sync.
-- **Weekly Convergence Digest** — the moat feature per [[semar_differentiator]]. Cross-engine longitudinal pattern synthesis. Sunday-evening artifact. Build before chat interface.
+- **Chat voice polish** — model occasionally slips into "kamu harus"-style language; add few-shot examples to system prompt to reinforce observational voice.
 - **OPENAI_API_KEY** — still not provisioned. Blocks tarot art generation pipeline.
+
+**Done this session (2026-05-25 second run):**
+- ✅ `app/api/convergence/route.ts` — Convergence Digest (HITUNGAN/KONVERGENSI/NEGASI) via MiniMax M2.7
+- ✅ `components/WeeklyDigest.tsx` — diary page component with 7/14/30d window selector
+- ✅ `app/api/chat/route.ts` — context-aware AI chat with today's CoreData + diary context
+- ✅ `app/chat/page.tsx` — full chat UI (bounce thinking indicator, auto-resize, Enter-to-send)
+- ✅ `.env.local` wired with MINIMAX_API_KEY from `/root/.mm_key`
+- ✅ **MiniMax M2.7 token budget** — must use `max_tokens: 2000`+ due to `<think>` blocks; unclosed think block handled with secondary strip regex
+- ✅ Pushed to github.com/doyoucalm/semar main (commit `29156bd`)
 
 **Inherited open items (still unresolved):**
 - Lunar converter 3 skipped tests in `@semar/zwds`
@@ -637,12 +695,11 @@ I-Ching casts from line 1 (bottom) to line 6 (top). Placeholder dashes moved to 
 - Astrology fixtures still at 9:31 (cosmetic)
 - Sasih/Saka year for pawukon
 - KB pawukon content
-- Git: still not a repo
 
 ## Resume hints
 
-- **"go semar chat"** → wire MiniMax API (`/root/.mm_key`) as `MINIMAX_API_KEY` env in `.env.local` + implement `/chat` page as AI-powered divination interface.
-- **"go semar convergence"** → implement Weekly Convergence Digest: aggregate diary events by tag/engine over 7-day window, send pre-aggregated summary to MiniMax, render as 3-block artifact (Counts · Convergence · Negation).
 - **"go semar tarot batch 2"** → generate cards 05+ via Genspark or OpenAI image gen. Card 05 = The Hierophant = Leon Silverberg (Suikoden II). Slug pattern: `apps/web/public/card-art/05-hierophant.jpg`.
+- **"go semar supabase"** → migrate diary from localStorage to Supabase; schema: `diary_entries` table + RLS + sync hook in diary-store.ts.
+- **"go semar chat polish"** → add 2-3 few-shot examples to chat system prompt to enforce observational voice strictly.
 - **"go semar beresin"** → check TG for quiz answers (msg #318) before resuming DiaryEvent schema migration.
 
