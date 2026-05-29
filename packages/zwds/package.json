@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "astronomy-engine": "^2.1.19"
+    "astronomy-engine": "^2.1.19",
+    "lunar-javascript": "^1.7.7"
   },
   "devDependencies": {
     "tsx": "^4.22.1",

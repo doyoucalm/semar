@@ -17,6 +17,9 @@ import {
   transformationsFor, type Transformation,
 } from './transformations.js';
 import { placeAuxStars, lucunBranch } from './aux-stars.js';
+import {
+  computeDecadeLimits, activeDecadeLimit, suiAge, type DecadeLimit,
+} from './decade-limits.js';
 
 export interface ChartInput {
   readonly year: number;
@@ -62,7 +65,11 @@ export interface ZWDSChart {
   readonly ziweiBranch: Branch;
   readonly tianfuBranch: Branch;
   readonly cells: readonly PalaceCell[];
+  /** All 12 大限 (decade limits) from 命宮, in sequence order. */
+  readonly decadeLimits: readonly DecadeLimit[];
 }
+
+export { type DecadeLimit } from './decade-limits.js';
 
 export function computeZWDSChart(input: ChartInput): ZWDSChart {
   validate(input);
@@ -127,6 +134,15 @@ export function computeZWDSChart(input: ChartInput): ZWDSChart {
     });
   }
 
+  const decadeLimits = computeDecadeLimits(
+    selfBranch,
+    byBranch.get(selfBranch) ?? '命宫',
+    bureau.number,
+    yp.stem,
+    input.gender,
+    byBranch,
+  );
+
   return {
     input,
     utcMs,
@@ -139,6 +155,7 @@ export function computeZWDSChart(input: ChartInput): ZWDSChart {
     ziweiBranch: ziwei,
     tianfuBranch: tianfu,
     cells,
+    decadeLimits,
   };
 }
 

@@ -37,6 +37,11 @@ export {
 } from './aux-stars.js';
 
 export {
+  computeDecadeLimits, activeDecadeLimit, suiAge, decadeLimitDirection,
+  type DecadeLimit,
+} from './decade-limits.js';
+
+export {
   computeZWDSChart,
   type ChartInput,
   type PalaceCell,
