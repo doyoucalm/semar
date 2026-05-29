@@ -33,3 +33,7 @@ packages/bazi/data/hko-raw/
 
 # Local-only CLI state: birth profile + diary log. Never commit personal data.
 .semar/
+
+# Server-side SQLite diary store (apps/web /api/diary). Holds personal diary
+# entries — never commit. WAL/SHM sidecar files included.
+data/
