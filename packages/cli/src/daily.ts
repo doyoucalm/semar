@@ -2,17 +2,21 @@
  * "semar today" — the daily ritual. Composes a single entry containing:
  *   - today's BaZi day pillar (and how it interacts with the natal pillars)
  *   - today's transit chart vs the natal astrology
- *   - a 3-card tarot spread (past / present / future)
- *   - one I-Ching hexagram
+ *   - today's Javanese weton (weton + wuku)
+ *   - a 3-card tarot spread (past / present / future)   [optional]
+ *   - one I-Ching hexagram                              [optional]
  *
  * Saves to JSONL diary. Returns a compact human-readable summary.
+ *
+ * For the interactive 2-step CLI flow, see interactive.ts.
  */
 
 import { computeBazi } from '@semar/bazi';
 import { computeChart, computeTransits } from '@semar/astrology';
 import { computeZWDSChart } from '@semar/zwds';
+import { computePawukonChart } from '@semar/pawukon';
 import { drawCards, mulberry32 as tarotMulberry } from '@semar/tarot';
-import { castHexagram, HEXAGRAMS, mulberry32 as ichingMulberry } from '@semar/iching';
+import { castHexagram, mulberry32 as ichingMulberry } from '@semar/iching';
 import type { Profile } from './profile.js';
 import {
   appendEntry, localDateString, makeId, type DiaryEntry,
@@ -67,6 +71,11 @@ export function runDaily(profile: Profile, opts: DailyOptions = {}): DailyResult
   // 3. Transits.
   const transits = computeTransits(natalAstro, nowMs);
 
+  // 3b. Weton — today's Javanese/Balinese day cycle.
+  const [ly, lm, ld] = localDate.split('-').map(Number);
+  const pawukonToday = computePawukonChart({ year: ly!, month: lm!, day: ld! });
+  const wetonLabel = `${pawukonToday.weton.hari} ${pawukonToday.weton.pasaran}  ·  neptu ${pawukonToday.weton.neptu}  ·  wuku ${pawukonToday.pawukon.wuku}`;
+
   // 4. Tarot — 3-card spread, deterministic for the (date, profile) pair.
   const cards = drawCards(3, { reversals: true, rng: tarotMulberry(seed) });
   const spread = cards.map((c, i) => ({
@@ -94,6 +103,7 @@ export function runDaily(profile: Profile, opts: DailyOptions = {}): DailyResult
     `── Semar daily — ${localDate} ──`,
     `Transits: ${transitLine}`,
     baziLine,
+    `Weton:    ${wetonLabel}`,
     `Tarot:    ${tarotLine}`,
     `I-Ching:  ${ichingLine}`,
   ].join('\n');
@@ -120,6 +130,12 @@ export function runDaily(profile: Profile, opts: DailyOptions = {}): DailyResult
           orb: a.orb,
           motion: a.motion,
         })),
+      },
+      weton: {
+        hari: pawukonToday.weton.hari,
+        pasaran: pawukonToday.weton.pasaran,
+        neptu: pawukonToday.weton.neptu,
+        wuku: pawukonToday.pawukon.wuku,
       },
       tarot: spread,
       iching: {

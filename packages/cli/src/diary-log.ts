@@ -14,7 +14,7 @@ export interface DiaryEntry {
   readonly id: string;
   readonly createdAt: string; // ISO UTC
   readonly localDate: string; // YYYY-MM-DD in profile's local time
-  readonly kind: 'today' | 'chart' | 'cast' | 'draw' | 'transits' | 'custom';
+  readonly kind: 'today' | 'chart' | 'cast' | 'draw' | 'transits' | 'custom' | 'note';
   readonly question?: string;
   readonly notes?: string;
   readonly payload: Record<string, unknown>;
