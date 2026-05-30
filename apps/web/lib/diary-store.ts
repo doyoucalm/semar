@@ -126,7 +126,3 @@ export async function pushLocalToRemote(): Promise<{ pushed: number }> {
     return { pushed: 0 };
   }
 }
-
-// ── Legacy Supabase compat (kept so no import sites break) ───────────────────
-export const syncFromSupabase   = syncFromRemote;
-export const pushLocalToSupabase = pushLocalToRemote;
