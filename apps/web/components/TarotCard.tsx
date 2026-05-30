@@ -9,12 +9,6 @@ interface Props {
   autoReveal?: boolean;
 }
 
-const POSITION_LABEL: Record<TarotDraw['position'], string> = {
-  past: 'Masa Lalu',
-  present: 'Sekarang',
-  future: 'Akan Datang',
-};
-
 export function TarotCard({ draw, autoReveal = false }: Props) {
   const [flipped, setFlipped] = useState(autoReveal);
 
@@ -22,7 +16,7 @@ export function TarotCard({ draw, autoReveal = false }: Props) {
     <div className="flex flex-col items-center gap-2">
       {/* Position label */}
       <span className="text-xs text-muted font-mono tracking-widest uppercase">
-        {POSITION_LABEL[draw.position]}
+        {draw.positionLabel}
       </span>
 
       {/* Card */}

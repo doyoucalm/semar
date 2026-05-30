@@ -4,7 +4,15 @@
  */
 'use client';
 
-import { drawCards, mulberry32 as tarotRng } from '@semar/tarot';
+import {
+  drawCards,
+  mulberry32 as tarotRng,
+  DECK,
+  SPREADS,
+  spreadById,
+  drawForSpread,
+  type Spread,
+} from '@semar/tarot';
 import { castHexagram, hexagramByBinary, mulberry32 as ichingRng } from '@semar/iching';
 import { PROFILE } from './profile';
 
@@ -22,8 +30,14 @@ function hash32(s: string): number {
 
 // ── Tarot ─────────────────────────────────────────────────────────────────────
 export interface TarotDraw {
-  position: 'past' | 'present' | 'future';
+  /** Stable key for React lists — the position label (unique within a spread). */
+  position: string;
+  /** Human-facing label for the position slot, e.g. "Past" or "Hopes & Fears". */
+  positionLabel: string;
   cardName: string;
+  /** Canonical deck slug, e.g. "the-fool" / "wands-ace". */
+  cardId: string;
+  /** 0-based index of the card within DECK (0..77). */
   deckIndex: number;
   reversed: boolean;
   artPath: string | null;
@@ -39,29 +53,49 @@ function artPath(deckIndex: number): string | null {
   return slug ? `/card-art/${slug}.png` : null;
 }
 
-function toDraw(d: ReturnType<typeof drawCards>[0], i: number, positions: TarotDraw['position'][]): TarotDraw {
-  // deck index heuristic: use card arcana/rank to find index
-  const raw = d.card.id !== undefined ? d.card.id : i;
-  const idx = typeof raw === 'number' ? raw : i;
+/** Real deck index for a card id, by lookup in DECK (not a slug heuristic). */
+function deckIndexOf(cardId: string): number {
+  return DECK.findIndex((c) => c.id === cardId);
+}
+
+function toDraw(
+  d: ReturnType<typeof drawCards>[number],
+  position: string,
+  positionLabel: string,
+): TarotDraw {
+  const idx = deckIndexOf(d.card.id);
   return {
-    position: positions[i]!,
+    position,
+    positionLabel,
     cardName: d.card.name,
+    cardId: d.card.id,
     deckIndex: idx,
     reversed: d.reversed,
-    artPath: artPath(idx),
+    artPath: idx >= 0 ? artPath(idx) : null,
   };
 }
 
-const POS: TarotDraw['position'][] = ['past', 'present', 'future'];
+export const TAROT_SPREADS = SPREADS;
+export const DEFAULT_SPREAD_ID = 'past-present-future';
+export type { Spread };
+
+/** Draw a fresh reading bound to the positions of the given spread. */
+export function drawFreshSpread(spreadId: string = DEFAULT_SPREAD_ID): TarotDraw[] {
+  const spread = spreadById(spreadId);
+  const seed = hash32(`${Date.now()}:fresh:${Math.random()}:${spreadId}`);
+  const positioned = drawForSpread(spread, { reversals: true, rng: tarotRng(seed) });
+  return positioned.map((p) => toDraw(p.drawn, p.position.label, p.position.label));
+}
 
 export function drawDailyTarot(localDate: string): TarotDraw[] {
+  const spread = spreadById(DEFAULT_SPREAD_ID);
   const seed = hash32(`${localDate}:${PROFILE.name}:tarot`);
-  return drawCards(3, { reversals: true, rng: tarotRng(seed) }).map((d, i) => toDraw(d, i, POS));
+  const positioned = drawForSpread(spread, { reversals: true, rng: tarotRng(seed) });
+  return positioned.map((p) => toDraw(p.drawn, p.position.label, p.position.label));
 }
 
 export function drawFreshTarot(): TarotDraw[] {
-  const seed = hash32(`${Date.now()}:fresh:${Math.random()}`);
-  return drawCards(3, { reversals: true, rng: tarotRng(seed) }).map((d, i) => toDraw(d, i, POS));
+  return drawFreshSpread(DEFAULT_SPREAD_ID);
 }
 
 // ── I-Ching ───────────────────────────────────────────────────────────────────

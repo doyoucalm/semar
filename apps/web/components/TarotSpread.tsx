@@ -16,8 +16,8 @@ export function TarotSpread({ draws, question }: Props) {
         </p>
       )}
 
-      {/* 3-card spread */}
-      <div className="flex justify-center gap-4 px-2">
+      {/* N-position spread — wraps for larger layouts (Celtic Cross, Year Ahead) */}
+      <div className="flex flex-wrap justify-center gap-4 px-2">
         {draws.map((d) => (
           <TarotCard key={d.position} draw={d} />
         ))}

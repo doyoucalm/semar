@@ -1,8 +1,119 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { getEntries, getEntryDates, type WebDiaryEntry } from '@/lib/diary-store';
 import { todayLocal } from '@/lib/profile';
 import { WeeklyDigest } from '@/components/WeeklyDigest';
+import {
+  DECK,
+  mirrorStats,
+  SUIT_ELEMENT,
+  type ReadingRecord,
+  type Suit,
+} from '@semar/tarot';
+
+// Card name → canonical deck id (diary stores the display name, mirror needs the id).
+const NAME_TO_ID: Record<string, string> = Object.fromEntries(
+  DECK.map((c) => [c.name, c.id]),
+);
+
+type TarotPayload = Array<{ position: string; card: string; reversed: boolean }>;
+
+/** Build flat ReadingRecord[] from every saved entry carrying a tarot payload. */
+function buildReadingRecords(entries: WebDiaryEntry[]): ReadingRecord[] {
+  const records: ReadingRecord[] = [];
+  for (const e of entries) {
+    const tarot = e.payload['tarot'] as TarotPayload | undefined;
+    if (!tarot || tarot.length === 0) continue;
+    for (const t of tarot) {
+      const cardId = NAME_TO_ID[t.card];
+      if (!cardId) continue; // skip names not in the 78-card deck
+      records.push({ cardId, reversed: !!t.reversed, date: e.localDate });
+    }
+  }
+  return records;
+}
+
+const SUIT_LABEL: Record<Suit, string> = {
+  wands: 'Wands', cups: 'Cups', swords: 'Swords', pentacles: 'Pentacles',
+};
+
+function MirrorSection({ entries }: { entries: WebDiaryEntry[] }) {
+  const records = useMemo(() => buildReadingRecords(entries), [entries]);
+  const stats = useMemo(() => mirrorStats(records), [records]);
+
+  if (stats.total === 0) return null;
+
+  const topName = stats.mostCommonCard
+    ? DECK.find((c) => c.id === stats.mostCommonCard!.cardId)?.name ?? stats.mostCommonCard.cardId
+    : null;
+
+  return (
+    <div className="flex flex-col gap-3 mt-2">
+      <h2 className="font-serif text-base text-parchment">Mirror</h2>
+      <p className="text-[10px] text-muted/50 font-mono">
+        agregat {stats.total} kartu dari riwayat tarot
+      </p>
+
+      <div className="grid grid-cols-2 gap-2">
+        <div className="border border-gold/15 rounded-lg px-3 py-2">
+          <p className="text-[10px] text-muted/60 font-mono uppercase">total kartu</p>
+          <p className="text-lg text-gold font-serif">{stats.total}</p>
+        </div>
+        <div className="border border-gold/15 rounded-lg px-3 py-2">
+          <p className="text-[10px] text-muted/60 font-mono uppercase">reversed</p>
+          <p className="text-lg text-ember/80 font-serif">{stats.reversalPct}%</p>
+        </div>
+        <div className="border border-gold/15 rounded-lg px-3 py-2 col-span-2">
+          <p className="text-[10px] text-muted/60 font-mono uppercase">paling sering</p>
+          <p className="text-sm text-parchment font-serif">
+            {topName}
+            {stats.mostCommonCard && (
+              <span className="text-muted/50 font-mono"> ×{stats.mostCommonCard.count}</span>
+            )}
+          </p>
+        </div>
+        <div className="border border-gold/15 rounded-lg px-3 py-2">
+          <p className="text-[10px] text-muted/60 font-mono uppercase">major / minor</p>
+          <p className="text-sm text-parchment font-mono">
+            {stats.majorMinorRatio.major} / {stats.majorMinorRatio.minor}
+          </p>
+        </div>
+        <div className="border border-gold/15 rounded-lg px-3 py-2">
+          <p className="text-[10px] text-muted/60 font-mono uppercase">elemen dominan</p>
+          <p className="text-sm text-parchment font-mono">
+            {(() => {
+              const eb = stats.elementBalance;
+              const top = (Object.keys(eb) as (keyof typeof eb)[])
+                .reduce((a, b) => (eb[b] > eb[a] ? b : a));
+              return eb[top] > 0 ? `${top} ${eb[top]}` : '—';
+            })()}
+          </p>
+        </div>
+      </div>
+
+      {/* Suit distribution */}
+      <div className="flex flex-col gap-1">
+        <p className="text-[10px] text-muted/60 font-mono uppercase">sebaran suit</p>
+        {(Object.keys(stats.suitDistribution) as Suit[]).map((suit) => {
+          const n = stats.suitDistribution[suit];
+          const pct = stats.total > 0 ? (n / stats.total) * 100 : 0;
+          return (
+            <div key={suit} className="flex items-center gap-2">
+              <span className="text-xs text-muted/70 font-mono w-20">
+                {SUIT_LABEL[suit]}
+                <span className="text-muted/40"> · {SUIT_ELEMENT[suit]}</span>
+              </span>
+              <div className="flex-1 h-2 rounded-full bg-elevated overflow-hidden">
+                <div className="h-full bg-gold/40" style={{ width: `${pct}%` }} />
+              </div>
+              <span className="text-xs text-parchment/70 font-mono w-6 text-right">{n}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 // Simple calendar
 function CalendarStrip({ dates }: { dates: Set<string> }) {
@@ -104,6 +215,9 @@ export default function DiaryPage() {
           entries.map((e) => <EntryRow key={e.id} e={e} />)
         )}
       </div>
+
+      {/* Mirror — aggregate tarot stats over saved history */}
+      <MirrorSection entries={entries} />
 
       {/* Weekly / multi-day convergence digest */}
       <WeeklyDigest />

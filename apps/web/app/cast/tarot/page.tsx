@@ -1,17 +1,27 @@
 'use client';
 import { useState } from 'react';
 import { TarotSpread } from '@/components/TarotSpread';
-import { drawFreshTarot } from '@/lib/engines-client';
+import { drawFreshSpread, TAROT_SPREADS, DEFAULT_SPREAD_ID } from '@/lib/engines-client';
+import { spreadById } from '@semar/tarot';
 import { appendEntry, makeId } from '@/lib/diary-store';
 import { todayLocal } from '@/lib/profile';
 
 export default function TarotPage() {
-  const [question, setQuestion] = useState('');
-  const [draws,    setDraws]    = useState<ReturnType<typeof drawFreshTarot> | null>(null);
-  const [saved,    setSaved]    = useState(false);
+  const [question,  setQuestion]  = useState('');
+  const [spreadId,  setSpreadId]  = useState<string>(DEFAULT_SPREAD_ID);
+  const [draws,     setDraws]     = useState<ReturnType<typeof drawFreshSpread> | null>(null);
+  const [saved,     setSaved]     = useState(false);
+
+  const spread = spreadById(spreadId);
 
   function cast() {
-    setDraws(drawFreshTarot());
+    setDraws(drawFreshSpread(spreadId));
+    setSaved(false);
+  }
+
+  function pickSpread(id: string) {
+    setSpreadId(id);
+    setDraws(null);
     setSaved(false);
   }
 
@@ -25,6 +35,7 @@ export default function TarotPage() {
       question: question || undefined,
       payload: {
         engine: 'tarot',
+        spread: spreadId,
         tarot: draws.map((d) => ({
           position: d.position,
           card: d.cardName,
@@ -41,7 +52,26 @@ export default function TarotPage() {
       <div className="text-center">
         <p className="text-gold text-5xl mb-1">🂡</p>
         <h1 className="font-serif text-lg text-parchment">Tarot Cast</h1>
-        <p className="text-xs text-muted font-mono mt-1">tiga kartu · past / present / future</p>
+        <p className="text-xs text-muted font-mono mt-1">
+          {spread.cardCount} kartu · {spread.name}
+        </p>
+      </div>
+
+      {/* Spread picker */}
+      <div className="flex flex-wrap gap-2 justify-center">
+        {TAROT_SPREADS.map((s) => (
+          <button
+            key={s.id}
+            onClick={() => pickSpread(s.id)}
+            className={`text-xs font-mono px-3 py-1.5 rounded-full border transition-colors
+                        ${s.id === spreadId
+                          ? 'border-gold/50 text-gold bg-gold/10'
+                          : 'border-gold/15 text-muted hover:border-gold/30 hover:text-parchment'}`}
+          >
+            {s.name}
+            <span className="ml-1.5 text-muted/50">{s.cardCount}</span>
+          </button>
+        ))}
       </div>
 
       {/* Question */}
