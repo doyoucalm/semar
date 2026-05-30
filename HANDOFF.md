@@ -39,8 +39,13 @@ fixed one real bug, and audited the project.
 - 🟡 **No backup of `data/semar.db`.** Now gitignored (correct — personal data) AND
   not in any cloud sync. R2 weekly backup bundles the repo dir so the file rides
   along, but verify the WAL is checkpointed or the bundle may catch a partial write.
-  The Supabase pivot traded cross-device sync for local-only; that's a real product
-  regression if Lucky ever wants the diary on his phone — was that intentional?
+- ✅ **CORRECTION to my 05-29 claim "Supabase pivot lost cross-device sync" — WRONG.**
+  Cross-device sync already works via the shared server DB: every device hitting
+  semar.astaredekor.com talks to the same SQLite. `appendEntry` write-throughs to
+  `/api/diary`; `DiarySync` (mounted in layout.tsx) pulls+merges remote entries into
+  localStorage on every mount. Only limit: an already-open tab catches new entries on
+  reload, not real-time — fine for a personal daily diary. I flagged it without
+  reading DiarySync/syncFromRemote fully. Lesson logged to memory.
 - 🟢 **`.env.local` correctly gitignored**, MINIMAX key sourced from `/root/.mm_key`.
 - 🟢 **Tests honest** — 411 green, no `.skip` left in zwds lunar.
 - 🟢 **Personal data hygiene** — `docs/personal/`, `.semar/`, `data/` all ignored.
@@ -50,8 +55,16 @@ ZWDS decade limits + aux stars ✅ · chat few-shot voice ✅ · Supabase migrat
 SUPERSEDED by SQLite ✅.
 
 **Still open:** tarot art batch 2 (needs OPENAI_API_KEY, still unprovisioned) ·
-dead Supabase cleanup · decide local-SQLite vs cross-device sync · push `main` to
-origin when ready.
+WAL-checkpoint before R2 bundle for clean `data/semar.db` backups.
+
+## SESSION ADDENDUM — 2026-05-30 (cross-device sync + dead-code)
+- Verified cross-device sync ALREADY works (see corrected audit note above) — no
+  new code needed. Optional future polish: re-pull on tab `visibilitychange` so a
+  long-open tab catches sibling-device writes without a manual reload.
+- `566e3f2` chore(web): removed dead Supabase — deleted `lib/supabase.ts`, dropped
+  `@supabase/supabase-js` from package.json + lockfile, removed the two compat
+  aliases. Typecheck + prod build clean, service restarted, live healthy.
+- Both this + the 05-29 batch are now pushed to origin/main.
 
 ---
 
