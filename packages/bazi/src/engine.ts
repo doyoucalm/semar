@@ -9,6 +9,7 @@ import {
 } from './sexagenary.js';
 import { MINOR_TERMS_ORDER, termMeta } from './data.js';
 import { solarTermMoment } from './astro.js';
+import { solarCorrection, applyCorrectionToWall, type SolarCorrection } from './solar-time.js';
 
 export interface BirthInput {
   readonly year: number;
@@ -18,6 +19,18 @@ export interface BirthInput {
   readonly minute: number;      // 0–59
   /** Minutes east of UTC. Asia/Jakarta = 420. China standard = 480. */
   readonly utcOffsetMinutes: number;
+  /**
+   * Birth gender. Optional for the natal chart, but REQUIRED to compute luck
+   * pillars (大运) — see computeLuckPillars.
+   */
+  readonly gender?: 'male' | 'female';
+  /**
+   * Birth longitude in degrees east (Bandung ≈ 107.6, Jakarta ≈ 106.8).
+   * When provided, the day & hour pillars use 真太阳时 (true solar time):
+   * longitude (LMT) + Equation-of-Time correction. When omitted, civil clock
+   * time is used as-is (backwards compatible).
+   */
+  readonly longitude?: number;
 }
 
 export interface BaziChart {
@@ -33,6 +46,14 @@ export interface BaziChart {
   readonly dayMaster: { stem: Pillar['stem']; element: string; polarity: string };
   /** Compact 8-character string e.g. "乙丑 庚辰 甲辰 己巳". */
   readonly eightCharacters: string;
+  /**
+   * True-solar-time correction applied to the day/hour pillars. Present only
+   * when `birth.longitude` was supplied. Exposed for transparency.
+   */
+  readonly solarTime?: SolarCorrection & {
+    /** Corrected local wall-clock used for day/hour pillars. */
+    readonly correctedLocal: { year: number; month: number; day: number; hour: number; minute: number };
+  };
 }
 
 export function computeBazi(birth: BirthInput): BaziChart {
@@ -41,10 +62,25 @@ export function computeBazi(birth: BirthInput): BaziChart {
   const utcMs = Date.UTC(birth.year, birth.month - 1, birth.day, birth.hour, birth.minute)
     - birth.utcOffsetMinutes * 60_000;
 
+  // Year & month pillars track the Sun's real position (solar terms), so they
+  // use the true UTC instant regardless of local-clock conventions.
   const yearPillar = computeYearPillar(utcMs, birth.year);
   const monthPillar = computeMonthPillar(utcMs, yearPillar.stemIdx);
-  const dayPillar = computeDayPillar(birth);
-  const hourPillar = computeHourPillar(birth, dayPillar.stemIdx);
+
+  // Day & hour pillars are read from the LOCAL clock. With a birth longitude,
+  // correct civil time → true solar time (may shift the date near midnight).
+  let solarTime: BaziChart['solarTime'] | undefined;
+  let dayHourInput = birth;
+  if (birth.longitude != null) {
+    const corr = solarCorrection(utcMs, birth.longitude, birth.utcOffsetMinutes);
+    const localWallMs = Date.UTC(birth.year, birth.month - 1, birth.day, birth.hour, birth.minute);
+    const correctedLocal = applyCorrectionToWall(localWallMs, corr.totalMinutes);
+    solarTime = { ...corr, correctedLocal };
+    dayHourInput = { ...birth, ...correctedLocal };
+  }
+
+  const dayPillar = computeDayPillar(dayHourInput);
+  const hourPillar = computeHourPillar(dayHourInput, dayPillar.stemIdx);
 
   return {
     birth,
@@ -59,6 +95,7 @@ export function computeBazi(birth: BirthInput): BaziChart {
       polarity: stemYinYang(dayPillar.stemIdx),
     },
     eightCharacters: `${yearPillar.name} ${monthPillar.name} ${dayPillar.name} ${hourPillar.name}`,
+    ...(solarTime ? { solarTime } : {}),
   };
 }
 

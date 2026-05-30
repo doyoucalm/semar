@@ -9,6 +9,7 @@ export {
   analyzeChart,
   type BaziAnalysis,
   type PillarAnalysis,
+  type AnalyzeOptions,
 } from './analyze.js';
 
 export {
@@ -88,3 +89,35 @@ export {
   type TermMeta,
   type TermEntry,
 } from './data.js';
+
+export {
+  computeLuckPillars,
+  type Gender,
+  type LuckPillar,
+  type LuckPillars,
+} from './luck-pillars.js';
+
+export {
+  solarCorrection,
+  equationOfTime,
+  applyCorrectionToWall,
+  type SolarCorrection,
+} from './solar-time.js';
+
+export {
+  computeUsefulGod,
+  type UsefulGod,
+  type TenGodGroup,
+} from './useful-god.js';
+
+export {
+  computeAnnualPillar,
+  annualFortune,
+  annualRange,
+  type AnnualFortune,
+  type NatalBranchHit,
+} from './annual.js';
+
+export {
+  pairBranchRelations,
+} from './interactions.js';
