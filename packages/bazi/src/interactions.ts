@@ -177,6 +177,41 @@ export function findStemInteractions(pillars: ChartPillars): StemInteraction[] {
   return out;
 }
 
+/**
+ * Pairwise branch relations between two single branches — used to score a
+ * transiting branch (流年 annual / 大运 luck) against a natal branch. Covers
+ * the pair-level interactions (六合/冲/破/害); triadic 三合/三会/刑 need three
+ * branches and are out of scope for a single pair.
+ */
+export function pairBranchRelations(a: Branch, b: Branch): BranchInteraction[] {
+  const data = loadBranch();
+  const pair: [Branch, Branch] = [a, b];
+  const out: BranchInteraction[] = [];
+  const slots: readonly PillarSlot[] = []; // caller supplies context; left empty
+
+  for (const c of data.sixCombinations) {
+    if (matches(pair, c.branches)) {
+      out.push({ kind: 'sixCombination', slots, branches: c.branches, element: c.element, name: c.name });
+    }
+  }
+  for (const c of data.clashes) {
+    if (matches(pair, c.branches)) {
+      out.push({ kind: 'clash', slots, branches: c.branches, name: `${c.branches[0]}${c.branches[1]}相冲` });
+    }
+  }
+  for (const c of data.breaks) {
+    if (matches(pair, c.branches)) {
+      out.push({ kind: 'break', slots, branches: c.branches, name: `${c.branches[0]}${c.branches[1]}相破` });
+    }
+  }
+  for (const c of data.harms) {
+    if (matches(pair, c.branches)) {
+      out.push({ kind: 'harm', slots, branches: c.branches, name: `${c.branches[0]}${c.branches[1]}相害` });
+    }
+  }
+  return out;
+}
+
 function matches<T>(observed: readonly T[], required: readonly T[]): boolean {
   if (observed.length !== required.length) return false;
   const a = [...observed].sort();
