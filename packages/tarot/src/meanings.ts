@@ -36,13 +36,13 @@
  * fortune-telling lines. The richer dimensions are a separate future task.
  */
 
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+// Vendored CC0 corpora dataset imported as an ESM JSON module (NOT read via
+// node:fs). This keeps the module bundler-safe: @semar/tarot is imported by
+// client React components (e.g. the cast page), and a node:fs/node:url read
+// would break the webpack client bundle. JSON import works in Next, vitest, tsx.
+import corporaData from '../data/tarot-interpretations.corpora.json';
 
 import { DECK, type Card } from './cards.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
  * A single card's interpretation, keyed by OUR card id (the slug from cards.ts,
@@ -146,9 +146,7 @@ function joinPhrases(phrases: readonly string[] | undefined): string {
 // ── Load + build ────────────────────────────────────────────────────────────
 
 function loadCorpora(): readonly CorporaEntry[] {
-  const path = join(__dirname, '..', 'data', 'tarot-interpretations.corpora.json');
-  const parsed = JSON.parse(readFileSync(path, 'utf8')) as CorporaFile;
-  return parsed.tarot_interpretations;
+  return (corporaData as unknown as CorporaFile).tarot_interpretations;
 }
 
 function buildMeanings(): ReadonlyMap<string, CardMeaning> {
