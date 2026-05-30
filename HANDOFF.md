@@ -57,6 +57,28 @@ SUPERSEDED by SQLite ✅.
 **Still open:** tarot art batch 2 (needs OPENAI_API_KEY, still unprovisioned) ·
 WAL-checkpoint before R2 bundle for clean `data/semar.db` backups.
 
+## SESSION ADDENDUM — 2026-05-30 PM (BaZi API features + tarot research)
+
+**⚠️ NEXT SESSION PLAN (Surya's words):** "aku bakal audit kamu satu satu besok,
+dan kita bakal mulai dari awal lagi dari logic2 nya." → Tomorrow: Surya audits the
+BaZi work one-by-one, then we **restart from the logic/fundamentals**. BUILD NOTHING
+NEW until that review. Tarot spread is parked ("spread beres sekarang").
+
+**BaZi → sellable API (built, tested, pushed):** 3 commits — `95f3665` timing layer
+(大运 luck pillars + gender input, 真太阳时 true solar time + longitude input),
+`4d7a023` reading layer (用神 useful god 扶抑法 + 流年 annual), `6aa5330` analyzeChart
+one-call payload. bazi 76 → 102 tests, 442 monorepo total, all green. Files:
+`packages/bazi/src/{luck-pillars,solar-time,useful-god,annual}.ts`. Audit-yourself
+notes for tomorrow: useful-god is 扶抑法 ONLY (调候/通关/专旺 not modelled); 12 life
+stages (长生) still missing; no HTTP/auth/billing/OpenAPI layer yet (it's a library,
+not yet an API product).
+
+**Tarot reader audit vs Labyrinthos + deep-research:** full buildable findings in
+**`docs/research/tarot-reader-gaps-2026-05-30.md`** (read before any tarot work).
+4 gaps: 1 spread→model first-class, 1-line meanings→rich schema, no web Mirror stats,
+art 5/78. Open data (CC0 corpora + MIT metabismuth + PD RWS art) = legal to bundle.
+Moat to protect: cross-engine synthesis (tarot+BaZi+ZWDS+weton).
+
 ## SESSION ADDENDUM — 2026-05-30 (cross-device sync + dead-code)
 - Verified cross-device sync ALREADY works (see corrected audit note above) — no
   new code needed. Optional future polish: re-pull on tab `visibilitychange` so a
