@@ -57,6 +57,22 @@ SUPERSEDED by SQLite ✅.
 **Still open:** tarot art batch 2 (needs OPENAI_API_KEY, still unprovisioned) ·
 WAL-checkpoint before R2 bundle for clean `data/semar.db` backups.
 
+## SESSION ADDENDUM — 2026-05-31 (tarot 4 gaps BUILT via workflow)
+
+All 4 tarot-reader gaps from the research doc are now BUILT, tested, deployed
+(orchestrated with a 6-agent Workflow: Build×4 parallel → Integrate → Web).
+- `packages/tarot`: `spreads.ts` (7 spreads, Spread=ordered positions, drawForSpread),
+  `meanings.ts` (rich CardMeaning from vendored CC0 corpora, all 78 ids), `elements.ts`
+  (suit→element + 4×4 dignity matrix + TAROT_TO_WUXING), `analytics.ts` (Mirror engine).
+  tarot 16→103 tests; 529 monorepo total, green.
+- Web: spread picker (cast), Mirror section (diary), card-art deckIndex bug fixed. Live.
+- 2 bugs the agents introduced, I caught + fixed: (a) `data/` gitignore swallowed
+  `packages/tarot/data/` → anchored to `/data/`; (b) meanings.ts used node:fs in a
+  client-imported package → broke `next build` → switched to ESM JSON import. Both only
+  caught by real prod build + `git check-ignore`, not typecheck. Lesson → memory.
+- Still open: per-life-area meanings/yes-no/major elements (corpora lacks them),
+  tarot↔BaZi 5-element map is a guess, card art 5/78.
+
 ## SESSION ADDENDUM — 2026-05-30 PM (BaZi API features + tarot research)
 
 **⚠️ NEXT SESSION PLAN (Surya's words):** "aku bakal audit kamu satu satu besok,
