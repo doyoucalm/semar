@@ -14,6 +14,8 @@ import {
   type BranchInteraction, type StemInteraction, type ChartPillars, type PillarSlot,
 } from './interactions.js';
 import { findShenSha, type StarHit } from './shen-sha.js';
+import { computeUsefulGod, type UsefulGod } from './useful-god.js';
+import { computeLuckPillars, type LuckPillars, type Gender } from './luck-pillars.js';
 
 export interface PillarAnalysis {
   readonly slot: PillarSlot;
@@ -33,11 +35,20 @@ export interface BaziAnalysis {
   readonly branchInteractions: readonly BranchInteraction[];
   readonly stemInteractions: readonly StemInteraction[];
   readonly shenSha: readonly StarHit[];
+  /** 用神 — favourable/unfavourable elements (扶抑法). Always computed. */
+  readonly usefulGod: UsefulGod;
+  /** 大运 — luck pillars. Present only when a gender is available. */
+  readonly luckPillars?: LuckPillars;
+}
+
+export interface AnalyzeOptions {
+  /** Gender for luck-pillar (大运) computation. Falls back to chart.birth.gender. */
+  readonly gender?: Gender;
 }
 
 const SLOTS: readonly PillarSlot[] = ['year', 'month', 'day', 'hour'];
 
-export function analyzeChart(chart: BaziChart): BaziAnalysis {
+export function analyzeChart(chart: BaziChart, opts: AnalyzeOptions = {}): BaziAnalysis {
   const dayMaster = chart.day.stem;
   const cp: ChartPillars = {
     year:  { stem: chart.year.stem,  branch: chart.year.branch },
@@ -70,12 +81,17 @@ export function analyzeChart(chart: BaziChart): BaziAnalysis {
     { stem: chart.hour.stem,  branch: chart.hour.branch },
   ]);
 
+  const strength = dayMasterStrength(dayMaster, distribution);
+  const gender = opts.gender ?? chart.birth.gender;
+
   return {
     pillars,
     elements: distribution,
-    dayMasterStrength: dayMasterStrength(dayMaster, distribution),
+    dayMasterStrength: strength,
     branchInteractions: findBranchInteractions(cp),
     stemInteractions: findStemInteractions(cp),
     shenSha: findShenSha(cp),
+    usefulGod: computeUsefulGod(dayMaster, distribution, strength),
+    ...(gender ? { luckPillars: computeLuckPillars(chart, gender) } : {}),
   };
 }
