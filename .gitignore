@@ -36,4 +36,6 @@ packages/bazi/data/hko-raw/
 
 # Server-side SQLite diary store (apps/web /api/diary). Holds personal diary
 # entries — never commit. WAL/SHM sidecar files included.
-data/
+# Anchored to repo root so it does NOT swallow packages/*/data (e.g. the
+# vendored tarot corpora JSON, which is build-time runtime data).
+/data/
