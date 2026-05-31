@@ -110,7 +110,7 @@ export function ascendantAndMidheaven(
   time: AstroTime,
   latitudeDeg: number,
   longitudeDegEast: number,
-): { ascendant: number; midheaven: number } {
+): { ascendant: number; midheaven: number; ramc: number } {
   const gstHours = SiderealTime(time);
   const lstHours = (gstHours + longitudeDegEast / 15 + 24) % 24;
   const ramcDeg = lstHours * 15;
@@ -131,7 +131,9 @@ export function ascendantAndMidheaven(
   const eastward = (ascendant - midheaven + 360) % 360;
   if (eastward === 0 || eastward > 180) ascendant = normalizeDegrees(ascendant + 180);
 
-  return { ascendant, midheaven };
+  // RAMC (Right Ascension of the MC) = local sidereal time in degrees. Needed by
+  // every quadrant house system (Placidus/Koch/Regiomontanus/Topocentric).
+  return { ascendant, midheaven, ramc: normalizeDegrees(ramcDeg) };
 }
 
 export function makeAstroTime(utcMs: number): AstroTime {

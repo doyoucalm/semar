@@ -1,10 +1,17 @@
-import { PLANETS, signOfLongitude, degreeInSign, type Planet, type Sign } from './constants.js';
+import {
+  PLANETS, signOfLongitude, degreeInSign, MEAN_OBLIQUITY_J2000, type Planet, type Sign,
+} from './constants.js';
 import {
   eclipticLongitudeOf, isRetrograde, ascendantAndMidheaven, makeAstroTime,
 } from './astro.js';
-import { wholeSignHouses, houseOfLongitude, type House } from './houses.js';
+import { computeHouses, houseOfLongitude, type House, type HouseSystem } from './houses.js';
 import { dignityOf, type Dignity } from './dignities.js';
 import { findAspects, type Aspect, type AspectOptions } from './aspects.js';
+import { ayanamsaValue, type Ayanamsa } from './ayanamsa.js';
+
+export type Zodiac = 'tropical' | 'sidereal';
+
+const mod360 = (n: number): number => ((n % 360) + 360) % 360;
 
 export interface ChartInput {
   readonly year: number;
@@ -38,35 +45,68 @@ export interface NatalChart {
   readonly houses: readonly House[];
   readonly placements: readonly Placement[];
   readonly aspects: readonly Aspect[];
-  readonly houseSystem: 'whole-sign';
+  readonly houseSystem: HouseSystem;
+  /** Tropical (Western) or sidereal (Vedic). */
+  readonly zodiac: Zodiac;
+  /** Ayanamsa applied (degrees). 0 for tropical. */
+  readonly ayanamsaDeg: number;
 }
 
 export interface ComputeChartOptions {
   readonly aspectOrbs?: AspectOptions['orbOverrides'];
+  /** House system. Default 'whole-sign'. */
+  readonly houseSystem?: HouseSystem;
+  /** Zodiac. Default 'tropical'. Sidereal subtracts an ayanamsa from all longitudes. */
+  readonly zodiac?: Zodiac;
+  /** Ayanamsa for sidereal charts. Default 'lahiri'. */
+  readonly ayanamsa?: Ayanamsa;
 }
 
 export function computeChart(input: ChartInput, opts: ComputeChartOptions = {}): NatalChart {
   validate(input);
+  const houseSystem = opts.houseSystem ?? 'whole-sign';
+  const zodiac = opts.zodiac ?? 'tropical';
+
   const utcMs =
     Date.UTC(input.year, input.month - 1, input.day, input.hour, input.minute) -
     input.utcOffsetMinutes * 60_000;
   const time = makeAstroTime(utcMs);
 
-  const { ascendant: ascLon, midheaven: mcLon } = ascendantAndMidheaven(
+  const { ascendant: ascLon, midheaven: mcLon, ramc } = ascendantAndMidheaven(
     time, input.latitude, input.longitude,
   );
-  const houses = wholeSignHouses(ascLon);
+
+  // Sidereal = compute everything tropically, then rotate all ecliptic
+  // longitudes by −ayanamsa. House MEMBERSHIP is rotation-invariant, so it is
+  // resolved against the tropical cusps; only the displayed longitude/sign shift.
+  const ayanamsaDeg = zodiac === 'sidereal' ? ayanamsaValue(opts.ayanamsa ?? 'lahiri', utcMs) : 0;
+  const shift = (lon: number): number => mod360(lon - ayanamsaDeg);
+
+  const tropicalHouses = computeHouses(houseSystem, {
+    ascendant: ascLon,
+    midheaven: mcLon,
+    ramc,
+    latitude: input.latitude,
+    obliquity: MEAN_OBLIQUITY_J2000,
+  });
+
+  // Output houses carry the (possibly shifted) cusp longitude + its sign.
+  const houses: House[] = tropicalHouses.map((h) => {
+    const lon = shift(h.startLongitude);
+    return { number: h.number, sign: signOfLongitude(lon), startLongitude: round3(lon) };
+  });
 
   const placements: Placement[] = PLANETS.map((planet) => {
-    const longitude = eclipticLongitudeOf(planet, time);
-    const sign = signOfLongitude(longitude);
+    const tropLon = eclipticLongitudeOf(planet, time);
+    const lon = shift(tropLon);
+    const sign = signOfLongitude(lon);
     return {
       planet,
-      longitude: round3(longitude),
+      longitude: round3(lon),
       sign,
-      degreeInSign: round3(degreeInSign(longitude)),
+      degreeInSign: round3(degreeInSign(lon)),
       retrograde: isRetrograde(planet, time),
-      house: houseOfLongitude(longitude, houses),
+      house: houseOfLongitude(tropLon, tropicalHouses),
       dignity: dignityOf(planet, sign),
     };
   });
@@ -80,19 +120,21 @@ export function computeChart(input: ChartInput, opts: ComputeChartOptions = {}):
     input,
     utcMs,
     ascendant: {
-      longitude: round3(ascLon),
-      sign: signOfLongitude(ascLon),
-      degreeInSign: round3(degreeInSign(ascLon)),
+      longitude: round3(shift(ascLon)),
+      sign: signOfLongitude(shift(ascLon)),
+      degreeInSign: round3(degreeInSign(shift(ascLon))),
     },
     midheaven: {
-      longitude: round3(mcLon),
-      sign: signOfLongitude(mcLon),
-      degreeInSign: round3(degreeInSign(mcLon)),
+      longitude: round3(shift(mcLon)),
+      sign: signOfLongitude(shift(mcLon)),
+      degreeInSign: round3(degreeInSign(shift(mcLon))),
     },
     houses,
     placements,
     aspects,
-    houseSystem: 'whole-sign',
+    houseSystem,
+    zodiac,
+    ayanamsaDeg: round3(ayanamsaDeg),
   };
 }
 

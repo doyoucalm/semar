@@ -4,6 +4,7 @@ export {
   type NatalChart,
   type Placement,
   type ComputeChartOptions,
+  type Zodiac,
 } from './chart.js';
 
 export {
@@ -34,10 +35,20 @@ export {
 } from './constants.js';
 
 export {
+  computeHouses,
   wholeSignHouses,
   houseOfLongitude,
   type House,
+  type HouseSystem,
+  type HouseInput,
 } from './houses.js';
+
+export {
+  lahiriAyanamsa,
+  ayanamsaValue,
+  toSidereal,
+  type Ayanamsa,
+} from './ayanamsa.js';
 
 export {
   dignityOf,
