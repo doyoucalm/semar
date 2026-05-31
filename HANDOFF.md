@@ -57,6 +57,25 @@ SUPERSEDED by SQLite ✅.
 **Still open:** tarot art batch 2 (needs OPENAI_API_KEY, still unprovisioned) ·
 WAL-checkpoint before R2 bundle for clean `data/semar.db` backups.
 
+## SESSION ADDENDUM — 2026-05-31 PM (astrology: house systems + sidereal)
+
+Extended `packages/astrology` per Surya's locked choices (full pluggable house
+systems + tropical & sidereal both). astrology 48 → 61 tests; 542 monorepo, green.
+- **7 house systems** (`houses.ts` + `computeHouses`): whole-sign, equal, porphyry,
+  placidus, koch, regiomontanus, topocentric. Quadrant math PORTED from
+  CircularNatalHoroscopeJS (public domain/Unlicense). `astro.ts` exposes RAMC.
+  `computeChart({ houseSystem })`, default whole-sign. **Koch port bug caught+fixed**
+  via fidelity probe (cusp1 must = Asc). **Campanus deferred** (rarely used).
+- **Sidereal/Vedic** (`ayanamsa.ts`): Lahiri J2000=23.853222° + linear precession.
+  `computeChart({ zodiac: 'sidereal' })`. Few-arcmin approx — validate vs Swiss Eph
+  before selling precise Vedic.
+- **deep-research workflow FAILED twice** (verify-phase StructuredOutput); findings
+  salvaged from transcripts + my own targeted searches (NOT formally verified).
+- **NEXT for astrology:** KB meanings (no clean open dataset — must author/LLM-gen
+  from public-domain Ptolemy; kerykeion/AstrologerStudio are AGPL = don't bundle);
+  SVG chart-wheel (use @astrodraw/AstroChart, MIT, web layer); Campanus; validate
+  cusps vs astro.com. Lessons → memory [[pattern-validate-ported-code]].
+
 ## SESSION ADDENDUM — 2026-05-31 (tarot 4 gaps BUILT via workflow)
 
 All 4 tarot-reader gaps from the research doc are now BUILT, tested, deployed
