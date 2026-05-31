@@ -69,12 +69,22 @@ systems + tropical & sidereal both). astrology 48 → 61 tests; 542 monorepo, gr
 - **Sidereal/Vedic** (`ayanamsa.ts`): Lahiri J2000=23.853222° + linear precession.
   `computeChart({ zodiac: 'sidereal' })`. Few-arcmin approx — validate vs Swiss Eph
   before selling precise Vedic.
-- **deep-research workflow FAILED twice** (verify-phase StructuredOutput); findings
-  salvaged from transcripts + my own targeted searches (NOT formally verified).
-- **NEXT for astrology:** KB meanings (no clean open dataset — must author/LLM-gen
-  from public-domain Ptolemy; kerykeion/AstrologerStudio are AGPL = don't bundle);
-  SVG chart-wheel (use @astrodraw/AstroChart, MIT, web layer); Campanus; validate
-  cusps vs astro.com. Lessons → memory [[pattern-validate-ported-code]].
+- **deep-research NOW FORMALLY VERIFIED** (2026-06-01): the failed run was resumed
+  after fixing the verify phase (`.catch(()=>null)` on each vote → fault-tolerant);
+  24/25 claims confirmed. Full report: `docs/research/astrology-engine-extension-2026-06-01.md`.
+  It **validates the entire build** — house-system architecture, Placidus iterative
+  method, sidereal-via-ayanamsa, astronomy-engine accuracy all confirmed. No code fix needed.
+- **NEXT for astrology (with verified refinements):**
+  - KB meanings — still must author. corpora `/data/divination/zodiac.json` (CC0) is a
+    THIN sign-level seed only; planet-in-sign/house/aspect/house prose = author/LLM-gen
+    from public-domain Ptolemy Tetrabiblos (Gutenberg #70850). kerykeion/AstrologerStudio = AGPL, don't bundle.
+  - SVG chart-wheel — `@astrodraw/astrochart` (MIT, pure-TS, zero-dep) in web layer.
+    ⚠️ re-confirm LICENSE at integration + BUDGET A SMALL INPUT ADAPTER (the "no adapter"
+    claim was refuted 0-3). Avoid hew/astrology-chart-wheel (unmaintained).
+  - Campanus (deferred); validate cusps vs astro.com/Swiss Eph (independent gold standard
+    — validating vs our own astronomy-engine is circular; do NOT bundle Swiss Eph, AGPL/paid).
+  - Consider switching web default house system to Placidus (conventional Western default).
+  - Lessons → memory [[pattern-validate-ported-code]] (incl. the deep-research verify-phase fix).
 
 ## SESSION ADDENDUM — 2026-05-31 (tarot 4 gaps BUILT via workflow)
 
