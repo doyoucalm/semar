@@ -21,10 +21,17 @@ export function TarotCard({ draw, autoReveal = false }: Props) {
 
       {/* Card */}
       <div
-        className="card-scene w-24 h-40 cursor-pointer"
-        onClick={() => setFlipped(true)}
+        className="card-scene w-20 h-32 sm:w-24 sm:h-40 cursor-pointer"
+        onClick={() => setFlipped((f) => !f)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setFlipped((f) => !f);
+          }
+        }}
         role="button"
-        aria-label={flipped ? draw.cardName : 'Ketuk untuk buka'}
+        tabIndex={0}
+        aria-label={flipped ? `${draw.cardName}${draw.reversed ? ', terbalik' : ''}` : 'Ketuk untuk buka kartu'}
       >
         <div className={`card-inner w-full h-full ${flipped ? 'flipped' : ''}`}>
 
@@ -46,7 +53,7 @@ export function TarotCard({ draw, autoReveal = false }: Props) {
               <div className={`relative w-full h-full ${draw.reversed ? 'rotate-180' : ''}`}>
                 <Image
                   src={draw.artPath}
-                  alt={draw.cardName}
+                  alt={`${draw.cardName}${draw.reversed ? ', terbalik' : ''}`}
                   fill
                   className="object-cover"
                   sizes="96px"

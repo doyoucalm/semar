@@ -12,8 +12,9 @@ export const PROFILE = {
   lunarOverride: { lunarMonth: 3, lunarDay: 16, isLeapMonth: false },
 } as const;
 
-/** Today's YYYY-MM-DD in WIB (UTC+7). */
-export function todayLocal(): string {
-  const local = new Date(Date.now() + PROFILE.birth.utcOffsetMinutes * 60_000);
+/** Today's YYYY-MM-DD in WIB (UTC+7). Pass an instant to keep multiple
+ *  derivations on the same clock read (avoids a midnight-boundary split). */
+export function todayLocal(nowMs: number = Date.now()): string {
+  const local = new Date(nowMs + PROFILE.birth.utcOffsetMinutes * 60_000);
   return local.toISOString().slice(0, 10);
 }

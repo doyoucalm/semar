@@ -8,6 +8,7 @@ import { HEXAGRAM_GUIDANCE } from '@/lib/meanings';
 interface Props {
   question?: string;
   onComplete?: (result: ReturnType<typeof buildResult>) => void;
+  onReset?: () => void;
 }
 
 interface CoinState {
@@ -17,7 +18,7 @@ interface CoinState {
 
 type Phase = 'idle' | 'casting' | 'done';
 
-export function CoinCast({ question, onComplete }: Props) {
+export function CoinCast({ question, onComplete, onReset }: Props) {
   const [phase,       setPhase]       = useState<Phase>('idle');
   const [lines,       setLines]       = useState<LineType[]>([]);
   const [coins,       setCoins]       = useState<CoinState[]>([
@@ -28,8 +29,9 @@ export function CoinCast({ question, onComplete }: Props) {
   const [result, setResult] = useState<ReturnType<typeof buildResult> | null>(null);
 
   const throwCoins = useCallback(() => {
-    if (phase === 'done') return;
-    setPhase('casting');
+    // Guard via the functional updater so a stale `phase` closure can't
+    // double-add lines after the hexagram is already complete.
+    setPhase((p) => (p === 'done' ? p : 'casting'));
 
     // Animate all 3 coins flipping
     setCoins((c) => c.map((coin) => ({ ...coin, flipping: true })));
@@ -40,6 +42,7 @@ export function CoinCast({ question, onComplete }: Props) {
       setCoins(newHeads.map((heads) => ({ heads, flipping: false })));
 
       setLines((prev) => {
+        if (prev.length >= 6) return prev;   // already complete — ignore
         const next = [...prev, line];
         if (next.length === 6) {
           const r = buildResult(next);
@@ -50,7 +53,7 @@ export function CoinCast({ question, onComplete }: Props) {
         return next;
       });
     }, 600);
-  }, [phase, onComplete]);
+  }, [onComplete]);
 
   const reset = () => {
     setPhase('idle');
@@ -61,6 +64,7 @@ export function CoinCast({ question, onComplete }: Props) {
       { heads: true, flipping: false },
       { heads: true, flipping: false },
     ]);
+    onReset?.();
   };
 
   const lineLabel = lines.length === 0
@@ -122,6 +126,7 @@ export function CoinCast({ question, onComplete }: Props) {
         <button
           onClick={throwCoins}
           disabled={coins.some((c) => c.flipping)}
+          aria-busy={coins.some((c) => c.flipping)}
           className="px-8 py-3 rounded-full border border-gold/40 text-gold
                      font-serif text-sm tracking-wide
                      hover:bg-gold/10 active:scale-95
@@ -133,6 +138,7 @@ export function CoinCast({ question, onComplete }: Props) {
       ) : (
         <button
           onClick={reset}
+          aria-label="Cast ulang"
           className="text-xs text-muted/60 font-mono hover:text-muted transition-colors"
         >
           ↺ cast ulang

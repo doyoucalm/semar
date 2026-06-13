@@ -67,10 +67,10 @@ export function DailyBrief({ core }: { core: CoreData }) {
 
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className="px-6 pt-8 pb-6">
-        <div className="flex items-baseline gap-2 mb-1">
+        <h1 className="flex items-baseline gap-2 mb-1">
           <span className="cn text-gold text-4xl leading-none">{bazi.today}</span>
           <span className="text-muted text-xs font-mono">{d} · {m} · {y}</span>
-        </div>
+        </h1>
 
         <p className="text-parchment/80 font-serif text-base">
           {weton.hari} {weton.pasaran}
@@ -123,7 +123,9 @@ export function DailyBrief({ core }: { core: CoreData }) {
       {/* ── Chooser ─────────────────────────────────────────────── */}
       {engine === null && (
         <div className="px-6 py-6 flex flex-col gap-4 animate-fade-up">
+          <label htmlFor="daily-question" className="sr-only">Pertanyaan hari ini</label>
           <input
+            id="daily-question"
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
@@ -159,7 +161,7 @@ export function DailyBrief({ core }: { core: CoreData }) {
           <TarotSpread draws={drawDailyTarot(localDate)} question={question || undefined} />
           {!saved && engine === 'tarot' && (
             <button onClick={() => save({ engine: 'tarot', tarot: drawDailyTarot(localDate).map(d => ({ position: d.position, card: d.cardName, reversed: d.reversed })) })}
-              className="mt-5 w-full py-2 text-xs font-mono text-sage/70
+              className="mt-5 w-full py-1.5 text-xs font-mono text-sage/70
                          border border-sage/20 rounded-lg hover:border-sage/40 transition-colors">
               simpan ke diary
             </button>

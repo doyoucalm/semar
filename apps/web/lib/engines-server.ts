@@ -10,7 +10,7 @@ import { PROFILE, todayLocal }           from './profile';
 export type CoreData = ReturnType<typeof getDailyCore>;
 
 export function getDailyCore(nowMs = Date.now()) {
-  const local = todayLocal();
+  const local = todayLocal(nowMs);
   const b = PROFILE.birth;
 
   const natalBazi = computeBazi({

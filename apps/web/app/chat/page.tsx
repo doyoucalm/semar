@@ -160,15 +160,15 @@ export default function ChatPage() {
             placeholder="Tanya Semar…"
             rows={1}
             disabled={status === 'thinking'}
-            className="flex-1 bg-elevated border border-gold/15 rounded-xl px-4 py-2.5
-                       text-sm text-parchment placeholder-muted/40 font-serif resize-none
+            className="flex-1 bg-elevated border border-gold/15 rounded-lg px-4 py-2.5
+                       text-sm text-parchment placeholder-muted/50 font-serif resize-none
                        focus:border-gold/40 outline-none transition-colors
                        disabled:opacity-50"
           />
           <button
             onClick={() => void send()}
             disabled={!input.trim() || status === 'thinking'}
-            className="w-10 h-10 rounded-xl border border-gold/25 bg-elevated
+            className="w-11 h-11 rounded-full border border-gold/25 bg-elevated
                        flex items-center justify-center text-gold/70
                        hover:border-gold/50 hover:text-gold
                        active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed
@@ -180,7 +180,7 @@ export default function ChatPage() {
             </svg>
           </button>
         </div>
-        <p className="text-[10px] text-muted/30 font-mono text-center mt-1.5">
+        <p className="text-[10px] text-muted/50 font-mono text-center mt-1.5">
           Enter kirim · Shift+Enter baris baru
         </p>
       </div>

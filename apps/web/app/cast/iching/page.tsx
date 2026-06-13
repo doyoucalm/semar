@@ -33,6 +33,7 @@ export default function IChingPage() {
       {/* Casting */}
       <CoinCast
         question={question}
+        onReset={() => setSaved(false)}
         onComplete={(r) => {
           if (saved) return;
           appendEntry({

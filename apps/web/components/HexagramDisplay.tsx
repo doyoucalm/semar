@@ -43,8 +43,17 @@ export function HexagramDisplay({ lines, changingLines = [], animateFrom }: Prop
   const displayed = [...lines].reverse();
   const topIndex  = lines.length - 1;
 
+  // Text alternative: describe each placed line bottom-to-top for screen readers.
+  const summary = lines.length === 0
+    ? 'Hexagram belum terbentuk'
+    : 'Hexagram: ' + lines.map((t, i) => {
+        const yang = t === 7 || t === 9;
+        const changing = changingLines.includes(i);
+        return `garis ${i + 1} ${yang ? 'yang' : 'yin'}${changing ? ' berubah' : ''}`;
+      }).join(', ');
+
   return (
-    <div className="flex flex-col gap-2 w-32 mx-auto">
+    <div className="flex flex-col gap-2 w-32 mx-auto" role="img" aria-label={summary}>
       {/* Placeholders at top — so cast lines build upward from the bottom */}
       {Array.from({ length: 6 - lines.length }).map((_, i) => (
         <div key={`ph-${i}`} className="h-5 flex items-center">

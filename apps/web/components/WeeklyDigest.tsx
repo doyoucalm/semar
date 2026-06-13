@@ -82,7 +82,7 @@ export function WeeklyDigest() {
     const entries = getEntries({ from, to: today });
 
     if (entries.length === 0) {
-      setErrMsg('Belum ada catatan di periode ini.');
+      setErrMsg('Belum ada catatan di periode ini — mulai dengan Daily atau Cast.');
       setPhase('error');
       return;
     }
@@ -100,7 +100,15 @@ export function WeeklyDigest() {
       }
 
       const data = await res.json() as { digest: string; meta: DigestMeta };
-      setBlocks(parseBlocks(data.digest));
+      const parsed = parseBlocks(data.digest);
+      const present = new Set(parsed.map((b) => b.label));
+      const complete = (['HITUNGAN', 'KONVERGENSI', 'NEGASI'] as const).every((l) => present.has(l));
+      if (!complete) {
+        setErrMsg('Sintesis belum lengkap — coba rangkum ulang.');
+        setPhase('error');
+        return;
+      }
+      setBlocks(parsed);
       setMeta(data.meta);
       setPhase('done');
     } catch (err) {
@@ -141,7 +149,7 @@ export function WeeklyDigest() {
         <div className="flex flex-col items-center gap-3">
           <button
             onClick={generate}
-            className="px-6 py-2.5 rounded-full border border-gold/30 text-gold
+            className="px-6 py-3 rounded-full border border-gold/30 text-gold
                        font-serif text-sm tracking-wide
                        hover:bg-gold/10 active:scale-95 transition-all duration-150"
           >
@@ -165,7 +173,7 @@ export function WeeklyDigest() {
       {phase === 'done' && blocks.length > 0 && (
         <div className="flex flex-col gap-5 animate-fade-up">
 
-          {blocks.map((b) => {
+          {blocks.map((b, idx) => {
             if (b.label === 'footer') return (
               <p key="footer" className="text-[10px] text-muted/40 font-mono text-center pt-2 border-t border-gold/8">
                 {b.body}
@@ -179,7 +187,7 @@ export function WeeklyDigest() {
             };
 
             return (
-              <div key={b.label}>
+              <div key={`${b.label}-${idx}`}>
                 <p className={`text-[10px] font-mono tracking-widest mb-2 ${colors[b.label] ?? 'text-muted/60'}`}>
                   {b.label}
                 </p>

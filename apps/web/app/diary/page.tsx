@@ -133,7 +133,7 @@ function CalendarStrip({ dates }: { dates: Set<string> }) {
       {days.map((d) => (
         <div
           key={d.str}
-          className={`flex-none w-9 h-10 rounded-lg flex flex-col items-center
+          className={`flex-none w-11 h-11 rounded-lg flex flex-col items-center
                       justify-center text-xs gap-0.5 transition-colors
                       ${d.isToday ? 'border border-gold/60' : ''}
                       ${d.has ? 'bg-gold/15 text-gold' : 'text-muted/50'}`}
@@ -192,10 +192,12 @@ function EntryRow({ e }: { e: WebDiaryEntry }) {
 export default function DiaryPage() {
   const [entries, setEntries] = useState<WebDiaryEntry[]>([]);
   const [dates,   setDates]   = useState<Set<string>>(new Set());
+  const [loaded,  setLoaded]  = useState(false);
 
   useEffect(() => {
     setEntries(getEntries().slice().reverse());
     setDates(getEntryDates());
+    setLoaded(true);
   }, []);
 
   return (
@@ -207,7 +209,9 @@ export default function DiaryPage() {
 
       {/* Entry list */}
       <div className="flex flex-col">
-        {entries.length === 0 ? (
+        {!loaded ? (
+          <p className="text-center text-muted/40 text-sm font-mono py-8">memuat…</p>
+        ) : entries.length === 0 ? (
           <p className="text-center text-muted text-sm font-mono py-8">
             kosong — mulai dengan Daily atau Cast
           </p>
