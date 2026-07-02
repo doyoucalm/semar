@@ -53,6 +53,11 @@ function artPath(deckIndex: number): string | null {
   return slug ? `/card-art/${slug}.png` : null;
 }
 
+/** Public art-path lookup by deck index (null when art not yet generated). */
+export function cardArtPath(deckIndex: number): string | null {
+  return artPath(deckIndex);
+}
+
 /** Real deck index for a card id, by lookup in DECK (not a slug heuristic). */
 function deckIndexOf(cardId: string): number {
   return DECK.findIndex((c) => c.id === cardId);

@@ -7,6 +7,7 @@ const TABS = [
   { href: '/calculator',  icon: '命',  label: 'BaZi'   },
   { href: '/cast/iching', icon: '☰',  label: 'I-Ching' },
   { href: '/cast/tarot',  icon: '🂡', label: 'Tarot'  },
+  { href: '/library',     icon: '牌',  label: 'Kartu'  },
   { href: '/diary',       icon: '◈',  label: 'Diary'  },
   { href: '/chat',        icon: '✦',  label: 'Chat'   },
 ];
@@ -25,14 +26,14 @@ export function Nav() {
             href={t.href}
             aria-label={t.label}
             aria-current={active ? 'page' : undefined}
-            className={`flex flex-col items-center gap-0.5 px-2 py-3 rounded-lg
-                        text-xs transition-colors duration-150
+            className={`flex flex-col items-center gap-0.5 px-1.5 py-3 rounded-lg
+                        transition-colors duration-150
                         ${active
                           ? 'text-gold'
                           : 'text-muted hover:text-parchment/70'}`}
           >
             <span className="cn text-lg leading-none" aria-hidden="true">{t.icon}</span>
-            <span className="font-mono tracking-wide text-[11px]">{t.label}</span>
+            <span className="font-mono tracking-tight text-[10px]">{t.label}</span>
           </Link>
         );
       })}
