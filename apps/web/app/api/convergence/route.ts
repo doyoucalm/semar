@@ -2,7 +2,7 @@
  * POST /api/convergence
  *
  * Accepts raw diary entries, pre-aggregates them server-side,
- * then sends a structured prompt to MiniMax M2.7.
+ * then sends a structured prompt to MiniMax M3.
  * Returns a 3-block Convergence Digest in Bahasa Indonesia.
  *
  * The LLM never sees raw chat history — only pre-aggregated symbol lists.
@@ -229,7 +229,7 @@ export async function POST(req: NextRequest) {
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'MiniMax-M2.7',
+        model: 'MiniMax-M3',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 2000,   // thinking tokens + output; M2.7 reasoning needs headroom
         temperature: 0.35,

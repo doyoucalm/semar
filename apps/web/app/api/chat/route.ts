@@ -1,7 +1,7 @@
 /**
  * POST /api/chat
  *
- * Semar conversational interface backed by MiniMax M2.7.
+ * Semar conversational interface backed by MiniMax M3.
  * System prompt is grounded in today's CoreData (BaZi, Weton, transit)
  * + optional last-N-days diary context from client.
  *
@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'MiniMax-M2.7',
+        model: 'MiniMax-M3',
         messages: [
           { role: 'system', content: systemPrompt },
           ...trimmed,
